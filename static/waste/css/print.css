@@ -1,0 +1,169 @@
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+@media print {
+
+    *,
+    *:before,
+    *:after {
+        color: #000 !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .btn > .caret,
+    .dropup > .btn > .caret {
+        border-top-color: #000 !important;
+    }
+
+    .label {
+        border: 1px solid #000;
+    }
+
+    .table {
+        border-collapse: collapse !important;
+        width: 100%;
+    }
+
+    .table td,
+    .table th {
+        background-color: #fff !important;
+    }
+
+
+
+    /*.table-bordered th,*/
+    /*.table-bordered td {*/
+    /*border: 1px solid #ddd !important;*/
+    /*padding: 3pt;*/
+    /*}*/
+    li, td, p {
+        font-size: 11pt;
+    }
+
+    .table-bordered tbody tr {
+        border-bottom: 1px solid #666;
+        padding: 3pt;
+    }
+
+    th {
+        border-bottom: 1px solid #666;
+        padding: 3pt 3pt 10pt;
+
+    }
+
+    tr td {
+        padding: 3pt;
+        text-align: center;
+        border-bottom: 1px solid #666;
+    }
+
+    tr td:nth-child(2) {
+        padding: 3pt;
+        text-align: left;
+    }
+
+    tr td:nth-child(3) {
+        padding: 3pt;
+        text-align: left;
+    }
+
+    tr td:nth-child(4) {
+        padding: 3pt;
+        text-align: left;
+    }
+
+    tbody tr:nth-last-child {
+        padding: 3pt;
+        text-align: center;
+        border: 0;
+    }
+
+    p {
+        margin: 1pt;
+    }
+
+    .printHeader p {
+        font-size: 9pt;
+    }
+
+    .printHeader {
+        margin-bottom: 20pt;
+    }
+
+    @page {
+        margin: 3%;
+    }
+    /*覆盖盘点单打印*/
+    .barnCheck tr td{
+        border: 1px solid #666;
+    }
+    .barnCheck tr th{
+        border: 1px solid #666;
+    }
+
+}
+
+
+

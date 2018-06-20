@@ -1,0 +1,124 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+
+    {include file="Public/search/purchaseSearch" /}
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">入库单</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 190px">入库批次号</th>
+                            <th style="width: 160px">创建时间</th>
+                            <th style="width: 140px">创建者</th>
+                            <th style="width: 160px">审核时间</th>
+                            <th style="width: 140px">审核者</th>
+                            <th style="width: 75px">栏目</th>
+                            <th style="width: 90px">商品总件数</th>
+                            <th style="width: 75px">状态</th>
+                            <th style="width: 180px">操作</th>
+                        </tr>
+                        {volist name="list" id="id"}
+                        <tr>
+                            <td>{$id.batch_code}</td>
+                            <td title="{$id.create_time}">{$id.create_time}</td>
+                            <td title="{$id.create_user}">{$id.create_user}</td>
+                            <td title="{$id.update_time}">{$id.update_time}</td>
+                            <td>{$id.update_user}</td>
+                            <td>{$id.depot_name}</td>
+                            <td>{$id.amount}</td>
+                            <td>
+                                {switch name="id.status"}
+                                {case value="0"}<span class="label label-warning">未审核</span>{/case}
+                                {case value="1"}<span class="label label-primary">已审核</span>{/case}
+                                {case value="10"}<span class="label label-danger">被驳回</span>{/case}
+                                {default /}
+                                <span class="label label-success">已完成</span>
+                                {/switch}
+                            </td>
+                            <th>
+                                <a class="text-primary"
+                                   href="{:url('detail',['id'=>$id.id])}"><i
+                                        class="fa fa-file-text-o fa-fw"></i>采购单详情</a>
+                                &nbsp;
+                                {eq name="id.status" value="0"}
+                                <a class="text-danger orderPrevBtn single buyIn"
+                                   href="javascript:void(0)"
+                                   data-orderId="{$id.id}"><i
+                                        class="fa fa-trash-o fa-fw"
+                                ></i>删除</a>
+                                {/eq}
+                            </th>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    {$list->render()}
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+
+    var buyInDelUrl = "{:url('purchaseDel')}";
+
+
+    $(document).ready(function () {
+
+    });
+</script>
+
+
+{/block}
+

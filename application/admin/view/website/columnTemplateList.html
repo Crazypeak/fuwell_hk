@@ -1,0 +1,474 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style> 
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- 新增区块代码 -->
+<div class="modal" id="columnFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增区块代码&nbsp;&nbsp;&nbsp;&nbsp;<span class="columnFileTypeTitle" style="color: #777"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal columnFileAdd">
+                    <input type="hidden" id="newtype" name="type" value="0">
+                    <input type="hidden" name="pid" value="{$column.id}">
+                    <div class="box-body">
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--区块代码名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="newon" checked="checked">
+                                <label for="newon">启用</label>
+                                <input type="radio" name="status" value="0" id="newoff">
+                                <label for="newoff">停用</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">代码</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <textarea class="form-control" name="code_text" style="resize:none;overflow: auto;height: 540px;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success columnFileAddConfirmBtn"><i class="fa fa-check"></i>&nbsp;新增
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑区块代码 -->
+<div class="modal" id="columnFileInfoEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改区块代码&nbsp;&nbsp;&nbsp;&nbsp;<span class="columnFileTypeTitle" style="color: #777"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal columnFileInfoEdit">
+                    <input type="hidden" id="edittype" name="type" value="0">
+                    <input type="hidden" name="pid" value="{$column.id}">
+                    <div class="box-body">
+
+                        <div class="form-group" style="display: none;">
+                            <label class="col-sm-3 control-label">id</label>
+                            <div class="col-sm-6">
+                                <!--用户id-->
+                                <input type="text" class="form-control" name="id" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--区块代码名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="editon" checked="checked">
+                                <label for="newon">启用</label>
+                                <input type="radio" name="status" value="0" id="editoff">
+                                <label for="newoff">停用</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">代码</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <textarea class="form-control" name="code_text" style="resize:none;overflow: auto;height: 540px;" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success columnFileInfoEditConfirmBtn"><i class="fa fa-check"></i>&nbsp;修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-12">
+                            <h3 class="box-title">Html详情：&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#777">(当前区块代码：{$column.name})</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 180px">名称</th>
+                            <th style="width: 120px;">顺序</th>
+                            <th style="width: 80px;">状态</th>
+                            <th style="width: 80px;">更新时间</th>
+                            <th style="width: 160px;">操作</th>
+                        </tr>
+                        {notempty name="list.type0"}
+                        {volist name="list.type0" id="vo"}
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label bg-gray">停用</span>{/case}
+                                {case value="1"}<span class="label bg-green">启用</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                <a class="columnFileInfoEditBtn" href="javascript:void(0);"
+                                   data-type="0"
+                                   data-id="{$vo.id}"
+                                   data-name="{$vo.name}"
+                                   data-status="{$vo.status}"
+                                   data-sequence="{$vo.sequence}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" class="text-danger single columnFileDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {/notempty}
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="columnFileAddBtn btn btn-sm	btn-success pull-right" style="" data-type="0">
+                                <i class="fa fa-plus fa-fw"></i>新增区块区块代码
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">CSS详情：<span style="color:#777">(代码优先度低)</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 160px">名称</th>
+                            <th style="width: 40px;">顺序</th>
+                            <th style="width: 45px;">状态</th>
+                            <th style="width: 120px;">更新时间</th>
+                            <th style="width: 100px;">操作</th>
+                        </tr>
+                        {notempty name='list.type1'}
+                        {volist name="list.type1" id="vo"}
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label bg-gray">停用</span>{/case}
+                                {case value="1"}<span class="label bg-green">启用</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                <a class="columnFileInfoEditBtn" href="javascript:void(0);"
+                                   data-type="1"
+                                   data-id="{$vo.id}"
+                                   data-name="{$vo.name}"
+                                   data-status="{$vo.status}"
+                                   data-sequence="{$vo.sequence}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" class="text-danger single columnFileDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {/notempty}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="columnFileAddBtn btn btn-sm	btn-success pull-right" style="" data-type="1">
+                                <i class="fa fa-plus fa-fw"></i>新增区块区块代码
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+
+        <div class="col-md-offset-0 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">Javascript详情：<span style="color:#777">(代码优先度低)</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 160px">名称</th>
+                            <th style="width: 40px;">顺序</th>
+                            <th style="width: 45px;">状态</th>
+                            <th style="width: 120px;">更新时间</th>
+                            <th style="width: 100px;">操作</th>
+                        </tr>
+                        {notempty name='list.type2'}
+                        {volist name="list.type2" id="vo"}
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label bg-gray">停用</span>{/case}
+                                {case value="1"}<span class="label bg-green">启用</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                <a class="columnFileInfoEditBtn" href="javascript:void(0);"
+                                   data-type="2"
+                                   data-id="{$vo.id}"
+                                   data-name="{$vo.name}"
+                                   data-status="{$vo.status}"
+                                   data-sequence="{$vo.sequence}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" class="text-danger single columnFileDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {/notempty}
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="columnFileAddBtn btn btn-sm btn-success pull-right" style="" data-type="2">
+                                <i class="fa fa-plus fa-fw"></i>新增区块区块代码
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+<script>
+    var columnFileSaveUrl = "{:url('website.template/columnTemplateSave')}";
+    var columnFileDelUrl = "{:url('website.template/columnTemplateDel')}";
+
+    var columnFileInfoEditConfirmBtn = $(".columnFileInfoEditConfirmBtn");
+    var columnFileInfoAddConfirmBtn = $(".columnFileInfoAddConfirmBtn");
+    var columnFileInfoEditModal = $("#columnFileInfoEditModal");
+    var columnFileInfoEditBtn = $(".columnFileInfoEditBtn");
+    var columnFileInfoAddModal = $("#columnFileInfoAddModal");
+
+    var columnFileDelBtn = $(".columnFileDelBtn");
+    var columnFileAddBtn = $(".columnFileAddBtn");
+    var columnFileAddConfirmBtn = $(".columnFileAddConfirmBtn");
+
+    $(document).ready(function () {
+        //新增区块代码
+        columnFileAddBtn.click(function () {
+            var type = $(this).data('type');
+            var title = type == 2 ? 'Javascript' : type ? 'CSS' : 'Html';
+            $('.columnFileTypeTitle').html(title);
+            $('#newtype').val(type);
+
+            $('#columnFileModal').modal({backdrop: 'static', keyboard: false});
+            $('#columnFileModal').find("input").on('keydown', function (event) {
+                if (event.keyCode == 13) {
+                    columnFileAddConfirmBtn.click();
+                }
+            });
+        });
+        
+        columnFileAddConfirmBtn.click(function () {
+            formPost($(".columnFileAdd").serialize(), columnFileSaveUrl);
+        });
+
+        //编辑区块代码
+        columnFileInfoEditBtn.click(function () {
+            columnFileInfoEditModal.modal({backdrop: 'static'});
+            formClear(columnFileInfoEditModal);
+            var type = $(this).data('type');
+            var title = type ==2 ? 'Javascript' : type ? 'CSS' : 'Html';
+            $('.columnFileTypeTitle').html(title);console.log(title);
+            $('#edittype').val(type);
+
+            var columnFileData = $(this).data();
+
+            $(".columnFileInfoEdit [name=id]").val(columnFileData.id);
+            $(".columnFileInfoEdit [name=name]").val(columnFileData.name);
+            $(".columnFileInfoEdit [name=url]").val(columnFileData.url);
+            columnFileData.status ? $("#editon").iCheck("check") : $("#editoff").iCheck("check");
+            $(".columnFileInfoEdit [name=sequence]").val(columnFileData.sequence);
+
+            $.get(columnFileSaveUrl, {id: columnFileData.id}, function (data) {
+                $(".columnFileInfoEdit [name=code_text]").val(data);
+            });
+//            var columnList = data.user_list;
+//            UserListSetSelect(columnList);
+        });
+        //用户编辑确认
+        columnFileInfoEditConfirmBtn.click(function () {
+            formPost($(".columnFileInfoEdit").serialize(), columnFileSaveUrl);
+        });
+
+        columnFileDelBtn.click(function () {
+            var formData = {};
+            formData.id = $(this).data("id");
+            AlertConfirm(AlertText.columnFile[0], AlertText.columnFile[1], "是", function () {
+                formPost(formData, columnFileDelUrl, this);
+            })
+        });
+    })
+</script>
+
+
+{/block}
+

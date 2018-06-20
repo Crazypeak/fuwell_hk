@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1e55d067-2477-4a52-a9e9-7097a173e793" name="hyu3526590001.my3w.com" url="http://hyu3526590001.my3w.com">
+        <fileTransfer host="hyu3526590001.my3w.com" port="21" rootFolder="/htdocs">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

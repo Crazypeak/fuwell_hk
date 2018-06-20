@@ -1,0 +1,38 @@
+<!--新闻详情 开始-->
+{notempty name="assign_data.row"}
+<div class="containerbox cf news-wrap">
+    <div class="bread-nav">
+        <a href="/">首页</a>><a href="/{$column.url}">新闻中心</a>><span class="cur">行业资讯</span>
+    </div>
+    <div class="news-con">
+        <h1>
+            {$assign_data.row.article.title}
+        </h1>
+        <div class="news-info">
+          <span>
+            发布时间：{:substr($assign_data['row']['article']['create_time'],0,10)}
+          </span>
+            <span>
+            发布者：{$assign_data.row.article.author}
+          </span>
+        </div>
+        {$assign_data.row.article.content}
+    </div>
+    <div class="page-bottom">
+        <div class="left">
+            <a {$assign_data['row']['last'] ? "href='/".$column['url']."/".$assign_data['row']['last']['id']."'" : ''}>
+                上一篇：{$assign_data['row']['last'] ? $assign_data['row']['last']['title'] : '无'}
+            </a>
+            <a {$assign_data['row']['news'] ? "href='/".$column['url']."/".$assign_data['row']['news']['id']."'" : ''}>
+                下一篇：{$assign_data['row']['news'] ? $assign_data['row']['news']['title']."'" : '无'}
+            </a>
+        </div>
+        <div class="right">
+            <a href="javascript:history.back(-1);" class="return">
+                返回上一级
+            </a>
+        </div>
+    </div>
+</div>
+{/notempty}
+<!--新闻详情 end-->

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8"/>
+    <title>{$title}{$column['url'] != 'index' ? '-'.$par['con_title'] : ''}</title>
+    <meta name="keywords" content="{$par.seo_keywords}"/>
+    <meta name="description" content="{$description?$description:$par['seo_description']}">
+    <meta name="baidu-site-verification" content="{$par.baidu_verification}"/>
+    <meta name="Author" content="Mather, Crazypeak"/>
+    {include file="baseHead"/}
+
+    {block name="style"}
+    {/block}
+</head>
+
+<body>
+<!--头部 开始-->
+<div class="nav" id="bignav" style="z-index: 9999;position: fixed;">
+    <div class="auto-container cf pdnav">
+        <a href="/" class="left"><img src="/images/logo.png" class="logo"/></a>
+        <div class="nav-right right">
+            <ul class="cf">
+                {volist name='column_list' id='item'}
+                <li><a href="/{$item.url}">{$item.name}</a></li>
+                {/volist}
+                <li><span><img src="/images/tel.png">400-0982-168</span>
+                </li>
+            </ul>
+        </div>
+        <!-- 手机导航 appnav-->
+        <div class="appnav right">
+            <a class="btn-appmenu"><img src="/images/nav-menu.png"/></a>
+            <ul class="appnavs">
+                {volist name='column_list' id='item'}
+                <li>
+                    {notempty name="item.child"}
+                    <span style="float: left;padding-left:5%;font-size: 160%"><a class="childBtn" style="width: 5%;height: 100%">+</a></span>
+                    {/notempty}
+                    <a href="/{$item.url}">{$item.name}</a>
+                    <ul class="child" style="display: none">
+                        {volist name="item.child" id="goods"}
+                        <li style="background-color:#666"><a href="/{$item.url}/{$goods.id}">|—&nbsp{$goods.name}</a></li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/volist}
+                <li><a href="https://shop144132623.taobao.com/" target="_blank">淘宝店铺</a></li>
+            </ul>
+            <script type="text/javascript">
+                $('.childBtn').click(function () {
+                    var child = $(this).parent().siblings('.child');
+                    if(child.css('display') === 'none'){
+                        $(this).html('||');
+                    }else{
+                        $(this).html('+');
+                    }
+                    child.slideToggle();
+                });
+            </script>
+        </div>
+    </div>
+    {notempty name="goods_list"}
+    <!--二级菜单 开始-->
+    <div class="Productbar">
+        <div class="product">
+            <ul class="productbrowser-items">
+                {volist name="goods_list" id="goods"}
+                <li>
+                    <a href="/{$column.url}/{$goods.id}">
+                        <img src="{$goods.img_url}"/>
+                    </a>
+                    <a href="/{$column.url}/{$goods.id}">
+                        <span class="productbrowser-label">{$goods.name}</span>
+                    </a>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+    <!--二级菜单 end-->
+    {/notempty}
+</div>
+<!--头部 end-->
+<div style="width: 100%;height:50px;"></div>
+<!--主体 开始-->
+{block name="content"}
+{/block}
+<!--主体 end-->
+
+<!--底部 开始-->
+<div class="footer">
+    <div class="auto-container cf">
+        <div class="footer-top cf">
+            {volist name="footer" id="item"}
+            <div class="footer-item">
+                <ul>
+                    <li><p>{$item.name}</p></li>
+                    {volist name="item.child" id="child"}
+                    <li><a href="{$child.url}">{$child.name}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+            {/volist}
+            <div class="footer-item footer-item-weixin">
+                <img src="/images/weixin.jpg"/>
+                <p>福维尔微信公众号</p>
+            </div>
+            <div class="footer-item footer-item-hotline">
+                <p class="hot24">全国免费服务热线</p>
+                <h3>{$par.con_phone}</h3>
+            </div>
+        </div>
+        <div class="footer-bottom cf">
+            <div class="footer-bottom-left left">
+                <p>CopyRight© {$par.con_company} . All Right Reserved {$par.con_number}
+                    <br/>地址：{$par.con_address}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部 end-->
+
+{include file="baseScript"/}
+{block name="script"}
+{/block}
+
+<!-- 右客服侧悬浮代码 开始 -->
+{include file="right"/}
+<!-- 右客服侧悬浮代码 end -->
+</body>
+</html>

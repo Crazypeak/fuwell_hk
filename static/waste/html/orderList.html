@@ -1,0 +1,134 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+
+<!-- Main content -->
+<section class="content">
+
+    {include file="Public/search/orderSearch" /}
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">订单汇总</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 13%">创建时间</th>
+                            <th style="width: 190px">订单编号</th>
+                            <th style="width: 80px">收件人</th>
+                            <th style="width: 120px">电话</th>
+                            <th style="">收货地址</th>
+                            <th style="width: 90px">商品总件数</th>
+                            <th style="width: 7%">订单状态</th>
+                            <th style="width: 7%">栏目状态</th>
+                            <th style="width: 8%">操作</th>
+                        </tr>
+                        <form action="">
+                            {volist name="list" id="id"}
+                            <tr>
+                                <td><a href="{:url('index/admin.order/order',['id'=>$id.id])}" title="{$id.order_code}">{$id.order_code}</a>
+                                </td>
+                                <td>{$id.create_time}</td>
+                                <td>{$id.cg_name}</td>
+                                <td>{$id.cg_phone}</td>
+                                <td title="{$id.cg_province}{$id.cg_city}{$id.cg_area}{$id.cg_address}">
+                                    {$id.cg_province}{$id.cg_city}{$id.cg_area}{$id.cg_address}
+                                </td>
+                                <td>&#65509;<span>{$id.total_price}</span></td>
+                                <td>
+                                    {switch name="id.status"}
+                                    {case value="0"}<span class="label bg-red disabled">待审核</span>{/case}
+                                    {case value="1"}<span class="label bg-yellow">已审核</span>{/case}
+                                    {case value="2"}<span class="label bg-green">已下发</span>{/case}
+                                    {case value="10"}<span class="label bg-gray-active">订单驳回</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <td>
+                                    {switch name="id.ck_status"}
+                                    {case value="0"}<span class="label bg-red disabled">待审核</span>{/case}
+                                    {case value="1"}<span class="label bg-yellow">已审核</span>{/case}
+                                    {case value="2"}<span class="label bg-light-blue">已拣货</span>{/case}
+                                    {case value="3"}<span class="label bg-light-blue-active">已打印订单</span>{/case}
+                                    {case value="4"}<span class="label bg-green">已发货</span>{/case}
+                                    {case value="10"}<span class="label bg-gray-active">栏目退单</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <th>
+                                    <a class="text-success"
+                                       href="{:url('index/admin.order/order',['id'=>$id.id])}"><i
+                                            class="fa fa-file-text-o"></i>&nbsp;详情</a>
+                                    &nbsp;&nbsp;
+                                </th>
+                            </tr>
+                            {/volist}
+                        </form>
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    {$list->render()}
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+
+{/block}
+
+
+{block name="script"}
+<script>
+
+
+
+    $(document).ready(function () {
+
+
+    });
+</script>
+
+
+{/block}
+

@@ -1,0 +1,44 @@
+<!--内容 开始-->
+<div class="parameter-new" id="param">
+    <h3>{$assign_data.goods.name}</h3>
+    {volist name="$assign_data.goods.detail" id="item"}
+    <div class="parameter-con">
+        <div class="row-first">
+            {$item.key}
+        </div>
+        <ul>
+            {eq name="item.type" value="0"}
+            {volist name="item.child" id="child"}
+            <li>
+                <div class="parameter-title">{$child.key}</div>
+                <div class="parameter-text">{$child.value}</div>
+            </li>
+            {/volist}
+            {else/}
+            {if condition="count($item['child']) == 1"}
+            <li>
+                {eq name="$item['child'][0]['type']") value="1"}
+                <div class="parameter-text">
+                    <img src="{$item['child'][0]['value']}" alt=""/>
+                </div>
+                {else/}
+                <div class="parameter-title">{$item['child'][0]['key']}</div>
+                <div class="parameter-text">{$item['child'][0]['value']}</div>
+                {/eq}
+            </li>
+            {else/}
+            <li class="featureswith">
+                {volist name="item.child" id="child"}
+                <div class="plusfeatures">
+                    <img src="{$child.value}" alt=""/>
+                    <p>{$child.key}</p>
+                </div>
+                {/volist}
+            </li>
+            {/if}
+            {/eq}
+        </ul>
+    </div>
+    {/volist}
+</div>
+<!--内容 end-->

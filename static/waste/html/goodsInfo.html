@@ -1,0 +1,156 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+    .form-group img[src="#"] {
+        visibility: hidden;
+    }
+
+    .form-group img[src] {
+        display: block;
+
+    }
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-8 col-lg-8">
+            <!-- 商品分类 box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-10">
+                            <h3 class="box-title">商品信息</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+
+                        <!--商品封面-->
+                        <div class="col-sm-2 col-md-3 clo-log-3"
+                             style="position: absolute;right: 100px;top: 50px; width: 200px;">
+                            <img src="{$row.img_url}" alt="" id="blah" class="thumbnail"
+                                 style="height: 180px; width: 100%;">
+                        </div>
+
+                        <dt>
+
+                        <h4>条形码</h4></dt>
+                        <dd><h4>{$row.bar_code}</h4></dd>
+                        <dt>
+                        <h4>货号</h4></dt>
+                        <dd><h4>{$row.product_code}</h4></dd>
+                        <dt>
+                        <h4>入库批次号</h4></dt>
+                        <dd><h4>{$row.batch_code}</h4></dd>
+
+                        <dt>
+                        <h4>商品名称</h4></dt>
+                        <dd><h4>{$row.name}</h4></dd>
+
+                        <dt>
+                        <h4>生产日期</h4></dt>
+                        <dd><h4>{$row.mfg_date}</h4></dd>
+
+                        <dt>
+                        <h4>过期日期</h4></dt>
+                        <dd><h4>{$row.exp_date}</h4></dd>
+
+
+                        <dt>
+                        <h4>商品分类</h4></dt>
+                        <dd><h4>{$row.a_cname}</h4></dd>
+
+
+                        <dt>
+                        <h4>参考销售价</h4></dt>
+                        <dd><h4>{$row.selling_price}</h4></dd>
+
+                        <dt>
+                        <h4>参考供货价</h4></dt>
+                        <dd><h4>{$row.supply_price}</h4></dd>
+
+                        <dt>
+                        <h4>币种</h4></dt>
+                        <dd><h4>{$row.currency}</h4></dd>
+
+                        <dt>
+                        <h4>规格</h4></dt>
+                        <dd><h4>{$row.model}</h4></dd>
+
+                        <dt>
+                        <h4>单位</h4></dt>
+                        <dd><h4>{$row.unit}</h4></dd>
+
+
+                        <!--<dt>-->
+                        <!--<h4>实际库存</h4></dt>-->
+                        <!--<dd><h4>{ $row.stock_true}</h4></dd>-->
+
+                        <!--<dt>-->
+                        <!--<h4>可销售库存</h4></dt>-->
+                        <!--<dd><h4>{ $row.stock_false}</h4></dd>-->
+
+
+                        <dt>
+                        <h4>发布时间</h4></dt>
+                        <dd><h4>{$row.create_time}</h4></dd>
+
+                    </dl>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!--待审核显示按钮 status = 0-->
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+    var goodsConfirmBtn = $("#goodsConfirmBtn");
+    var goodsConfirmUrl = "{:url('barn.goods/goodsVerify')}";
+
+    $(document).ready(function () {
+
+        goodsConfirmBtn.click(function () {
+            var id = $(this).data("id");
+            formPost(jQuery.param({id: id}), goodsConfirmUrl);
+
+        })
+
+
+    })
+</script>
+
+
+{/block}
+

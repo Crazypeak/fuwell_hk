@@ -1,0 +1,181 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+<style>
+
+    .box-line {
+        /*border-top: 1px solid #f4f4f4;*/
+        margin-left: 20px;
+        position: relative;
+    }
+    .box.box-defalut {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    .group-box {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    .dottedLine {
+        position: absolute;
+        content: '';
+        opacity: .5;
+        border-left: 2px dashed #B3B7B9;
+        height: 32px;
+        top: -9px;
+        left: -2px;
+    }
+    .dottedLineRow {
+        position: absolute;
+        content: '';
+        opacity: .5;
+        border-top: 2px dashed #B3B7B9;
+        width: 19px;
+        top: 23px;
+        left: 0px;
+    }
+    .box-body.box-line:not(:first-child) .dottedLine {
+    }
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">权限管理</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body form-horizontal">
+                    <div class="form-group" style="display: none;">
+                        <label class="col-sm-3 control-label">员工组id</label>
+                        <div class="col-sm-6">
+                            <!--员工组名称-->
+                            <input type="text" class="form-control userGroupPermid" name="id" value="{$group.id}"
+                                   placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="">
+                        <label class="col-md-1 control-label">员工组名称</label>
+                        <div class="col-md-2" style="">
+                            <!--员工组名称-->
+                            <input type="text" class="form-control userGroupPermName" name="name"
+                                   value="{$group.name}" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <!--<div class="box-footer clearfix">-->
+                <!--<button type="button" class="btn btn-sm btn-success pull-right single groupPerm orderNextBtn"><i-->
+                <!--class="fa fa-check fa-fw"></i>更改权限-->
+                <!--</button>-->
+                <!--</div>-->
+            </div>
+
+            <form action="" class="userGroupSettingPage">
+                {volist name="list" id="id"}
+                <div class="box box-defalut">
+                    <div class="box-header with-border">
+                        <h4>{$id.name}权限</h4>
+                        <!--<div class="box-title">{$id.name}</div>-->
+                        <!--第一层权限-->
+                        <div class="row Layers1">
+                            <div class="col-md-2" style="width: 180px;">
+                                <input type="checkbox" class="Layers1CheckBox" name="ids" value="{$id.id}" {in
+                                       name="id.id"
+                                       value="$group['rule']" }checked {/in} data-pid="{$id.pid}">
+                                <label>{$id.name}</label>
+                            </div>
+                        </div>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    {notempty name="id['operator']"}
+                    {volist name="id['operator']" id="id"}
+                    <div class="box-body box-line">
+                        <!--第二层权限-->
+                        <div class="row Layers2">
+                            <div class="col-md-2" style="width: 180px;">
+                                <input type="checkbox" class="Layers2CheckBox" name="ids" value="{$id.id}" {in
+                                       name="id.id"
+                                       value="$group['rule']" }checked {/in} data-pid="{$id.pid}">
+                                <label>{$id.name}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row Layers3" style="margin-top: 35px;">
+                                    {notempty name="id['operator']"}
+                                    {volist name="id['operator']" id="id"}
+                                    <!--第三层权限-->
+                                    <div class="col-md-2" style="padding-bottom: 5px;width: 150px;">
+                                        <input type="checkbox" class="Layers3CheckBox" name="ids" value="{$id.id}" {in
+                                               name="id.id"
+                                               value="$group['rule']" }checked {/in}
+                                        data-pid="{$id.pid}">
+                                        <label>{$id.name}</label>
+                                    </div>
+                                    {/volist}
+                                    {/notempty}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                    {/notempty}
+
+                    <!-- /.box-body -->
+                    <!--<div class="box-footer text-center">-->
+                    <!--</div>-->
+                    <!-- /.box-footer -->
+                </div>
+                {/volist}
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-sm btn-success pull-right single groupPerm orderNextBtn"><i
+                                class="fa fa-check fa-fw"></i>更改权限
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+
+            <!-- /.box -->
+        </div>
+    </div>
+
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/dist/adminStyle.bundle.js"></script>
+{/block}
+
+
+{block name="script"}
+<script>
+    var groupPermEditUrl = "{:url('admin.group/access')}";
+</script>
+{/block}
+

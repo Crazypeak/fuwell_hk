@@ -1,0 +1,308 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class=" col-md-12">
+            <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+
+                {include file="retail/orderListSB" /}
+
+                <div class="tab-content no-padding" >
+                <!-- Morris chart - Sales -->
+                <div class="chart tab-pane active" id="retail-order" style="height: 100vh">
+                <div class="col-md-12" style="height: 100vh" >
+
+                    <!-- 上传订单Modal -->
+                    <div class="modal" id="upLoadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                            class="sr-only">Close</span></button>
+                                    <h4 class="modal-title" id="">上传订单</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{:url('')}" enctype="multipart/form-data" method="post" class="upLoadExcel">
+                                        <div class="box-body">
+
+                                            <div class="form-group">
+
+                                                <a class="btn btn-app filestyle">
+                                                    <input type="file" id="ExcelFile" name="Excel" class="">
+                                                    <i class="fa fa-file-excel-o fa-5x"></i>
+                                                    <p>点我导入文件</p>
+                                                </a>
+
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <span class="fileNameSpan text-danger pull-right"></span>
+                                            </div>
+
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default cancelUploadBtn" data-dismiss="modal"><i
+                                            class="fa fa-close fa-fw"></i>取消
+                                    </button>
+                                    <button type="button" class="btn btn-success confirmUploadBtn"><i class="fa fa-upload fa-fw"></i>上传订单
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main content -->
+                    <section class="content">
+
+                        {include file="Public/search/orderSearchNoStatus12" /}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Default box -->
+                                <div class="box">
+                                    <!--<div class="box-header with-border">-->
+                                        <!--<div class="row">-->
+                                            <!--<div class="col-md-4 col-lg-6">-->
+                                                <!--<h3 class="box-title">销售订单管理</h3>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+
+                                        <table class="table table-bordered table-hover">
+                                            <tbody>
+                                            <tr>
+                                                <th style="width: 30px"><input type="checkbox" checked="checked" name="del" value=""
+                                                                               id="checkAllBtn"></th>
+                                                <th style="width: 190px">订单编号</th>
+                                                <th style="width: 100px">创建人</th>
+                                                <th style="width: 100px">收件人</th>
+                                                <th style="width: 120px">电话</th>
+                                                <th style="">收货地址</th>
+                                                <th style="width: 90px">商品总件数</th>
+                                                <th style="width: 75px">栏目</th>
+                                                <th style="width: 220px">操作</th>
+                                            </tr>
+                                            <form action="">
+                                                {volist name="list" id="id"}
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" checked="checked" name="ids[]" value="{$id.id}">
+                                                    </td>
+                                                    <td><a href="{:url('index/retail.order/orderEdit',['id'=>$id.id])}"
+                                                           title="{$id.order_code}">{$id.order_code}</a>
+                                                    </td>
+                                                    <td title="{$id.create_name}">{$id.create_name}</td>
+                                                    <td title="{$id.cg_name}">{$id.cg_name}</td>
+                                                    <td>{$id.cg_phone}</td>
+                                                    <td title="{$id.cg_province}{$id.cg_city}{$id.cg_area}{$id.cg_address}">
+                                                        {$id.cg_province}{$id.cg_city}{$id.cg_area}{$id.cg_address}
+                                                    </td>
+                                                    <td title="{$id.total}">{$id.total}</td>
+                                                    <td>{$id.depot_name}</td>
+                                                    <th>
+                                                        <a class="text-success"
+                                                           href="{:url('index/retail.order/orderEdit',['id'=>$id.id])}"><i
+                                                                class="fa fa-pencil-square-o fa-fw"></i>编辑</a>
+                                                        &nbsp;&nbsp;
+                                                        <a class="text-danger orderPrevBtn single"
+                                                           href="javascript:void(0)"
+                                                           data-orderId="{$id.id}"
+                                                           data-orderDelUrl="{:url('index/retail.order/orderDel',['ids'=>$id.id])}"><i
+                                                                class="fa fa-trash-o fa-fw"
+                                                        ></i>删除</a>
+                                                        &nbsp;&nbsp;
+                                                        <a class="text-success orderNextBtn single"
+                                                           href="javascript:void(0)"
+                                                           data-orderId="{$id.id}">
+                                                            <i class="fa fa-check fa-fw"></i>提交</a>
+                                                    </th>
+                                                </tr>
+                                                {/volist}
+                                            </form>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="box-footer clearfix">
+
+                                        <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <a href="../../demo.xls" class="btn btn-sm btn-info">
+                                                    <i class="fa fa-download fa-fw"></i>下载模板
+                                                </a>
+                                            </div>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-sm btn-info uploadModalBtn">
+                                                    <i class="fa fa-upload fa-fw"></i>上传订单
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group" aria-label="...">
+
+                                                <a href="{:url('index/retail.order/orderAdd')}" class="btn btn-sm btn-success" style="">
+                                                    <i class="fa fa-plus fa-fw"></i>新增订单
+                                                </a>
+                                            </div>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-sm btn-danger orderPrevBtn">
+                                                    <i class="fa fa-trash fa-fw"></i>批量删除
+                                                </button>
+                                            </div>
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="submit" class="btn btn-sm	btn-success pull-right orderNextBtn">
+                                                    <i class="fa fa-check fa-fw"></i>批量提交
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                        {$list->render()}
+                                    </div>
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                    </section>
+                    <!-- /.content -->
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+    var orderAddUrl = "{:url('index/retail.order/orderAdd')}";
+    var orderDelUrl = "{:url('index/retail.order/orderDel')}";
+    var orderSubUrl = "{:url('index/retail.update/subOrder')}";
+    var orderUpLoadUrl = "{:url('index/retail.Upload/index')}";
+    var orderSearchUrl = "{:url('')}";
+
+    var cancelUploadBtn = $(".cancelUploadBtn");
+    var confirmUploadBtn = $(".confirmUploadBtn");
+
+    var fileInput = $("#ExcelFile");
+    var fileNameSpan = $(".fileNameSpan");
+    var canUpload = false;
+
+
+    //上传文化初始化检测
+    function upLoadInit() {
+        fileInput.val("");
+        if (fileInput.val() == "") {
+            canUpload = false;
+            fileNameSpan.text("未选择文件");
+            confirmUploadBtn.attr("disabled", true);
+        }
+    }
+
+    //提交文件
+    function ExcelFilePost(formData) {
+        swal({
+            title: "上传文件",
+            text: "上传" + fileNameSpan.text() + "吗？",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                //超时检测
+                setTimeout(function () {
+                    AlertWarn("上传超时", "请重新上传订单文件！并验证订单是否正确！", function () {
+                        location.reload(true)
+                    });
+                }, 20000);
+                //文件上传
+                $.ajax({
+                    url: orderUpLoadUrl,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        orderApiSuccess(data, "请稍等 正在跳转到订单列表");
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    $(document).ready(function () {
+
+        $(".uploadModalBtn").click(function () {
+            //上传文化初始化检测
+            upLoadInit();
+            $("#upLoadModal").modal({backdrop: 'static'});
+        });
+
+
+        //文件选择按钮
+        fileInput.on("change", function () {
+            var filePath = $(this).val();
+            var fileNameArray = filePath.split('.');
+            var fileExtension = fileNameArray[fileNameArray.length - 1];
+            var fileName = fileInput[0].files[0].name;
+            if (fileExtension !== "xls") {
+                confirmUploadBtn.attr("disabled", true);
+                fileNameSpan.text("无效的文件");
+            } else {
+                canUpload = true;
+                confirmUploadBtn.attr("disabled", false);
+                fileNameSpan.text("已选择文件: " + fileName);
+            }
+        });
+        //文件提交按钮
+        confirmUploadBtn.click(function () {
+            if (canUpload) {
+                var ExcelFormData = new FormData();
+                ExcelFormData.append('Excel', fileInput[0].files[0]);
+                ExcelFilePost(ExcelFormData);
+            } else {
+                alert("请选择xls文件");
+            }
+        });
+
+    });
+</script>
+
+
+{/block}
+

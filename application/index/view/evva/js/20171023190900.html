@@ -1,0 +1,19 @@
+<!--视频脚本-->
+<script type="text/javascript">
+    var myVideo = document.getElementById("video");
+    var videoBtn = $("#videoBtn");
+
+    function playPause() {
+        $('#video').slideDown(1000);
+        $('#videobg').slideUp(1000);
+        $('#tip').slideUp(1000);
+
+        if (myVideo.paused) {
+            myVideo.play();
+            videoBtn.toggle();
+        } else {
+            videoBtn.toggle();
+            myVideo.pause();
+        }
+    }
+</script>

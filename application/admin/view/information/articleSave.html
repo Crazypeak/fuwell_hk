@@ -1,0 +1,223 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+<!-- Main content -->
+<section class="content">
+    <form id="newInfo">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <!--订单信息-->
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">文章信息</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="col-sm-10 form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">发布者</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" disabled value="{:session('user_auth.nickname')}">
+                                </div>
+
+                                <label class="col-sm-1 control-label"><span class="text-danger">&nbsp;*</span>状态</label>
+                                <div class="col-sm-3">
+                                    <select name="status" id="status" class="form-control">
+                                        <option class="op0" value="0">草稿(待发)</option>
+                                        <option class="op1" value="1" selected>正常</option>
+                                    </select>
+                                </div>
+
+                                {if condition="is_HK()"}
+                                <input type="hidden" name="type" id="type" value="0"/>
+                                {else/}
+                                <label class="col-sm-1 control-label"><span class="text-danger">&nbsp;*</span>类别</label>
+                                <div class="col-sm-3">
+                                    <select name="type" id="type" class="form-control">
+                                        <option class="op0" value="0" selected>公司新闻</option>
+                                        <option class="op1" value="1">行业资讯</option>
+                                    </select>
+                                </div>
+                                {/if}
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label"><span class="text-danger">&nbsp;*</span>标题</label>
+                                <div class="col-sm-11">
+                                    <input type="text" class="form-control" id="title" name="title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">描述</label>
+                                <div class="col-sm-11">
+                                    <textarea id="description" style="resize: vertical" class="form-control" name="description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="col-sm-2">
+                                <a href="javascript:void(0)" id="articleImgBtn">
+                                    <input type="file" class="form-control" style="display: none" id="imgFile" name="articleImage">
+                                    <img id="articleImg" width="160" height="150" src="/images/notimg.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <!-- /.box-footer -->
+                </div>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">文章内容</h3>
+                    </div>
+                    <!-- /.box-header -->
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-md-offset-1 col-sm-10">
+                                <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+                                <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"></script>
+                                <!-- 实例化编辑器 -->
+                                <script type="text/javascript">
+                                    var ue = UE.getEditor('contents');
+                                </script>
+                                <script id="contents" type="text/plain"></script>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a class="btn btn-default btn-sm" href="{:url('index')}"><i
+                                        class="fa fa-long-arrow-left fa-fw"></i>返回列表
+                                </a>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a class="btn btn-success btn-sm " id="newsSavePostBtn"><i
+                                        class="fa fa-check fa-fw"></i>确定文章
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+
+<script>
+    var newsSaveData = new FormData();
+    var newsSaveUrl = "{:url('')}";
+    var id = "{$id ? $id : ''}";
+    if (id) $.get(newsSaveUrl, {id: id}, function (data) {
+        newsSaveData.append('id', id);
+        newsSaveData.append('img_url', data.img_url);
+
+        $('#articleImg').attr('src', data.img_url);
+
+        $("#title").val(data.title);
+        $("#description").val(data.description);
+        ue.ready(function() {   //编辑器初始化完成再赋值
+            ue.setContent(data.content);  //赋值给UEditor
+        });
+
+        //读取员工状态
+        if(data.type == 1){
+            $('#status .op1').select('select')
+        }else{
+            $('#status .op0').select('select');
+        }
+        if(data.status == 1){
+            $('status .op1').select('select')
+        }else{
+            $('status .op0').select('select');
+        }
+    });
+
+
+    var imgFile = $('#imgFile');
+    var articleImg = $('#articleImg');
+
+    $(document).ready(function () {
+        imgFile.change(function () {
+            var filePath = $(this).val();
+            var fileNameArray = filePath.split('.');
+            var fileExtension = fileNameArray[fileNameArray.length - 1];
+            if ((fileExtension !== "jpg") &&
+                (fileExtension !== "png") &&
+                (fileExtension !== "JPG")) {
+                AlertWarn("无效的文件", "选择文件的格式不正确");
+                $('#articleImg').attr('src', filePath);
+            } else {
+                readURL(this);
+            }
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#articleImg').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        articleImg.click(function () {
+            imgFile.click();
+        });
+
+        $('#newsSavePostBtn').click(function () {
+            if (!id){
+                if(imgFile[0].files[0] === undefined) {
+                    AlertWarn("错误", "未上传封面图片");
+                    $(this).prop("disabled", false);
+                    return false;
+                }else{
+                    newsSaveData.append('img', imgFile[0].files[0]);
+                }
+            }else{
+                if(imgFile[0].files[0] !== undefined) {
+                    newsSaveData.append('img', imgFile[0].files[0]);
+                }
+            }
+//            console.log(imgFile);
+//            $('#newInfo').submit();
+            newsSaveData.append('type', $("#type").val());
+            newsSaveData.append('title', $("#title").val());
+            newsSaveData.append('status', $("#status").val());
+            newsSaveData.append('content', $("[name='editorValue']").val());
+            newsSaveData.append('description', $("#description").val());
+            originFormPost(newsSaveData, newsSaveUrl, this);
+        });
+    });
+</script>
+
+
+{/block}
+

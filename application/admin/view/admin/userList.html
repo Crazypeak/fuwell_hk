@@ -1,0 +1,456 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- 新增员工 -->
+<div class="modal" id="userInfoAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="">新增员工</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal userAdd">
+                    <div class="box-body">
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">账号</label>
+                            <div class="col-sm-6">
+                                <!--员工id-->
+                                <input type="text" class="form-control userInfoid" name="username" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">密码</label>
+                            <div class="col-sm-6">
+                                <!--员工id-->
+                                <input type="password" class="form-control userInfoid" name="password" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">确认密码</label>
+                            <div class="col-sm-6">
+                                <!--员工id-->
+                                <input type="password" class="form-control userInfoid" name="verify_pw" value=""
+                                       placeholder="再输入一次密码">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="box-body">
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">员工名称</label>
+                            <div class="col-sm-6">
+                                <!--名称-->
+                                <input type="text" class="form-control userInfoName" name="nickname" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">所属组别</label>
+                            <div class="col-sm-6">
+                                <!--所属组别-->
+                                <select class="form-control menuSelect" name="group_id">
+                                    {volist name="group" id="value"}
+                                    <option value="{$value.id}">{$value.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-4 control-label">员工状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--员工组名称-->
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="newon" checked="checked">
+                                <label for="newon">启用</label>
+                                <input type="radio" name="status" value="0" id="newoff">
+                                <label for="newoff">禁用</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success userInfoAddConfirmBtn"><i class="fa fa-check fa-fw"></i>新增
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑修改员工信息 -->
+<div class="modal" id="userInfoEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改员工信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal userInfoEdit">
+                    <div class="box-body">
+
+                        <div class="form-group" style="display: none;">
+                            <label class="col-sm-4 control-label">id</label>
+                            <div class="col-sm-6">
+                                <!--员工id-->
+                                <input type="text" class="form-control userInfoid" name="id" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">员工名称</label>
+                            <div class="col-sm-6">
+                                <!--名称-->
+                                <input type="text" class="form-control userInfoName" name="nickname" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">所属组别</label>
+                            <div class="col-sm-6">
+                                <!--所属组别-->
+                                <select class="form-control menuSelect" name="group_id">
+                                    {volist name="group" id="value"}
+                                    <option value="{$value.id}">{$value.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group " style="">
+                            <label class="col-sm-4 control-label">员工状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--员工组名称-->
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="on">
+                                <label for="on">启用</label>
+                                <input type="radio" name="status" value="0" id="off">
+                                <label for="off">停用</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success userInfoEditConfirmBtn"><i class="fa fa-check"></i>&nbsp;修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 重置某个员工密码 -->
+<div class="modal" id="resetUserPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">设置员工密码</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="box-body">
+
+                        <div class="form-group" style="display: none">
+                            <label class="col-sm-6 control-label">为员工 <span id="UserNameSpan"></span> 设置一个新密码</label>
+                        </div>
+
+
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">新密码</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control " name="new_password" value=""
+                                       placeholder="输入新密码">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="">
+                            <label class="col-sm-4 control-label">确认新密码</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control " name="ver_password" value=""
+                                       placeholder="重复一次新密码">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success resetUserPasswordConfirmBtn"><i class="fa fa-check"></i>&nbsp;修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">员工信息管理</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="">账号</th>
+                            <th style="">员工名称</th>
+                            <th style="">所属组别</th>
+                            <th style="">状态</th>
+                            <th style="width: 360px">操作</th>
+                        </tr>
+                        <form action="">
+                            {volist name="list" id="id"}
+                            <tr>
+                                <td>{$id.username}</td>
+                                <td>{$id.nickname}</td>
+                                <td>{$id.group_name}</td>
+                                <td>
+                                    {switch name="id.status"}
+                                    {case value="0"}<span class="label bg-gray">停用</span>{/case}
+                                    {case value="1"}<span class="label bg-green">启用</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+
+                                <td>
+                                    <a class="userResetPwBtn" href="javascript:void(0);"
+                                       data-id="{$id.id}"><i class="fa fa-undo"></i>重置密码</a>
+
+                                    &nbsp;&nbsp;
+                                    <a class="userInfoEditBtn" href="javascript:void(0);"
+                                       data-id="{$id.id}"
+                                       data-nickname="{$id.nickname}"><i class="fa fa-pencil-square-o"></i>编辑</a>
+
+                                    &nbsp;&nbsp;
+                                    <a class="userDelBtn text-danger" href="javascript:void(0);"
+                                       data-id="{$id.id}"><i class="fa fa-trash-o"></i>删除</a>
+                                </td>
+
+
+                            </tr>
+                            {/volist}
+
+                        </form>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right"
+                                    id="userAddBtn">
+                                <i class="fa fa-plus fa-fw"></i>新增员工
+                            </button>
+                        </div>
+                    </div>
+                    {$list->render()}
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+    var userAddBtn = $("#userAddBtn");
+    var userInfoEditConfirmBtn = $(".userInfoEditConfirmBtn");
+    var userInfoAddConfirmBtn = $(".userInfoAddConfirmBtn");
+    var userDelConfirmBtn = $(".userDelBtn");
+
+    var userInfoEditModal = $("#userInfoEditModal");
+    var userInfoEditBtn = $(".userInfoEditBtn");
+    var userInfoAddModal = $("#userInfoAddModal");
+    var userResetPwBtn = $(".userResetPwBtn");
+
+
+    var resetUserPasswordModal = $("#resetUserPasswordModal");
+    var resetUserPasswordConfirmBtn = $(".resetUserPasswordConfirmBtn");
+
+
+    var userInfoEditUrl = "{:url('admin.user/userEdit')}";
+    var userResetPwUrl = "{:url('admin.user/resetPassword')}";
+    var userAddUrl = "{:url('admin.user/userAdd')}";
+    var userDelUrl = "{:url('admin.user/userDel')}";
+
+    var allDepotID = [];
+
+
+    $(document).ready(function () {
+
+
+        $('input[type="radio"], input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'icheckbox_flat-blue',
+            increaseArea: '20%' // optional,
+        });
+        var alluesrDepotCheckbox = $(".userInfoEdit").find(".uesrDepot input[type='checkbox']");
+        //所有栏目识别id 的数组
+        alluesrDepotCheckbox.each(function (i, e) {
+            allDepotID.push(Number($(e).val()));
+        });
+
+        console.log(allDepotID);
+
+
+        //编辑员工信息
+        userInfoEditBtn.click(function () {
+            userInfoEditModal.modal({backdrop: 'static'});
+            userInfoEditModal.find('input').on('keydown', function (event) {
+                if (event.keyCode === 13) {
+                    userInfoEditConfirmBtn.click();
+                }
+            });
+
+
+            var id = $(this).data("id");
+            //获取员工数据
+            $.get(userInfoEditUrl, {id: id}, function (data) {
+                //console.log(data);
+                $(".userInfoEdit .userInfoid").val(data.id);
+                $(".userInfoEdit .userInfoName").val(data.nickname);
+                $(".userInfoEdit .menuSelect option").each(function (i, e) {
+                    if ($(e).val() == data.group_id) {
+                        $(e).prop("selected", true);
+                    }
+                });
+
+                //读取员工状态
+                if (data.status == 1) {
+                    $('.userInfoEdit #on').iCheck('check');
+                } else {
+                    $('.userInfoEdit #off').iCheck('check');
+                }
+            });
+
+
+        });
+
+        //员工编辑确认
+        userInfoEditConfirmBtn.click(function () {
+            AlertConfirm(AlertText.userInfoEdit[0], AlertText.userInfoEdit[1], "是", function () {
+                var formData = $(".userInfoEdit").serialize();
+                console.log(formData);
+                formPost(formData, userInfoEditUrl, userInfoEditConfirmBtn);
+            })
+        });
+
+        function resetUserPassword(event) {
+            var a = resetUserPasswordModal.find("input[name='new_password']").val();
+            var b = resetUserPasswordModal.find("input[name='ver_password']").val();
+            if (a === "") {
+                AlertWarn("错误", "输入的密码不能为空");
+                return false;
+            }
+
+            if (a !== b) {
+                AlertWarn("错误", "两次输入的密码不一样");
+                return false;
+            } else {
+                var formData = new IsSelect();
+                formData.id = event.data.id;
+                formData.password = a.trim().toString();
+                formPost(jQuery.param(formData), userResetPwUrl, resetUserPasswordConfirmBtn);
+            }
+        }
+
+        //员工重置密码
+        userResetPwBtn.click(function () {
+            resetUserPasswordModal.modal({backdrop: 'static'});
+            var nickname = $(this).data("nickname");
+            var id = $(this).data("id");
+            $("#UserNameSpan").text(nickname);
+            resetUserPasswordConfirmBtn.bind('click', {id: id}, resetUserPassword);
+        });
+
+
+        //新增员工
+        userAddBtn.click(function () {
+            userInfoAddModal.modal({backdrop: 'static'});
+            userInfoAddModal.find('input').on('keydown', function (event) {
+                if (event.keyCode == 13) {
+                    userInfoAddConfirmBtn.click();
+                }
+            });
+        });
+
+        userInfoAddConfirmBtn.click(function () {
+            var formData = $("form.userAdd").serialize();
+            formPost(formData, userAddUrl, this);
+        });
+
+        userDelConfirmBtn.click(function () {
+            var formData = {};
+            formData.id = $(this).data("id");
+            AlertConfirm(AlertText.userDel[0], AlertText.userDel[1], "是", function () {
+                formPost(formData, userDelUrl, this);
+            })
+        });
+
+    });
+
+
+</script>
+
+
+{/block}

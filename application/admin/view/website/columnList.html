@@ -1,0 +1,427 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!--批量上传-->
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('contents',{toolbars:[['attachment']]});
+    ue.addListener("ready", function () {
+        UE.getEditor('contents').setHide();
+    });
+</script>
+<script id="contents" type="text/plain"></script>
+<textarea style="display:none;" name="contents" id="sss" class="tip_textarea3"></textarea>
+
+<!-- 新增栏目 -->
+<div class="modal" id="columnUrlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增栏目</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal columnUrlAdd">
+                    <div class="box-body">
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--栏目名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">英文</label>
+                            <div class="col-sm-6">
+                                <!--栏目链接-->
+                                <input type="text" class="form-control" name="url" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="newon" checked="checked">
+                                <label for="newon">显示</label>
+                                <input type="radio" name="status" value="0" id="newoff">
+                                <label for="newoff">隐藏</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success columnUrlAddConfirmBtn"><i class="fa fa-check"></i>&nbsp;新增
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑栏目 -->
+<div class="modal" id="columnUrlInfoEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改栏目信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal columnUrlInfoEdit">
+                    <div class="box-body">
+
+                        <div class="form-group" style="display: none;">
+                            <label class="col-sm-3 control-label">id</label>
+                            <div class="col-sm-6">
+                                <!--用户id-->
+                                <input type="text" class="form-control" name="id" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--栏目名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">英文</label>
+                            <div class="col-sm-6">
+                                <!--栏目链接-->
+                                <input type="text" class="form-control" name="url" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="editon" checked="checked">
+                                <label for="newon">显示</label>
+                                <input type="radio" name="status" value="0" id="editoff">
+                                <label for="newoff">隐藏</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success columnUrlInfoEditConfirmBtn"><i class="fa fa-check"></i>&nbsp;修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">栏目编辑</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 220px">名称</th>
+                            <th style="">英文</th>
+                            <th style="">地址</th>
+                            <th style="width: 120px;">顺序</th>
+                            <th style="width: 80px;">状态</th>
+                            <th style="width: 220px;">操作</th>
+                        </tr>
+
+                        {volist name="list" id="vo"}
+                        <tr>
+                            <td title="{$vo.name}">{$vo.name}</td>
+                            <td>{$vo.url}</td>
+                            <td><a href="http://{$_SERVER['SERVER_NAME']}/{$vo.url}">{$_SERVER['SERVER_NAME']}/{$vo.url}</a></td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label bg-gray">隐藏</span>{/case}
+                                {case value="1"}<span class="label bg-green">显示</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>
+                                <a class="text-info"
+                                   href="{:url('website.Template/columnTemplateList',['id'=>$vo.id])}">
+                                    <i class="fa fa-th-large" aria-hidden="true"></i>模板管理</a>
+                                &nbsp;&nbsp;
+                                <a class="columnUrlInfoEditBtn" href="javascript:void(0);"
+                                   data-id="{$vo.id}"
+                                   data-name="{$vo.name}"
+                                   data-url="{$vo.url}"
+                                   data-status="{$vo.status}"
+                                   data-sequence="{$vo.sequence}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" class="text-danger single orderPrevBtn columnUrlDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-sm btn-info" href="javascript:void(0)" onclick="upFiles()">
+                            <i class="fa fa-upload fa-fw"></i>批量上传文件
+                        </button>
+                    </div>
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right"
+                                    id="columnUrlAddBtn" style="">
+                                <i class="fa fa-plus fa-fw"></i>新增栏目
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">全局头部Head代码域，高优先等级</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <textarea style="resize:vertical" id="head_text" class="table table-bordered table-hover">{$code_text['baseHead']}</textarea>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" data-type="0" class="btn btn-sm	btn-success pull-right codeSaveConfirmBtn">
+                                <i class="fa fa-check"></i>保存修改
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-offset-0 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">全局尾部Script代码域，高优先等级</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <textarea style="resize:vertical" id="script_text" class="table table-bordered table-hover">{$code_text['baseScript']}</textarea>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" data-type="1" class="btn btn-sm	btn-success pull-right codeSaveConfirmBtn">
+                                <i class="fa fa-check"></i>保存修改
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+
+<script>
+    var columnSaveUrl = "{:url('website.column/columnSave')}";
+    var columnDelUrl = "{:url('website.column/columnDel')}";
+    var codeSaveUrl = "{:url('website.column/codeSave')}";
+
+    var columnUrlInfoEditConfirmBtn = $(".columnUrlInfoEditConfirmBtn");
+    var columnUrlInfoAddConfirmBtn = $(".columnUrlInfoAddConfirmBtn");
+    var columnUrlInfoEditModal = $("#columnUrlInfoEditModal");
+    var columnUrlInfoEditBtn = $(".columnUrlInfoEditBtn");
+    var columnUrlInfoAddModal = $("#columnUrlInfoAddModal");
+
+    var columnUrlDelBtn = $(".columnUrlDelBtn");
+    var columnUrlAddBtn = $("#columnUrlAddBtn");
+    var columnUrlAddConfirmBtn = $(".columnUrlAddConfirmBtn");
+
+    var codeSaveConfirmBtn = $(".codeSaveConfirmBtn");
+
+    $(document).ready(function () {
+        //新增栏目
+        columnUrlAddBtn.click(function () {
+            $('#columnUrlModal').modal({backdrop: 'static', keyboard: false});
+            $('#columnUrlModal').find("input").on('keydown', function (event) {
+                if (event.keyCode == 13) {
+                    columnUrlAddConfirmBtn.click();
+                }
+            });
+        });
+        columnUrlAddConfirmBtn.click(function () {
+            console.log($(".columnUrlAdd").serialize());
+            formPost($(".columnUrlAdd").serialize(), columnSaveUrl);
+        });
+
+        //编辑栏目
+        columnUrlInfoEditBtn.click(function () {
+            columnUrlInfoEditModal.modal({backdrop: 'static'});
+            formClear(columnUrlInfoEditModal);
+            var columnUrlData = $(this).data();
+
+            $(".columnUrlInfoEdit [name=id]").val(columnUrlData.id);
+            $(".columnUrlInfoEdit [name=name]").val(columnUrlData.name);
+            $(".columnUrlInfoEdit [name=url]").val(columnUrlData.url);
+            columnUrlData.status ? $("#editon").iCheck("check") : $("#editoff").iCheck("check");
+            $(".columnUrlInfoEdit [name=sequence]").val(columnUrlData.sequence);
+
+//            var columnList = data.user_list;
+//            UserListSetSelect(columnList);
+        });
+        //用户编辑确认
+        columnUrlInfoEditConfirmBtn.click(function () {
+            formPost($(".columnUrlInfoEdit").serialize(), columnSaveUrl);
+        });
+
+        columnUrlDelBtn.click(function () {
+            var formData = {};
+            formData.id = $(this).data("id");
+            AlertConfirm(AlertText.columnUrl[0], AlertText.columnUrl[1], "是", function () {
+                formPost(formData, columnDelUrl, this);
+            })
+        });
+
+        //全局代码编辑确认
+        codeSaveConfirmBtn.click(function () {
+            var formData = {};
+            formData.type = $(this).data("type");
+            formData.code_text = formData.type ? $("#script_text").val() : $("#head_text").val();
+            formPost(formData, codeSaveUrl,this);
+        });
+    })
+
+    //弹出文件上传的对话框
+    function upFiles() {
+        var myFiles = ue.getDialog("attachment");
+        myFiles.open();
+    }
+
+</script>
+
+
+{/block}
+

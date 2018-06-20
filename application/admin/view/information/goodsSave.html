@@ -1,0 +1,450 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+<!-- Main content -->
+<!-- 新增 -->
+<div class="modal" id="detailAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">产品参数</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="detailAdd">
+                    <input id="goods_id" name="goods_id" type="hidden" value="{$goods.id}"/>
+                    <div class="box-body">
+                        <input type="text" class="form-control" id="detail_pid" name="pid" value="0"
+                               placeholder="" style="display: none;">
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--名称-->
+                                <input type="text" class="form-control" id="detail_name" name="detail_name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-6">
+                                <!--顺序-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           id="detail_sequence"
+                                           name="detail_sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label"><span style="color: red">*</span>类型</label>
+                            <div class="col-sm-6">
+                                <select id="detail_type" name="detail_type" class="form-control">
+                                    <option id="type0" value="0">文本</option>
+                                    <option id="type1" value="1">图片</option>
+                                </select>
+                                <span style="color: red">注意选择父类栏类型</span>
+                            </div>
+                        </div>
+                        <div class="form-group" id="detail_text">
+                            <label class="col-sm-3 control-label">文本</label>
+                            <div class="col-sm-6">
+                                <!--参数值-->
+                                <input type="text" class="form-control" id="detail_value" name="detail_value" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group " id="detail_image" style="display: none">
+                            <label class="col-sm-3 control-label">图片</label>
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" id="detailImgBtn">
+                                    <input type="file" class="form-control" style="display: none" id="detailImgFile" name="detailImg">
+                                    <img id="detailImg" width="120" height="75" src="/images/notimg.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success detailAddConfirmBtn"><i class="fa fa-check"></i>&nbsp;新增
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">产品信息</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover collaptable">
+                        <tbody>
+                        <tr>
+                            <th style="width: 120px">名称</th>
+                            <th style="">参数值</th>
+                        </tr>
+
+                        <form class="form-horizontal goodsInfo">
+                            <input type="hidden" name="id" value="{$goods.id}"/>
+                            <tr>
+                                <td>缩略图</td>
+                                <td>
+                                    <a href="javascript:void(0)" id="goodsImgBtn">
+                                        <input type="file" class="form-control" style="display: none" id="imgFile" name="goodsImage">
+                                        <img id="goodsImg" width="120" height="60" src="{$goods.img_url}">
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>名称</td>
+                                <td style="padding: 0;"><input id="name" name="name" style="border: 0;width: 100%;height: 36px" value="{$goods.name}"/></td>
+                            </tr>
+                            <tr>
+                                <td>分类</td>
+                                <td style="padding: 0;">
+                                    <select name="class_id" id="class_id" class="form-control">
+                                        {volist name="column_list" id="class"}
+                                        <option class="op" value="{$class.id}" {eq name="goods.class_id" value="$class['id']" }selected="selected"{/eq}>{$class.name}</option>
+                                        {/volist}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>排序</td>
+                                <td style="padding: 0;">
+                                    <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                        <input type="text"
+                                               class="form-control text-center"
+                                               name="sequence"
+                                               id="sequence"
+                                               value="1"
+                                               data-min="1"
+                                               data-rule="quantity">
+                                        <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>状态</td>
+                                <td style="padding: 0;">
+                                    <!--状态-->
+                                    <div style="width: 100%;height: 35px;line-height: 35px">
+                                        <input type="radio" name="status" value="1" id="newon" checked="checked">
+                                        <label for="newon">显示</label>
+                                        <input type="radio" name="status" value="0" id="newoff">
+                                        <label for="newoff">隐藏</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a class="btn btn-default btn-sm" href="{:url('index')}"><i
+                                    class="fa fa-long-arrow-left fa-fw"></i>返回列表
+                            </a>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right"
+                                    id="goodsSaveBtn" style="">
+                                <i class="fa fa-check fa-fw"></i>保存产品信息
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-offset-0 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">产品参数</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover collaptable">
+                        <tbody>
+                        <tr>
+                            <th style="">名称</th>
+                            <th style="">参数值</th>
+                            <th style="width: 60px;">顺序</th>
+                            <th style="width: 120px;">操作</th>
+                        </tr>
+                        {volist name="goods.detail" id="vo"}
+                        <tr data-id="{$vo.id}" data-parent="">
+                            <td>{$vo.key}</td>
+                            <td>类型：{$vo['type'] ? '图片 images' : '文本'}</td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                <a class="text-info detailChildAddBtn"
+                                   href="javascript:void(0);" data-pid="{$vo.id}">
+                                    <i class="fa fa-plus fa-fw"></i>新增</a>
+                                <a href="javascript:void(0);" class="text-danger single detailDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {volist name="vo.child" id="child_item"}
+                        <tr data-id="{$child_item.id}" data-parent="{$child_item.pid}">
+                            <td>|—&nbsp;&nbsp;&nbsp;{$child_item.key}</td>
+                            <td>{eq name="child_item.type" value="1"}<img src="{$child_item.value}"/>{else/}{$child_item.value}{/eq}</td>
+                            <td>{$vo.sequence}.{$child_item.sequence}</td>
+                            <td>
+                                <a href="javascript:void(0);" class="text-danger single detailDelBtn"
+                                   data-id="{$child_item.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {/volist}
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right"
+                                    id="detailAddBtn" style="">
+                                <i class="fa fa-plus fa-fw"></i>新增父级参数
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+<script src="/static/js/jquery.aCollapTable.min.js"></script>
+<script>
+    var detail_type = $("#detail_type");
+    var detail_pid = $("#detail_pid");
+    detail_type.change(function () {
+        if (detail_pid.val() !== '0'){
+            if ($(this).val() === '1') {
+                $('#detail_image').show();
+                $('#detail_text').hide();
+            } else {
+                $('#detail_text').show();
+                $('#detail_image').hide();
+            }
+        }
+    });
+
+    //产品参数
+    var detailImgFile = $('#detailImgFile');
+    var detailImg = $('#detailImg');
+    detailImgFile.change(function () {
+        var filePath = $(this).val();
+        var fileNameArray = filePath.split('.');
+        var fileExtension = fileNameArray[fileNameArray.length - 1];
+        if ((fileExtension !== "jpg") &&
+            (fileExtension !== "png") &&
+            (fileExtension !== "JPG")) {
+            AlertWarn("无效的文件", "选择文件的格式不正确");
+            detailImg.attr('src', filePath);
+        } else {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    detailImg.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+    });
+    detailImg.click(function () {
+        detailImgFile.click();
+    });
+
+    var detailSaveUrl = "{:url('detailSave')}";
+    var detailDelUrl = "{:url('detailDel')}";
+
+    var detailDelBtn = $(".detailDelBtn");
+    var detailAddBtn = $("#detailAddBtn");
+    var detailAddConfirmBtn = $(".detailAddConfirmBtn");
+
+    $('.collaptable').aCollapTable({
+        startCollapsed: true,
+        addColumn: false,
+        plusButton: '<i class="fa fa-plus-circle fa-fw" aria-hidden="true"></i>',
+        minusButton: '<i class="fa fa-minus-circle fa-fw" aria-hidden="true"></i>'
+    });
+    //新增父级
+    detailAddBtn.click(function () {
+        $('#detail_image').hide();
+        $('#detail_text').hide();
+        $('#detailAddModal').modal({backdrop: 'static', keyboard: false});
+        $('#detailAddModal').find("[name=pid]").attr("value", 0);
+        $('#detailAddModal').find("input").on('keydown', function (event) {
+            if (event.keyCode == 13) {
+                detailUrlAddConfirmBtn.click();
+            }
+        });
+    });
+    //子级新增
+    $(".detailChildAddBtn").click(function () {
+        $('#type0').attr("selected",true);
+        $('#type1').attr("selected",false);
+        $('#detail_text').show();
+        $('#detailAddModal').modal({backdrop: 'static', keyboard: false});
+        $('#detailAddModal').find("[name=pid]").attr("value", $(this).data("pid"));
+    })
+
+    detailAddConfirmBtn.click(function () {
+        var detailSaveData = new FormData();
+
+        if (detail_pid.val() !== '0' && detail_type.val() === '1') {
+            if (detailImgFile[0].files[0] === undefined) {
+                AlertWarn("错误", "未上传图片");
+                $(this).prop("disabled", false);
+                return false;
+            } else {
+                detailSaveData.append('detailImg', detailImgFile[0].files[0]);
+            }
+        }
+
+        detailSaveData.append('pid', detail_pid.val());
+        detailSaveData.append('goods_id', $("#goods_id").val());
+        detailSaveData.append('name', $("#detail_name").val());
+        detailSaveData.append('sequence', $("#detail_sequence").val());
+        detailSaveData.append('type', detail_type.val());
+        detailSaveData.append('text', $("#detail_value").val());
+        originFormPost(detailSaveData, detailSaveUrl, this);
+    });
+
+    detailDelBtn.click(function () {
+        var formData = {};
+        formData.id = $(this).data("id");
+        AlertConfirm("删除", "删除", "是", function () {
+            formPost(formData, detailDelUrl, this);
+        })
+    });
+</script>
+<script>
+    var goodsSaveData = new FormData();
+    var img_url = "{$goods.img_url}";
+    goodsSaveData.append('img_url', img_url);
+
+    var goodsSaveUrl = "{:url('add')}";
+
+    var imgFile = $('#imgFile');
+    var goodsImg = $('#goodsImg');
+    $(document).ready(function () {
+        imgFile.change(function () {
+            var filePath = $(this).val();
+            var fileNameArray = filePath.split('.');
+            var fileExtension = fileNameArray[fileNameArray.length - 1];
+            if ((fileExtension !== "jpg") &&
+                (fileExtension !== "png") &&
+                (fileExtension !== "JPG")) {
+                AlertWarn("无效的文件", "选择文件的格式不正确");
+                goodsImg.attr('src', filePath);
+            } else {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        goodsImg.attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            }
+        });
+
+        goodsImg.click(function () {
+            imgFile.click();
+        });
+
+        $('#goodsSaveBtn').click(function () {
+            if (!img_url) {
+                if (imgFile[0].files[0] === undefined) {
+                    AlertWarn("错误", "未上传封面图片");
+                    $(this).prop("disabled", false);
+                    return false;
+                } else {
+                    goodsSaveData.append('img', imgFile[0].files[0]);
+                }
+            } else {
+                if (imgFile[0].files[0] !== undefined) {
+                    goodsSaveData.append('img', imgFile[0].files[0]);
+                }
+            }
+
+            goodsSaveData.append('id', $("[name='id']").val());
+            goodsSaveData.append('name', $("#name").val());
+            goodsSaveData.append('class_id', $("#class_id").val());
+            goodsSaveData.append('status', $("[name='status']").val());
+            goodsSaveData.append('sequence', $("#sequence").val());
+            originFormPost(goodsSaveData, goodsSaveUrl, this);
+        });
+    });
+</script>
+
+
+{/block}
+

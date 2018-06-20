@@ -1,0 +1,26 @@
+<!--新闻列表 开始-->
+{notempty name="assign_data.list"}
+<div class="containerbox cf">
+    <div class="newslist">
+        {volist name="assign_data.list" id="item"}
+        <div class="wrapper news-headline hoverShadow">
+            <a class="left-img" href="/{$column.url}/{$item.id}">
+                <img src="{$item.img_url}" alt="">
+            </a>
+            <div class="right-detail">
+                <a href="/{$column.url}/{$item.id}">{$item.title}</a>
+                <em>{:substr($item['create_time'],0,10)}</em>
+                <p title="/{$item.description}">
+                    {$item.description}
+                </p>
+                <div class="news-more">
+                    <a href="/{$column.url}/{$item.id}">MORE <span></span></a>
+                </div>
+            </div>
+        </div>
+        {/volist}
+        {$assign_data.list->render()}
+    </div>
+</div>
+{/notempty}
+<!--新闻列表 end-->

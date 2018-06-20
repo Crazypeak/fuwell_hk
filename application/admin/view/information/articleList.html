@@ -1,0 +1,117 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">新闻列表</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 200px">标题</th>
+                            <th style="">描述</th>
+                            <th style="width: 120px">作者</th>
+                            <th style="width: 160px;">发布时间</th>
+                            <th style="width: 80px;">状态</th>
+                            <th style="width: 80px;">类型</th>
+                            <th style="width: 220px;">操作</th>
+                        </tr>
+
+                        {volist name="list" id="vo"}
+                        <tr>
+                            <td title="{$vo.title}">{$vo.title}</td>
+                            <td title="{$vo.description}">{$vo.description}</td>
+                            <td>{$vo.author}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label bg-gray">待发布</span>{/case}
+                                {case value="1"}<span class="label bg-green">已发布</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>
+                                {switch name="vo.type"}
+                                {case value="0"}<span class="label bg-yellow">公司新闻</span>{/case}
+                                {case value="1"}<span class="label bg-aqua">行业资讯</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>
+                                <a href="{:url('save',['id'=>$vo['id']])}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" class="text-danger single articleDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a class="btn btn-sm btn-success pull-right" style="" href="{:url('save')}">
+                                <i class="fa fa-plus fa-fw"></i>发布新文章
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+<script type="text/javascript">
+    var articleDelUrl = "{:url('del')}";
+    $('.articleDelBtn').click(function () {
+        var formData = {};
+        formData.id = $(this).data("id");
+        AlertConfirm(AlertText.article[0], AlertText.article[1], "是", function () {
+            formPost(formData, articleDelUrl, this);
+        })
+    });
+</script>
+{/block}
+

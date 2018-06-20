@@ -1,0 +1,357 @@
+{extend name="Public:base" /}
+{block name="header"}
+{/block}
+<!-- 样式 -->
+{block name="style"}
+<style></style>
+{/block}
+<!-- /.样式 -->
+{block name="content"}
+<!-- 新增导航信息 -->
+<div class="modal" id="navAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">新增导航信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal navAdd">
+                    <div class="box-body">
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--导航名称--><input type="text" class="form-control" name="name"></div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">父级</label>
+                            <div class="col-sm-5">
+                                <!--上级菜单--><select class="form-control menuSelect" name="pid">
+                            </select></div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">地址</label>
+                            <div class="col-sm-6">
+                                <!--地址-->
+                                <p class="text-info"><input type="text" class="form-control navUrl" name="url"></p>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6">
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="status[0]" checked="checked">
+                                <label for="status[1]">显示</label>
+                                <input type="radio" name="status" value="0" id="status[1]">
+                                <label for="status[0]">隐藏</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="submit" class="btn btn-success single orderNextBtn navAdd" style="margin-left: 20px;">
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;新增导航
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 修改导航信息 -->
+<div class="modal" id="navEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改当前导航信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal navEdit">
+                    <div class="box-body">
+                        <div class="form-group" style="display: none;"><label class="col-sm-3 control-label">nav
+                            id</label>
+                            <div class="col-sm-6">
+                                <!--订单id--><input type="text" class="form-control navId" name="id" value=""
+                                                  placeholder=""></div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--订单id--><input type="text" class="form-control navName" name="name" value=""
+                                                  placeholder=""></div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">导航位置</label>
+                            <div class="col-sm-6"><select class="form-control menuSelect" name="pid">
+                            </select></div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">地址</label>
+                            <div class="col-sm-6">
+                                <!--订单id--><input type="text" class="form-control navUrl" name="url" value=""
+                                                  placeholder=""></div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-3 fix-checkbox">
+                                <input type="radio" class="navHideTrue" name="status"
+                                       value="1" id="status[2]"> <label for="status[1]">显示</label>
+                                <input type="radio" class="navHideFalse" name="status" value="0" id="status[3]"> <label
+                                    for="status[0]">隐藏</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center navSequence"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success navEditConfirmBtn"><i class="fa fa-check fa-fw"></i>修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">菜单导航管理{notempty name='title_name'}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #777">(父级：{$title_name})</span>{/notempty}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th>名称</th>
+                            <th>位置</th>
+                            <th>路径</th>
+                            <th width="65px;">顺序</th>
+                            <th width="65px;">状态</th>
+                            <th width="220px;">操作</th>
+                        </tr>
+                        <form action="" class=""> {volist name="list" id="id"}
+                            <tr>
+                                <td>{$id.name}</td>
+                                <td>{$id.pid ? '子级':'顶级'}</td>
+                                <td>{$id.url}</td>
+                                <td>{$id.sequence}</td>
+                                <td><span class="label {$id['status']?'label-success':'label-default'}">{$id['status']?'显示':'隐藏'}</span>
+                                </td>
+                                <td><a class="" href="{:url('?pid='.$id['id'])}"><i
+                                        class="fa fa-arrow-down"></i>&nbsp;进入</a> &nbsp;&nbsp;
+                                    <!--singleOrderDelBtn-->
+                                    <a class="navEditBtn" href="javascript:void(0)" data-id="{$id.id}"
+                                       data-pid="{$id.pid}"
+                                       data-name="{$id.name}" data-url="{$id.url}" data-status="{$id.status}"
+                                       data-sequence="{$id.sequence}"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                    &nbsp;&nbsp;
+                                    <a class="text-danger orderPrevBtn single navDel"
+                                       href="javascript:void(0)" data-orderId="{$id.id}" data-id="{$id.id}"
+                                       data-pid="{$id.pid}"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right" id="navAddBtn" style="">
+                                <i class="fa fa-plus fa-fw"></i>新增导航
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->{/block} {block name="scriptSrc"} {/block} {block name="script"}
+<script>
+    var navAddUrl = "{:url('admin.menu/menuSave')}";
+    var navDelUrl = "{:url('admin.menu/menuDel')}";
+    var navEditBtn = $(".navEditBtn");
+    var menuSelect = $(".menuSelect");
+    var readOnlyNavUrl = $(".nav input.navUrl");
+    var navEditConfirmBtn = $(".navEditConfirmBtn");
+    var navAddBtn = $("#navAddBtn");
+
+    var navParent = function () {
+    };
+    navParent.prototype = {
+        parent: null,
+        son: null
+    };
+
+
+    $(document).ready(function () {
+
+        navEditConfirmBtn.click(function () {
+            console.log($("form.navEdit").serialize());
+            formPost($("form.navEdit").serialize(), navAddUrl, this);
+        });
+
+        //新建导航弹窗
+        navAddBtn.click(function () {
+            $("#navAddModal").modal({backdrop: 'static'});
+
+
+            $("#navAddModal .menuSelect option").each(function (i, e) {
+                if ($("body a.navEditBtn")) {
+
+                    if ($("body a.navEditBtn").data("pid") == $(e).val()) {
+                        $(e).prop("selected", true);
+                    }
+                }
+            })
+
+
+            if ($("#navAddModal .menuSelect").val() == 0) {
+                $("#navAddModal .navUrl").attr("readonly", true);
+            } else {
+                $("#navAddModal .navUrl").attr("readonly", false);
+            }
+
+
+        });
+
+        //下拉选择禁用Url输入
+        menuSelect.change(function () {
+            if (menuSelect.val() == 0) {
+                readOnlyNavUrl.attr("readonly", true);
+            } else {
+                readOnlyNavUrl.attr("readonly", false);
+            }
+        });
+        //新增状态 下拉选择禁用Url输入
+        $("#navAddModal .menuSelect").change(function () {
+            if ($("#navAddModal .menuSelect").val() == 0) {
+                $("#navAddModal .navUrl").attr("readonly", true);
+            } else {
+                $("#navAddModal .navUrl").attr("readonly", false);
+            }
+        });
+        //编辑状态 下拉选择禁用Url输入
+        $("form.navEdit .menuSelect").change(function () {
+            if ($("form.navEdit .menuSelect").val() == 0) {
+                $("form.navEdit .navUrl").attr("readonly", true);
+            } else {
+                $("form.navEdit .navUrl").attr("readonly", false);
+            }
+        });
+        //数字选择
+        var navNoSpinner = $(".navNoSpinner").spinner('changing', function (e, newVal, oldVal) {
+        });
+        //
+        $('input[type="radio"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'icheckbox_flat-blue',
+            increaseArea: '20%' // optional,
+        });
+
+
+        //修改导航信息
+        navEditBtn.click(function () {
+            $('#navEditModal').modal({backdrop: 'static'});
+            var navModalData = new navData();
+            navModalData.id = $(this).data("id");
+            navModalData.pid = $(this).data("pid");
+            navModalData.name = $(this).data("name");
+            navModalData.url = $(this).data("url");
+            navModalData.status = $(this).data("status");
+            navModalData.sequence = $(this).data("sequence");
+            //console.log(navModalData);
+
+            $("form.navEdit .navId").val(navModalData.id);
+            $("form.navEdit .navName").val(navModalData.name);
+            $("form.navEdit .navUrl").val(navModalData.url);
+            navModalData.status ? $("form.navEdit .navHideTrue").iCheck("check") : $("form.navEdit .navHideFalse").iCheck("check");
+            $("form.navEdit .navSequence").trigger("focus").val(navModalData.sequence);
+            $("form.navEdit .navName").trigger("focus");
+
+            $("form.navEdit .menuSelect option").each(function (i, e) {
+                if (navModalData.pid == $(e).val()) {
+                    $(e).prop("selected", true);
+                }
+            })
+
+            if ($("form.navEdit .menuSelect").val() == 0) {
+                $("form.navEdit .navUrl").attr("readonly", true);
+            } else {
+                $("form.navEdit .navUrl").attr("readonly", false);
+            }
+
+        });
+
+        var pid_all = {$pid_all};
+        menuSelect.append(new Option(
+            "顶级导航",
+            0
+        ));
+        for (var i in pid_all) {
+            //console.table(data[i].operator);
+            if (pid_all[i].name === '') continue;
+            menuSelect.append(new Option(
+                "　|--" + pid_all[i].name,
+                pid_all[i].id
+            ));
+            for (var j in pid_all[i].operator) {
+                if (pid_all[i].operator[j].name === '') continue;
+                //console.table(data[i].operator);
+                menuSelect.append(new Option(
+                    "　　|--" + pid_all[i].operator[j].name,
+                    pid_all[i].operator[j].id
+                ));
+            }
+        }
+    });
+
+
+</script>
+{/block}

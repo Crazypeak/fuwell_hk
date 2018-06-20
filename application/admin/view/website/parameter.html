@@ -1,0 +1,277 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+    /*
+    20171023
+    */
+
+    .act-tr-level-1 td:first-child {
+        padding-left: 20px !important;
+    }
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+<!-- Main content -->
+<!-- 新增 -->
+<div class="modal" id="footerAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增底部导航</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal footerAdd">
+                    <div class="box-body">
+                        <input type="text" class="form-control" name="pid" value="0"
+                               placeholder="" style="display: none;">
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--栏目名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">地址</label>
+                            <div class="col-sm-6">
+                                <!--栏目链接-->
+                                <input type="text" class="form-control" name="url" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success footerAddConfirmBtn"><i class="fa fa-check"></i>&nbsp;新增
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">网站参数</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover collaptable">
+                        <tbody>
+                        <tr>
+                            <th style="width: 120px">名称</th>
+                            <th style="width: 120px">变量名</th>
+                            <th style="">参数值</th>
+                        </tr>
+
+                        <form class="form-horizontal parameterInfo">
+                        {volist name="parameter_list" id="vo"}
+                        <tr data-id="{$vo.id}" data-parent="">
+                            <td title="{$vo.name}">{$vo.name}</td>
+                            <td title="{$vo.key}">{$vo.key}</td>
+                            <td style="padding: 0;"><input name="{$vo.key}" style="border: 0;width: 100%;height: 36px" value="{$vo.value}"/></td>
+                        </tr>
+                        {/volist}
+
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right"
+                                    id="parameterSaveBtn" style="">
+                                <i class="fa fa-check fa-fw"></i>保存网站参数
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <div class="col-md-offset-0 col-md-5">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">底部导航</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover collaptable">
+                        <tbody>
+                        <tr>
+                            <th style="">名称</th>
+                            <th style="">地址</th>
+                            <th style="width: 60px;">顺序</th>
+                            <th style="width: 120px;">操作</th>
+                        </tr>
+
+                        {volist name="footer_list" id="vo"}
+                        <tr data-id="{$vo.id}" data-parent="">
+                            <td>{$vo.name}</td>
+                            <td>'顶部'</td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                <a class="text-info footerChildAddBtn"
+                                   href="javascript:void(0);" data-pid="{$vo.id}">
+                                    <i class="fa fa-plus fa-fw"></i>新增</a>
+                                <a href="javascript:void(0);" class="text-danger single footerUrlDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {volist name="vo.child" id="child_item"}
+                        <tr data-id="{$child_item.id}" data-parent="{$child_item.pid}">
+                            <td>|—&nbsp;&nbsp;&nbsp;{$child_item.name}</td>
+                            <td>{$child_item.url}</td>
+                            <td>{$vo.sequence}.{$child_item.sequence}</td>
+                            <td>
+                                <a href="javascript:void(0);" class="text-danger single footerUrlDelBtn"
+                                   data-id="{$child_item.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        {/volist}
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm	btn-success pull-right"
+                                    id="footerAddBtn" style="">
+                                <i class="fa fa-plus fa-fw"></i>新增父级底部导航
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+<script src="/static/js/jquery.aCollapTable.min.js"></script>
+{/block}
+
+{block name="script"}
+
+<script>
+    var footerSave = "{:url('website.parameter/footerSave')}";
+    var footerDel = "{:url('website.parameter/footerDel')}";
+    var parameterSaveUrl = "{:url('website.parameter/parameterSave')}";
+
+    var footerUrlDelBtn = $(".footerUrlDelBtn");
+    var footerAddBtn = $("#footerAddBtn");
+    var footerAddConfirmBtn = $(".footerAddConfirmBtn");
+
+    var parameterSaveBtn = $("#parameterSaveBtn");
+
+    $(document).ready(function () {
+
+        $('.collaptable').aCollapTable({
+            startCollapsed: true,
+            addColumn: false,
+            plusButton: '<i class="fa fa-plus-circle fa-fw" aria-hidden="true"></i>',
+            minusButton: '<i class="fa fa-minus-circle fa-fw" aria-hidden="true"></i>'
+        });
+        //新增底部导航
+        footerAddBtn.click(function () {
+            $('#footerAddModal').modal({backdrop: 'static', keyboard: false});
+            $('#footerAddModal').find("[name=pid]").attr("value", 0);
+            $('#footerAddModal').find("input").on('keydown', function (event) {
+                if (event.keyCode == 13) {
+                    footerUrlAddConfirmBtn.click();
+                }
+            });
+        });
+        //子级新增
+        $(".footerChildAddBtn").click(function () {
+            $('#footerAddModal').modal({backdrop: 'static', keyboard: false});
+            $('#footerAddModal').find("[name=pid]").attr("value", $(this).data("pid"));
+        })
+
+        footerAddConfirmBtn.click(function () {
+            formPost($(".footerAdd").serialize(), footerSave);
+        });
+
+        footerUrlDelBtn.click(function () {
+            var formData = {};
+            formData.id = $(this).data("id");
+            AlertConfirm("删除", "删除", "是", function () {
+                formPost(formData, footerDel, this);
+            })
+        });
+
+        //网站参数确定
+        parameterSaveBtn.click(function () {
+            formPost($(".parameterInfo").serialize(), parameterSaveUrl);
+        });
+    })
+
+</script>
+
+
+{/block}
+

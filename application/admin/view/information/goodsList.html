@@ -1,0 +1,257 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- 新增栏目 -->
+<div class="modal" id="goodsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">发布新产品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal goodsAdd">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">缩略图</label>
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" id="goodsImgBtn">
+                                    <input type="file" class="form-control" style="display: none" id="imgFile" name="goodsImage">
+                                    <img id="goodsImg" width="120" height="75" src="/images/notimg.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">名称</label>
+                            <div class="col-sm-6">
+                                <!--栏目名称-->
+                                <input type="text" class="form-control" id="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">分类</label>
+                            <div class="col-sm-6">
+                                <select name="class_id" id="class_id" class="form-control">
+                                    {volist name="column_list" id="class"}
+                                    <option class="op0" value="{$class.id}">{$class.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group " style="">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6 " style="padding-top: 7px;">
+                                <!--状态-->
+                                <input type="radio" name="status" value="1" id="newon" checked="checked">
+                                <label for="newon">显示</label>
+                                <input type="radio" name="status" value="0" id="newoff">
+                                <label for="newoff">隐藏</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           id="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;取消
+                </button>
+                <button type="button" class="btn btn-success goodsAddConfirmBtn"><i class="fa fa-check"></i>&nbsp;确认发布
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">产品列表</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 120px">封面</th>
+                            <th style="width: 200px">名称</th>
+                            <th style="">所属分类</th>
+                            <th style="width: 50px">排序</th>
+                            <th style="width: 160px;">更新时间</th>
+                            <th style="width: 60px;">状态</th>
+                            <th style="width: 140px;">操作</th>
+                        </tr>
+
+                        {volist name="list" id="vo"}
+                        <tr>
+                            <td title="{$vo.name}">
+                                <img src="{$vo.img_url}"/>
+                            </td>
+                            <td>
+                                {$vo.name}
+                            </td>
+                            <td title="{$vo.class_name}">{$vo.class_name}</td>
+                            <td>{$vo.sequence}</td>
+                            <td>{$vo.create_time}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label bg-gray">隐藏</span>{/case}
+                                {case value="1"}<span class="label bg-green">正常</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>
+                                <a href="{:url('save',['id'=>$vo['id']])}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" class="text-danger single goodsDelBtn"
+                                   data-id="{$vo.id}">
+                                    <i class="fa fa-trash fa-fw"></i>删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a class="btn btn-sm btn-success pull-right" style="" id="goodsAddBtn">
+                                <i class="fa fa-plus fa-fw"></i>发布新产品
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+<script type="text/javascript">
+    var goodsAddUrl = "{:url('add')}";
+
+    var goodsAddBtn = $("#goodsAddBtn");
+    var goodsAddConfirmBtn = $(".goodsAddConfirmBtn");
+
+    //新增产品——封面上传
+    var imgFile = $('#imgFile');
+    var goodsImg = $('#goodsImg');
+    imgFile.change(function () {
+        var filePath = $(this).val();
+        var fileNameArray = filePath.split('.');
+        var fileExtension = fileNameArray[fileNameArray.length - 1];
+        if ((fileExtension !== "jpg") &&
+            (fileExtension !== "png") &&
+            (fileExtension !== "JPG")) {
+            AlertWarn("无效的文件", "选择文件的格式不正确");
+            goodsImg.attr('src', filePath);
+        } else {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    goodsImg.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+    });
+    goodsImg.click(function () {
+        imgFile.click();
+    });
+
+    //新增产品——提交
+    goodsAddConfirmBtn.click(function () {
+        var goodsSaveData = new FormData();
+        if (imgFile[0].files[0] === undefined) {
+            AlertWarn("错误", "未上传封面图片");
+            $(this).prop("disabled", false);
+            return false;
+        } else {
+            goodsSaveData.append('img', imgFile[0].files[0]);
+        }
+
+        goodsSaveData.append('name', $("#name").val());
+        goodsSaveData.append('class_id', $("#class_id").val());
+        goodsSaveData.append('status', $("[name='status']").val());
+        goodsSaveData.append('sequence', $("#sequence").val());
+        originFormPost(goodsSaveData, goodsAddUrl, this);
+    });
+
+    //新增产品——弹窗
+    goodsAddBtn.click(function () {
+        $('#goodsModal').modal({backdrop: 'static', keyboard: false});
+        $('#goodsModal').find("input").on('keydown', function (event) {
+            if (event.keyCode == 13) {
+                goodsAddConfirmBtn.click();
+            }
+        });
+    });
+
+    var goodsDelUrl = "{:url('del')}";
+    $('.goodsDelBtn').click(function () {
+        var formData = {};
+        formData.id = $(this).data("id");
+        AlertConfirm(AlertText.goods[0], AlertText.goods[1], "是", function () {
+            formPost(formData, goodsDelUrl, this);
+        })
+    });
+</script>
+{/block}
+

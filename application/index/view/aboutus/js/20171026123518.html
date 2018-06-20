@@ -1,0 +1,20 @@
+<script type="text/javascript">
+    var navList = $('#navList');
+    navList.find('a').click(function () {
+        $('.navDiv').hide();
+        switch($(this).data('id'))
+        {
+            case 1:
+                $('#joinus_div').show();
+                break;
+            case 2:
+                $('#contactus_div').show();
+                break;
+            default:
+                $('#adoutus_div').show();
+        }
+
+        navList.find('li').removeClass('active');
+        $(this).parent('li').addClass('active');
+    });
+</script>

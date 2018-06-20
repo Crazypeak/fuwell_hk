@@ -1,0 +1,130 @@
+<script src="/static/plugins/select2/select2.full.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+
+<script>
+    var backOrderEditUrl = "{$orderEditUrl}";
+    var orderImageUrl = "{$orderImageUrl}";
+
+    var goodsSearchUrl = "{:url('index/search/seaOrderCommodity')}";
+    var goodsBatchSearchUrl = "{:url('index/search/seaOrderGoods')}";
+    var contactSearchUrl = "{:url('Search/seaClient')}";
+
+    var pay_type_Select = $("#pay_type");
+
+
+    var loc = {};
+    loc.province = '{$order.cg_province}';
+    loc.city = '{$order.cg_city}';
+    loc.area = '{$order.cg_area}';
+    loc_commit = true;
+    var addGoodsMark = [];
+    //oldMark 只用来记录原来有的 识别id 只有删不会多
+    var oldMark = [];
+    //记录栏目的id
+    var select_depot_id;
+    var old_select_depot_id;
+
+    $(document).ready(function () {
+
+        //新增商品初始化
+        orderAddSelete2Init();
+        //联系人搜索初始化
+        contactSelectInit(contactSearchUrl);
+
+
+        //付款方式初始化
+        (Number(pay_type_Select.val()) === 2 || 0) ? $(".orderImageSelectBtnGroup").hide() : $(".orderImageSelectBtnGroup").css("display", "flex");
+        pay_type_Select.change(function () {
+            console.log($(this).val());
+            (Number($(this).val()) === 2 || 0) ? $(".orderImageSelectBtnGroup").hide() : $(".orderImageSelectBtnGroup").css("display", "flex");
+
+        });
+
+        //订单中新增商品弹窗
+        orderGoodsAddBtn.click(function () {
+
+
+            if ($(".editOrderInfo select[name='depot_id']").val() == "") {
+                AlertWarn("该订单还没选择目标栏目", "该订单还没选择目标栏目");
+                return false;
+            }
+
+            //记录当前订单的栏目
+            select_depot_id = $(".editOrderInfo select[name='depot_id']").val();
+
+
+            $('#addGoodsModal').modal({backdrop: 'static'});
+            goodsAddContinueBtn.prop("disabled", false);
+            goodsAddModalClear();
+
+        });
+
+        //提交订单
+        $(".orderAddPostBtn").click(function () {
+
+
+            if (pay_type_Select.val() === "") {
+                AlertWarn("该订单还没选择付款方式", "该订单还没选择付款方式！");
+                return false;
+            }
+
+            if ($(".editOrderInfo select[name='depot_id']").val() == "") {
+                AlertWarn("该订单还没选择目标栏目", "该订单还没选择目标栏目");
+                return false;
+            }
+            //var newOrderFormData = new FormData();
+            var a = [];
+            var newOrderDataA = {};
+            //读取订单信息
+            //editOrderInfo
+            $(".editOrderInfo select[name='depot_id'], .editOrderInfo input[type='text']").each(function (i, e) {
+                a[i] = $(e).val();
+                console.log($(e).prop("name") + "=" + $(e).val());
+
+            });
+            newOrderDataA.order_id = a[0];
+            newOrderDataA.order_code = a[1];
+            newOrderDataA.depot_id = a[2];
+            newOrderDataA.remark = a[3];
+            newOrderDataA.cg_name = a[4];
+            newOrderDataA.cg_number = "";
+            newOrderDataA.cg_phone = a[6];
+            newOrderDataA.cg_address = a[7];
+            newOrderDataA.img_url = lookImageBtn.attr('href');
+            newOrderDataA.cg_province = "";
+            newOrderDataA.cg_city = "";
+            newOrderDataA.cg_area = "";
+            newOrderDataA.pay_type = Number(pay_type_Select.val());
+            (newOrderDataA.pay_type === 2) ? newOrderDataA.img_url = "#" : newOrderDataA.img_url = lookImageBtn.attr('href');
+
+
+            newOrderDataA.goods = [];//clear
+
+            console.log(a);
+            //循环tr
+            $("tr.goodsTableTr").each(function (i, e) {
+                var newOrderGoodsDataA = {};
+                //入库批次号
+                newOrderGoodsDataA.batch_code = $(e).find(".batch_code").text();
+                //货号
+                newOrderGoodsDataA.product_code = $(e).find(".product_code").text();
+                //数量
+                newOrderGoodsDataA.qty = $(e).find(".amount").text();
+                newOrderGoodsDataA.currency = $(e).find(".currency").text();
+                newOrderGoodsDataA.selling_price = $(e).find(".selling_price").text();
+                newOrderGoodsDataA.CNY_rate = $(e).find(".CNY_rate").text();
+                if ($(e).find(".oldId").length) {
+                    console.log($(e).find(".oldId").text());
+                    //如果存在旧的 id 识别号
+                    newOrderGoodsDataA.id = $(e).find(".oldId").text();
+                }
+                newOrderDataA.goods.push(newOrderGoodsDataA);
+            });
+            console.log(newOrderDataA);
+            formPost(newOrderDataA, backOrderEditUrl, this);
+
+        });
+
+
+    });
+</script>

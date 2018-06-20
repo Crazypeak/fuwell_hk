@@ -1,0 +1,158 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+
+    {include file="Public/search/recordSearch" /}
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- 商品分类 box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                            <h3 class="box-title">审核商品入库</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th width="190px">入库批次号</th>
+                            <th width="">商品名称</th>
+                            <th width="160px">审核时间</th>
+                            <th width="140px">审核者</th>
+                            <th width="80px">库存增减</th>
+                            <th width="80px">变动数量</th>
+                            <th width="160px">备注</th>
+                            <th style="width: 75px">栏目</th>
+                            <th width="75px">状态</th>
+                            <th width="180px">操作</th>
+                        </tr>
+                        <form action="">
+                            {volist name="list" id="vo"}
+                            <tr>
+                                <td title="{$vo.serial_code}">{$vo.serial_code}</td>
+                                <td title="{$vo.name}">{$vo.name}</td>
+                                <td title="{$vo.product_code}">{$vo.product_code}</td>
+                                <td title="{$vo.bar_code}">{$vo.bar_code}</td>
+                                <td>
+                                    {switch name="vo.model"}
+                                    {case value="0"}<span class="text-danger">&nbsp;&nbsp;减少&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down" aria-hidden="true"></i></span>{/case}
+                                    {case value="1"}<span class="text-success">&nbsp;&nbsp;增加&nbsp;&nbsp;<i
+                                        class="fa fa-caret-up" aria-hidden="true"></i></span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <td>
+                                    {switch name="vo.model"}
+                                    {case value="0"}<span class="text-danger">{$vo.amount}</span>{/case}
+                                    {case value="1"}<span class="text-success">{$vo.amount}</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <td title="{$vo.remark}">{$vo.remark}</td>
+                                <td>{$id.depot_name}</td>
+                                <td>
+                                    {switch name="vo.status"}
+                                    {case value="0"}<span class="label label-default">未审核</span>{/case}
+                                    {case value="1"}<span class="label label-primary">已审核</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <td>
+                                    <a href="{:url('index/barn.goods/goodsLook',['id'=>$vo.com_id])}" class="text-info"
+                                       data-orderid="{$vo.id}">
+                                        <i class="fa fa-info-circle fa-fw"></i>商品详情
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    {switch name="vo.status"}
+                                    {case value="0"}
+                                    <a href="javascript:void(0);" class="text-success orderNextBtn single inventoryVerify"
+                                      data-orderid="{$vo.id}">
+                                        <i class="fa fa-check fa-fw"></i>审核
+                                    </a>
+                                    {/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                            </tr>
+                            {/volist}
+                        </form>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+
+                    {$list->render()}
+                </div>
+            </div>
+            <!-- /.box -->
+
+
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+
+
+    var inventoryVerifyConfirmBtn = $("#inventoryVerifyConfirmBtn");
+
+
+    var inventoryVerifyUrl = "{:url('barn.record/inventoryVerify')}";
+
+
+    $(document).ready(function () {
+
+        $("input[name='model']").iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+
+
+        $(".spinner").spinner('changing', function (e, newVal, oldVal) {
+
+        });
+
+
+    })
+</script>
+
+
+{/block}
+

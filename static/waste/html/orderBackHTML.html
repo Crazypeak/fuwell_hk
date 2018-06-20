@@ -1,0 +1,466 @@
+<!-- 新增商品 modal-->
+<div class="modal" id="addGoodsModal" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width:45%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">商品信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal newOrderGoodsAdd">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">商品搜索</label>
+                            <div class="col-sm-8">
+                                <select class="goodsAddCodeSelect" style="width: 420px" multiple="multiple">
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">条形码</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsBar_code">请先选择商品</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">货号</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsProduct_code">请先选择商品</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">商品品名</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsName">请先选择商品</label>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">销售库存</label>-->
+                        <!--<div class="col-sm-8">-->
+                        <!--<label class=" control-label" id="NewgoodsStock_false"></label>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">实际库存</label>-->
+                        <!--<div class="col-sm-8">-->
+                        <!--<label class=" control-label" id="NewgoodsStock_true"></label>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">参考供货价</label>-->
+                        <!--<div class="col-sm-8">-->
+                        <!--<label class=" control-label" id="Newgoodssupply_price"></label>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">规格</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsModel">请先选择商品</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">单位</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsUnit">请先选择商品</label>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">入库批次号</label>
+                            <div class="col-sm-8">
+                                <select style="width: 420px" name="NewgoodsBatch" id="NewgoodsBatch"
+                                        class="form-control select-sm">
+                                    <option value="" selected="selected">选择入库批次号</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">生产日期</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsMfg">请先选择入库批次号</label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">过期日期</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsExp">请先选择入库批次号</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">销售库存</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsStock_false"></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">实际库存</label>
+                            <div class="col-sm-8">
+                                <label class=" control-label" id="NewgoodsStock_true">请先选择入库批次号</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">销售价</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" id="Newgoodsselling_price"
+                                       name="Newgoodsselling_price"
+                                       value="" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">币种</label>
+
+                            <div class="col-sm-2">
+                                <select name="currency" id="NewgoodsCurrency" class="form-control input-sm">
+                                    <option value="">请选择币种</option>
+                                    <option value="CNY">CNY</option>
+                                    <option value="AUD">AUD</option>
+                                    <option value="HKD">HKD</option>
+                                    <option value="NZD">NZD</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">CNY汇率</label>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" id="NewgoodsRate"
+                                           name="NewgoodsRate"
+                                           value="1" placeholder="">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-sm currencyQueryBtn"
+                                                type="button">汇率查询</button>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">数量</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" id="NewgoodsNum"
+                                       name="NewgoodsNum"
+                                       value="" placeholder="">
+                                <!--<div class="input-group spinner" data-trigger="spinner">-->
+                                <!--<input type="text" class="form-control text-center" value="1" data-min="1"-->
+                                <!--id="NewgoodsNum"-->
+                                <!--data-max="999999"-->
+                                <!--data-rule="quantity">-->
+                                <!--<span class="input-group-addon">-->
+                                <!--<a href="" class="spin-up" data-spin="up">-->
+                                <!--<i class="fa fa-caret-up"></i></a>-->
+                                <!--<a href="" class="spin-down" data-spin="down">-->
+                                <!--<i class="fa fa-caret-down"></i></a>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="addGoodsTips text-success"
+                                    style="display: none;text-align: right;">
+                                    添加成功！
+                                </h4>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success goodsAddContinueBtn goodsAddSaveBtn"><i
+                        class="fa fa-floppy-o fa-fw"></i>保存
+                </button>
+                <button type="button" class="btn btn-success goodsAddContinueBtn"><i class="fa fa-check fa-fw"></i>继续添加
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="box">
+                <div class="box-header with-border" data-widget="collapse">
+                    <i class="fa fa-minus fa-fw"></i>
+                    <h3 class="box-title">联系人搜索</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool">
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <form class="form-horizontal SearchKey">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="contactAddSelect" class="col-sm-4 control-label">联系人搜索</label>
+                                    <div class="col-sm-8 col-md-8">
+                                        <select class="contactAddSelect" multiple="multiple" id="contactAddSelect"
+                                                style="width: 320px">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <!-- /.box-body -->
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!--订单信息-->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">编辑订单</h3>
+                    <div class="box-tools pull-right">
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class=" form-horizontal">
+                        <form action="" class="editOrderInfo">
+
+                            <div class="form-group" style="display: none;">
+                                <label class="col-sm-3 control-label">订单id</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="order_id"
+                                           value="{$order.id}"
+                                           placeholder="">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label class="col-sm-1 control-label">订单编号<span
+                                        class="text-danger">&nbsp;*</span></label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="order_code" disabled="disabled"
+                                           value="{$order.order_code}"
+                                           placeholder="">
+                                </div>
+
+
+                                <label class="col-sm-1 control-label">当前栏目<span
+                                        class="text-danger">&nbsp;*</span></label>
+                                <div class="col-sm-2">
+                                    <select name="depot_id" id="depot_id" class="form-control">
+                                        {volist name="barn_list" id="vo"}
+                                        <option value="{$key}"
+                                                {eq name="$key" value="$order['depot_id']" }
+                                                selected{
+                                        /eq}
+                                        >{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+
+                                <label class="col-sm-1 control-label">备注</label>
+                                <div class="col-sm-3" style="width: 387px;">
+                                    <input type="text" class="form-control" name="remark"
+                                           value="{$order.remark}"
+                                           placeholder="">
+                                </div>
+                            </div>
+
+
+                            <!--员工可见-->
+                            <div class="form-group">
+
+                                <label class="col-sm-1 control-label">收件人<span
+                                        class="text-danger">&nbsp;*</span></label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="cg_name" value="{$order.cg_name}"
+                                           placeholder="">
+                                </div>
+                                <label class="col-sm-1 control-label" style="display: none">身份证</label>
+                                <div class="col-sm-2" style="display: none">
+                                    <input type="text" class="form-control" name="cg_number"
+                                           value="{$order.cg_number}" placeholder="">
+                                </div>
+                                <label class="col-sm-1 control-label">电话<span
+                                        class="text-danger">&nbsp;*</span></label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="cg_phone"
+                                           value="{$order.cg_phone}"
+                                           placeholder="">
+                                </div>
+
+                                <label class="col-sm-1 control-label">详细地址<span
+                                        class="text-danger">&nbsp;*</span></label>
+                                <div class="col-sm-4" style="width: 387px;">
+                                    <input type="text" class="form-control" name="cg_address"
+                                           value="{$order.cg_address}"
+                                           placeholder="">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">付款方式<span
+                                        class="text-danger">&nbsp;*</span></label>
+
+                                <div class="col-sm-2">
+                                    <select name="pay_type" id="pay_type" class="form-control">
+                                        <option value="1" {eq name="order.pay_type" value="1"}selected {/eq}>全额付款</option>
+                                        <option value="2" {eq name="order.pay_type" value="2"}selected {/eq}>货到付款</option>
+                                        <option value="3" {eq name="order.pay_type" value="3"}selected {/eq}>分期付款</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-3 orderImageSelectBtnGroup">
+                                    <a href="javascript:void(0)" class="orderImageSelect">
+                                        <input type="file" class="" id="imgFile" name=""
+                                               value=""
+                                               placeholder="">
+                                        <p><i class="fa fa-picture-o fa-fw"></i>选择图片文件</p>
+                                    </a>
+
+                                    <span class="imageHover">
+                                        <a href="{$order.img_url}" id="lookImageBtn" target="_blank">
+                                            <i class="fa fa-search fa-fw"></i>查看</a>
+                                         <p class="text-success" id="ImageUploadStatus"></p>
+
+                                        <a href="javascript:void(0)" id="orderImageUploadBtn" class="disp-no">
+                                            <i class="fa fa-upload fa-fw"></i>上传</a>
+                                    </span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" style="display: none">
+                                <input type="text" class="form-control" name="cg_province"
+                                       value="{$order.cg_province}" placeholder="">
+                                <input type="text" class="form-control" name="cg_city" value="{$order.cg_city}"
+                                       placeholder="">
+                                <input type="text" class="form-control" name="cg_area" value="{$order.cg_area}"
+                                       placeholder="">
+                            </div>
+                            <div class="form-group" style="display: none">
+                                <label class="col-sm-1 control-label">省市区</label>
+                                <div class="col-sm-6">
+                                    <select id="loc_province" style="width:109px;"></select>
+                                    <select id="loc_city" style="width:120px;"></select>
+                                    <select id="loc_town" style="width:120px;"></select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <!-- /.box-footer -->
+            </div>
+
+            <!--订单内商品-->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">订单商品</h3>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody class="goodsTable">
+                        <tr>
+                            <th>商品名称</th>
+                            <th width="190px">入库批次号</th>
+                            <th width="190px">货号</th>
+                            <th width="190px">条形码</th>
+                            <th width="95px">销售价</th>
+                            <th width="65px">币种</th>
+                            <th width="75px">CNY汇率</th>
+                            <th width="75px">数量</th>
+                            <th width="75px">规格</th>
+                            <th width="75px">单位</th>
+                            <th width="75px">操作</th>
+                        </tr>
+                        {volist name="goods_list" id="vo"}
+                        <tr class="goodsTableTr">
+                            <td style="display: none;" class="oldId">{$vo.id}</td>
+                            <td style="display: none;" class="goodsBatch">{$vo.purchase_id}</td>
+                            <td title="{$vo.name}">{$vo.name}</td>
+                            <td title="{$vo.batch_code}" class="batch_code">{$vo.batch_code}</td>
+                            <td title="{$vo.product_code}" class="product_code">{$vo.product_code}</td>
+                            <td title="{$vo.bar_code}">{$vo.bar_code}</td>
+                            <td>{$vo.selling_price}</td>
+                            <td>{$vo.currency}</td>
+                            <td>{$vo.CNY_rate}</td>
+                            <td class="amount">{$vo.qty}</td>
+                            <td>{$vo.model}</td>
+                            <td>{$vo.unit}</td>
+                            <td>
+                                <a href="javascript:void(0);" class="text-danger goodsAddOneDel"><i
+                                        class="fa fa-trash fa-fw"></i>删除</a>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm btn-primary orderGoodsAddBtn">
+                                <i class="fa fa-plus fa-fw"></i>新增商品
+                            </button>
+                        </div>
+
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit"
+                                    class="btn btn-success btn-sm orderAddPostBtn"><i
+                                    class="fa fa-check fa-fw"></i>保存订单
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+

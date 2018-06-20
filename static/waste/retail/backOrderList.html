@@ -1,0 +1,154 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class=" col-md-12">
+            <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+
+                {include file="retail/orderListSB" /}
+
+                <div class="tab-content no-padding" >
+                    <!-- Morris chart - Sales -->
+                    <div class="chart tab-pane active" id="retail-order" style="height: 100vh">
+                        <div class="col-md-12" style="height: 100vh" >
+
+                            <section class="content">
+                            {include file="Public/search/orderSearchStatus10md12" /}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- Default box -->
+                                    <div class="box">
+                                        <!--<div class="box-header with-border">-->
+                                            <!--<div class="row">-->
+                                                <!--<div class="col-md-4 col-lg-6">-->
+                                                    <!--<h3 class="box-title">退回订单列表</h3>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+
+                                            <table class="table table-bordered table-hover">
+                                                <tbody>
+                                                <tr>
+                                                    <th style="width: 190px">订单编号</th>
+                                                    <th style="width: 100px">创建人</th>
+                                                    <th style="width: 100px">收件人</th>
+                                                    <th style="width: 120px">电话</th>
+                                                    <th style="">收货地址</th>
+                                                    <th style="width: 90px">商品总件数</th>
+                                                    <th style="width: 75px">栏目</th>
+                                                    <!--<th style="width: 7%">订单状态</th>-->
+                                                    <th style="width: 280px">操作</th>
+                                                </tr>
+                                                <form action="">
+                                                    {volist name="list" id="id"}
+                                                    <tr>
+                                                        <td title="{$id.order_code}">
+                                                            <a class="text-info"
+                                                               href="{:url('index/retail.backorder/order',['id'=>$id.id])}">{$id.order_code}</a>
+                                                        </td>
+                                                        <td title="{$id.create_name}">{$id.create_name}</td>
+                                                        <td title="{$id.cg_name}">{$id.cg_name}</td>
+                                                        <td>{$id.cg_phone}</td>
+                                                        <td title="{$id.cg_province}{$id.cg_city}{$id.cg_area}{$id.cg_address}">
+                                                            {$id.cg_province}{$id.cg_city}{$id.cg_area}{$id.cg_address}
+                                                        </td>
+                                                        <td title="{$id.total}">{$id.total}</td>
+                                                        <td>{$id.depot_name}</td>
+                                                        <!--<td>-->
+                                                        <!--{eq name="id.status" value="10"}<span class="label bg-red">订单驳回</span>{/eq}-->
+                                                        <!--{eq name="id.status" value="11"}<span class="label bg-gray-active">订单作废</span>{/eq}-->
+                                                        <!--{eq name="id.ck_status" value="10"}<span class="label bg-gray">栏目退单</span>{/eq}-->
+                                                        <!--</td>-->
+                                                        <th>
+                                                            <a class="text-success"
+                                                               href="{:url('index/retail.backorder/orderEdit',['id'=>$id.id])}"><i
+                                                                    class="fa fa-pencil-square-o fa-fw"></i>编辑</a>
+                                                            &nbsp;
+                                                            <a class="text-success"
+                                                               href="{:url('index/retail.backorder/order',['id'=>$id.id])}"><i
+                                                                    class="fa fa-file-text-o fa-fw"></i>详情</a>
+                                                            &nbsp;
+                                                            <a class="text-success orderNextBtn single backOrderSub"
+                                                               href="#" data-orderid="{$id.id}"><i
+                                                                    class="fa fa-check fa-fw"></i>重新提交</a>
+                                                            &nbsp;
+                                                            <a class="text-danger orderPrevBtn single backOrderDie"
+                                                               href="#" data-orderid="{$id.id}"><i
+                                                                    class="fa fa-times fa-fw"></i>作废</a>
+                                                        </th>
+                                                    </tr>
+                                                    {/volist}
+                                                </form>
+                                                </tbody>
+
+
+                                            </table>
+
+                                        </div>
+                                        <!-- /.box-body -->
+                                        <div class="box-footer clearfix">
+                                            {$list->render()}
+                                        </div>
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{/block}
+
+{block name="scriptSrc"}
+
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+
+{/block}
+
+
+{block name="script"}
+<script>
+    var backOrderSubUrl = "{:url('index/retail.update/subBackOrder')}";
+    var backOrderDieUrl = "{:url('index/retail.update/dieBackOrder')}";
+
+
+
+    $(document).ready(function () {
+
+
+    });
+</script>
+
+
+{/block}
+

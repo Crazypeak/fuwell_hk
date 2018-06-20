@@ -1,0 +1,50 @@
+
+{switch name="controllerName"}
+
+{case value="import"}
+{assign name="order" value=":url('import.order/orderlist')" /}
+{assign name="history" value=":url('import.history/orderlist')" /}
+{assign name="backorder" value=":url('import.backorder/orderlist')" /}
+{/case}
+
+{case value="retail"}
+
+{assign name="order" value=":url('retail.order/orderlist')" /}
+{assign name="history" value=":url('retail.history/orderlist')" /}
+{assign name="backorder" value=":url('retail.backorder/orderlist')" /}
+
+{/case}
+{default /}
+{/switch}
+
+{$order}
+
+
+<!-- Tabs within a box -->
+<ul class="nav nav-tabs pull-left ui-sortable-handle" id="OrderAction">
+    {assign name='SBurl' value=':url()'/}
+    {if condition="verifyUrl($order)"}
+    <li class="{eq name='SBurl' value='$order'}active{/eq}">
+        <a href="{$order}">{$title_all['a_title']}
+            {neq name='count_all.0' value='0'}<small
+                    class="badge pull-right bg-blue"
+                    style="margin: 0;">{$count_all.0}</small>{/neq}</a>
+    </li>
+    {/if}
+    {if condition="verifyUrl($history)"}
+    <li class="{eq name='SBurl' value='$history'}active{/eq}">
+        <a href="{$history}">{$title_all['a_title']}</a>
+    </li>
+    {/if}
+    {if condition="verifyUrl($backorder)"}
+    <li class="{eq name='SBurl' value='$backorder'}active{/eq}">
+        <a href="{$backorder}">{$title_all['a_title']}
+            {neq name='count_all.1' value='0'}<small
+                    class="badge pull-right bg-blue"
+                    style="margin: 0;">{$count_all.1}</small>{/neq}</a>
+    </li>
+    {/if}
+
+    <li class="pull-left header"><a href="#"></a></li>
+</ul>
+

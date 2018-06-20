@@ -1,0 +1,161 @@
+{extend name="Public:base" /}
+{extend name="Public:sidebar" /}
+
+
+{block name="sidebar"}
+
+{/block}
+
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">订单导入</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                            <i class="fa fa-minus"></i></button>
+                        <!--<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">-->
+                        <!--<i class="fa fa-times"></i></button>-->
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <form action="{:url('')}" enctype="multipart/form-data" method="post" class="upLoadExcel">
+                            <a class="btn btn-app filestyle">
+                                <input type="file" id="ExcelFile" name="Excel" class="">
+                                <i class="fa fa-file-excel-o fa-5x"></i>
+                                <p>点我导入文件</p>
+                            </a>
+                        </form>
+                    </div>
+                    <div class="form-group">
+                        <span class="fileNameSpan text-danger pull-right"></span>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success pull-right">
+                        <i class="fa fa-upload"></i>
+                        上传
+                    </button>
+                </div>
+                <!-- /.box-footer-->
+            </div>
+            <!-- /.box -->
+
+        </div>
+
+    </div>
+
+
+</section>
+<!-- /.content -->
+
+{/block}
+<!-- 样式 -->
+{block name="style"}
+
+<style>
+
+</style>
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+    var fileSubmitBtn = $(".box-footer button");
+    var fileInput = $("#ExcelFile");
+    var fileNameSpan = $(".fileNameSpan");
+    var canUpload = false;
+    //初始化检测
+    function upLoadInit() {
+        fileInput.val("");
+        if (fileInput.val() == "") {
+            canUpload = false;
+            fileNameSpan.text("未选择文件");
+            fileSubmitBtn.attr("disabled", true);
+        }
+    }
+    //提交文件
+    function ExcelFilePost(formData) {
+        swal({
+                title: "上传文件",
+                text: "上传" + fileNameSpan.text() + "吗？",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    //超时检测
+                    setTimeout(function () {
+                        AlertWarn("上传超时", "请重新上传订单文件！并验证订单是否正确！", function () {
+                            location.reload(true)
+                        });
+                    }, 20000);
+                    //文件上传
+                    $.ajax({
+                        url: "{:url('')}",
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            orderApiSuccess(data, "请稍等 正在跳转到订单列表");
+                        }
+                    });
+
+                }
+            });
+    }
+    //选择按钮检测
+    fileInput.on("change", function () {
+        var filePath = $(this).val();
+        var fileNameArray = filePath.split('.');
+        var fileExtension = fileNameArray[fileNameArray.length - 1];
+        var fileName = fileInput[0].files[0].name;
+        if (fileExtension !== "xls") {
+            fileSubmitBtn.attr("disabled", true);
+            fileNameSpan.text("无效的文件");
+        } else {
+            canUpload = true;
+            fileSubmitBtn.attr("disabled", false);
+            fileNameSpan.text("已选择文件: " + fileName);
+        }
+    });
+    //提交按钮检测
+    fileSubmitBtn.click(function () {
+        if (canUpload) {
+            var ExcelFormData = new FormData();
+            ExcelFormData.append('Excel', fileInput[0].files[0]);
+            ExcelFilePost(ExcelFormData);
+        } else {
+            alert("请选择xls文件");
+        }
+    });
+    $(document).ready(function () {
+        upLoadInit();
+    });
+</script>
+
+
+{/block}
+
+
+
+
+
+
+

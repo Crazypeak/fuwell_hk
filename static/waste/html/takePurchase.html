@@ -1,0 +1,125 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10 col-lg-10">
+
+            {include file="Public/purchase/purchaseInfo"/}
+            <!-- /.box -->
+            <div class="box">
+
+                {include file="Public/purchase/purchaseTable"/}
+
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="box-title">商品详情</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="col-md-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                <tr>
+                                    <th width="">商品名称</th>
+                                    <th width="190px">条形码</th>
+                                    <th width="190px">货号</th>
+                                    <th width="95px">生产日期</th>
+                                    <th width="95px">过期日期</th>
+                                    <th width="95px">销售价</th>
+                                    <th width="95px">供货价</th>
+                                    <th width="75px">币种</th>
+                                    <th width="75px">数量</th>
+                                    <!--<th width="75px">销售库存</th>-->
+                                    <!--<th width="75px">实际库存</th>-->
+                                    <th width="75px">规格</th>
+                                    <th width="75px">单位</th>
+                                    <th width="75px">状态</th>
+                                </tr>
+                                <form action="">
+                                    {volist name="row.goods" id="vo"}
+                                    <tr>
+                                        <td title="{$vo.name}">{$vo.name}</td>
+                                        <td title="{$vo.bar_code}">{$vo.bar_code}</td>
+                                        <td title="{$vo.product_code}">{$vo.product_code}</td>
+                                        <td title="{$vo.mfg_date}">{$vo.mfg_date}</td>
+                                        <td title="{$vo.exp_date}">{$vo.exp_date}</td>
+                                        <td title="{$vo.selling_price}">{$vo.selling_price}</td>
+                                        <td title="{$vo.supply_price}">{$vo.supply_price}</td>
+                                        <td title="{$vo.currency}">{$vo.currency}</td>
+                                        <td title="{$vo.amount}">{$vo.amount}</td>
+                                        <!--<td>{$vo.stock_false}</td>-->
+                                        <!--<td>{$vo.stock_true}</td>-->
+                                        <td title="{$vo.model}">{$vo.model}</td>
+                                        <td title="{$vo.unit}">{$vo.unit}</td>
+                                        <td>
+                                            {switch name="vo.goods_status"}
+                                            {case value="0"}<span class="label  label-warning">未完成</span>{/case}
+                                            {case value="1"}<span class="label label-success">已完成</span>{/case}
+                                            {default /}
+                                            {/switch}
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                </form>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+        </div>
+
+
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+
+
+    $(document).ready(function () {
+
+
+    })
+</script>
+
+
+{/block}
+

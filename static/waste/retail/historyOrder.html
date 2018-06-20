@@ -1,0 +1,65 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+<style>
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+<!-- 主要内容 -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!--订单信息-->
+            {include file="Public/order/orderInfo"/}
+            <!--订单商品列表-->
+            <div class="box">
+                {include file="Public/order/orderTableCount"/}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <!--订单操作记录-->
+                    {include file="Public/order/orderRecord"/}
+                </div>
+                <div class="col-md-6">
+                    <!--订单流水凭证图-->
+                    {include file="Public/order/orderImage"/}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+<script src="/static/js/jquery.drag.js"></script>
+<script src="/static/js/jquery.imgZoom.js"></script>
+<script src="/static/js/jquery.mousewheel.js"></script>
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+
+//    $(document).ready(function () {
+//        $(".thumbnail img").imgZoom();
+//    });
+</script>
+
+
+{/block}
+

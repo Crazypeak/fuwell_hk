@@ -1,0 +1,120 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">{$title_all['a_title']}</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="">入库批次号</th>
+                            <th style="width: 12%">创建时间</th>
+                            <th style="">创建者</th>
+                            <th style="width: 12%">审核时间</th>
+                            <th style="">审核者</th>
+                            <th style="width: 5%">状态</th>
+                            <th style="width: 5%">类型</th>
+                            <th style="width: 10%">操作</th>
+                        </tr>
+                        <form action="">
+                            {volist name="list" id="id"}
+                            <tr>
+                                <td>{$id.batch_code}</td>
+                                <td title="{$id.create_time}">{$id.create_time}</td>
+                                <td title="{$id.create_user}">{$id.create_user}</td>
+                                <td title="{$id.update_time}">{$id.update_time}</td>
+                                <td>{$id.update_user}</td>
+                                <td>
+                                    {switch name="id.status"}
+                                    {case value="0"}<span class="label bg-red disabled">待审核</span>{/case}
+                                    {case value="1"}<span class="label bg-green">已审核</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <td>
+                                    {switch name="id.type"}
+                                    {case value="0"}<span class="label label-default">采购</span>{/case}
+                                    {case value="1"}<span class="label label-primary">赠送</span>{/case}
+                                    {default /}
+                                    {/switch}
+                                </td>
+                                <th>
+                                    <a class="text-success"
+                                       href="{:url('index/purchase.order/orderDetail',['id'=>$id.id])}"><i
+                                            class="fa fa-file-text-o fa-fw"></i>详情</a>
+                                </th>
+                            </tr>
+                            {/volist}
+                        </form>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    {$list->render()}
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+
+    //下发订单
+    var orderSupUrl = "{:url('index/supply.update/supOrder')}";
+    var buyInDelUrl = "{:url('index/purchase.Takeorder/del')}";
+
+
+    $(document).ready(function () {
+
+    });
+</script>
+
+
+{/block}
+

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="renderer" content="webkit">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="Author" content="Mather, Crazypeak"/>
+    <title>网站后台</title>
+    <link rel="stylesheet" href="/static/dist/adminStyle.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    {block name="header"}
+    {/block}
+    {block name="style"}
+    {/block}
+
+</head>
+<body class="skin-green-light sidebar-mini">
+
+<!-- Reset password -->
+<div class="modal" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal resetPassword">
+                    <div class="box-body">
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">旧密码</label>
+                            <div class="col-sm-4">
+                                <input type="password" class="form-control " name="password" value=""
+                                       placeholder="输入旧密码">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">新密码</label>
+                            <div class="col-sm-4">
+                                <input type="password" class="form-control " name="new_password" value=""
+                                       placeholder="输入新密码">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">确认新密码</label>
+                            <div class="col-sm-4">
+                                <input type="password" class="form-control " name="ver_password" value=""
+                                       placeholder="重复一次新密码">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success resetPasswordConfirmBtn"><i class="fa fa-check fa-fw"></i>修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Site wrapper -->
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{:url('index/index')}" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">FW</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>网站后台</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <!-- Navbar Right Menu -->
+            {include file="Public/navBarRight"/}
+        </nav>
+    </header>
+
+    <!-- =============================================== -->
+    <!-- Left side column. contains the sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                {volist name="menu" id="value"}
+                <li class="treeview active">
+                    <a href="#">
+                        <i class="fa fa-newspaper-o"></i> <span>{$value.name}</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        {volist name="value.child" id="item"}
+                        <li>
+                            <a href="{:url($item['url'])}"><i class="fa fa-circle-o"></i>{$item.name}</a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </li>
+                {/volist}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+
+    <!-- =============================================== -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {$title_all.0.name}
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                {volist name='title_all.crumbs' id='title'}
+                <li class="{eq name='title_all.0.name' value='$key'}active{/eq}">
+                    <!--{//notempty name='title'}-->
+                    <!--<a href="{:url('title')}">{$key}</a>-->
+                    <!--{//else/}-->
+                    <!--{$key}-->
+                    <!--{//notempty}-->
+                    {$key}
+                </li>
+                {/volist}
+            </ol>
+        </section>
+
+        {block name="content"}
+
+        {/block}
+
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <!-- main-footer -->
+
+    {include file="Public:footer" /}
+
+    <!-- /.main-footer  -->
+
+
+</div>
+<!-- ./wrapper -->
+<!-- jQuery 3.1.0 -->
+<script src="/static/js/jquery-2.2.3.min.js"></script>
+<script src="/static/js/underscore-min.js"></script>
+
+<!-- Bootstrap 3.3.6 -->
+<script src="/static/js/bootstrap.min.js"></script>
+<!-- jquery.spinner -->
+<script src="/static/js/jquery.spinner.min.js"></script>
+<!-- SlimScroll -->
+<!--<script src="/static/js/jquery.slimscroll.min.js"></script>-->
+<!-- FastClick -->
+<!--<script src="/static/js/fastclick.js"></script>-->
+<!-- AdminLTE App -->
+<script src="/static/js/app.min.js"></script>
+<!-- Sweet Alert -->
+<script src="/static/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- icheck -->
+<script src="/static/plugins/iCheck/icheck.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="/static/plugins/datepicker/moment.js"></script>
+<script src="/static/plugins/datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/static/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- requireJS module loader -->
+<!--<script data-main="/static/js/main" async src="/static/js/require.js"></script>-->
+<!-- HTML DOM prototype and function-->
+<script src="/static/js/DOM.js"></script>
+<!-- Main JavaScript-->
+<script src="/static/js/main.js"></script>
+<!-- deployment JavaScript -->
+<!--<script src="/static/js/main.min.js"></script>-->
+
+
+<!-- AdminLTE for demo purposes -->
+<!--<script src="../../dist/js/demo.js"></script>-->
+{block name="scriptSrc"}
+
+{/block}
+
+
+{block name="script"}
+
+
+{/block}
+<script>
+
+    var resetPasswordUrl = "{:url('user/changePW')}";
+
+    $(document).ready(function () {
+        $("dd:contains('0000-00-00 00:00:00')").text(null);
+        $("td:contains('0000-00-00')").text(null);
+        $("td:contains('0000-00-00 00:00:00')").text(null);
+        $("h4:contains('0000-00-00 00:00:00')").text(null);
+
+        $('.sidebar-menu').find("a[href!='#']").each(function (key, value) {
+            if ($(value).attr('href') === '{:url($is_url)}') {
+                $(value).parents('li').addClass('active');
+                $(value).parents('.treeview').addClass('active');
+            }
+        });
+
+        $('.breadcrumb').eq(1).prepend('<i class="fa fa-dashboard"></i>');
+
+
+        //enter
+        resetPasswordModal.find('input').on('keydown', function (event) {
+            if (event.keyCode == 13) {
+                resetPasswordConfirmBtn.click();
+            }
+        });
+
+        //enter
+        $(".SearchKey").find('input:text').on('keydown', function (event) {
+            if (event.keyCode == 13) {
+                SearchBtn.click();
+            }
+        });
+
+    });
+
+
+</script>
+</body>
+
+</html>

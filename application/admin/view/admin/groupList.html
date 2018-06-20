@@ -1,0 +1,309 @@
+{extend name="Public:base" /}
+{block name="header"}
+{/block}
+
+{block name="style"}
+<style></style>
+{/block}
+
+{block name="content"}
+<!-- 新增员工组 -->
+<div class="modal" id="userGroupAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增员工组</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal userGroupAdd">
+                    <div class="box-body">
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">员工组名</label>
+                            <div class="col-sm-3">
+                                <!--员工组名称-->
+                                <input type="text" class="form-control userGroupName" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control " name="sequence" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-3 fix-checkbox">
+                                <input type="radio" class="navHideTrue" name="status" value="1" id="status[2]"
+                                       checked="checked">
+                                <label for="status[2]">启用</label>
+                                <input type="radio" class="navHideFalse" name="status" value="0" id="status[3]">
+                                <label for="status[3]">禁用</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control " name="remark" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.box-body -->
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success userGroupAddConfirmBtn"><i class="fa fa-check fa-fw"></i>新增
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 编辑员工组 -->
+<div class="modal" id="userGroupEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="">编辑员工组</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal userGroupEdit">
+                    <div class="box-body">
+
+                        <div class="form-group" style="display: none;">
+                            <label class="col-sm-3 control-label">id</label>
+                            <div class="col-sm-3">
+                                <!--员工组名称-->
+                                <input type="text" class="form-control" name="id" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">员工组名</label>
+                            <div class="col-sm-3">
+                                <!--员工组名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control " name="sequence" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-3 fix-checkbox">
+                                <input type="radio" class="on" name="status" value="1" id="status[4]">
+                                <label for="status[4]">启用</label>
+                                <input type="radio" class="off" name="status" value="0" id="status[5]">
+                                <label for="status[5]">禁用</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control " name="remark" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.box-body -->
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success userGroupEditConfirmBtn"><i class="fa fa-check fa-fw"></i>修改
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">员工组别管理</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="width: 15%">员工组名</th>
+                            <th>备注</th>
+                            <th width="75px">排序</th>
+                            <th width="75px">状态</th>
+                            <th width="360px">操作</th>
+                        </tr>
+                        {volist name="group" id="vo"}
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.remark}</td>
+                            <td>{$vo.sequence}</td>
+                            <td>
+                                {switch name="vo.status"}
+                                {case value="0"}<span class="label label-default">禁用</span>{/case}
+                                {case value="1"}<span class="label label-success">启用</span>{/case}
+                                {default /}
+                                {/switch}
+                            </td>
+                            <td>
+                                <a href="{:url('admin.group/access', ['id'=>$vo.id])}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑权限</a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);"
+                                   class="userGroupEditBtn" data-id="{$vo.id}">
+                                    <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                                &nbsp;&nbsp;
+                                {neq name="vo.id" value="1"}<a href="javascript:void(0);"
+                                class="userGroupDelBtn text-danger" data-id="{$vo.id}"><i class="fa fa-trash-o"></i>删除</a>{/neq}
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-sm btn-success pull-right" id="userGroupAddBtn"
+                                    style="">
+                                <i class="fa fa-plus fa-fw"></i>新增组别
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+{block name="script"}
+<script>
+    var userGroupDelUrl = "{:url('admin.group/del')}";
+    var userGroupAddUrl = "{:url('admin.group/save')}";
+
+    var userGroupAddModal = $('#userGroupAddModal');
+    var userGroupEditModal = $('#userGroupEditModal');
+
+    var userGroupDelBtn = $(".userGroupDelBtn");
+    var userGroupEditBtn = $(".userGroupEditBtn");
+    var userGroupAddBtn = $("#userGroupAddBtn");
+    var userGroupAddConfirmBtn = $(".userGroupAddConfirmBtn");
+    var userGroupEditConfirmBtn = $(".userGroupEditConfirmBtn");
+
+
+    $(document).ready(function () {
+        $('input[type="radio"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'icheckbox_flat-blue',
+            increaseArea: '20%' // optional,
+        });
+
+
+        userGroupEditBtn.click(function () {
+            userGroupEditModal.modal({backdrop: 'static', keyboard: false});
+
+            //clear radio check
+//            userGroupEditModal.find("input[type='radio']").each(function (i, e) {
+//                $(e).iCheck('uncheck');
+//            });
+
+            var id = $(this).data("id");
+            var form = $("form.userGroupEdit");
+
+            formClear(form);
+
+            //查询员工组
+            $.get(userGroupAddUrl, {id: id}, function (data) {
+                console.log(data);
+                form.find("input[name='id']").val(data.id);
+                form.find("input[name='name']").val(data.name);
+                form.find("input[name='sequence']").val(data.sequence);
+                form.find("input[name='remark']").val(data.remark);
+                (data.status == 1) ? form.find(".on").iCheck('check') : form.find(".off").iCheck('check');
+
+//                if (data.status == 1) {
+//                    form.find(".on").iCheck('check');
+//                } else {
+//                    form.find(".off").iCheck('check');
+//                }
+            });
+
+        });
+
+
+        userGroupAddBtn.click(function () {
+            userGroupAddModal.modal({backdrop: 'static', keyboard: false});
+        });
+        //userGroupAdd
+        userGroupAddConfirmBtn.click(function () {
+            var form = $("form.userGroupAdd");
+            //console.log(form.serialize());
+            formPost(form.serialize(), userGroupAddUrl, this);
+        });
+        //userGroupEdit
+        userGroupEditConfirmBtn.click(function () {
+            var form = $("form.userGroupEdit");
+            //console.log(form.serialize());
+            formPost(form.serialize(), userGroupAddUrl, this);
+        });
+        //userGroupDel
+        userGroupDelBtn.click(function () {
+            var id = $(this).data("id");
+            AlertConfirm("删除员工组", "你确定要删除员工组吗？", "删除", function () {
+                formPost({id: id}, userGroupDelUrl, userGroupDelBtn);
+            });
+        });
+
+    })
+</script>
+{/block}
