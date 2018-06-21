@@ -28,9 +28,9 @@ class Index extends Controller
 
     public function index($url = 'index')
     {
-        $title = 'Fuwell';
+        $title = 'FullWell';
         switch ($url) {
-            case 'newlist':
+            case 'News':
                 $assign_data = $this->article(input('id'));
                 break;
             case 'information':
@@ -63,7 +63,7 @@ class Index extends Controller
             $column_file["type" . $item['type']][] = $column['url'] . '/' . $file_type_all[$item['type']] . '/' . $item['address'];
         }
 
-        empty($title) && $title = $column['name'];
+        $title = $column['name'];
         $this->assign('title', $title);
         $this->assign('column', $column);
         $this->assign('column_list', $column_list);

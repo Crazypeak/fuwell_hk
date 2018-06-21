@@ -1,0 +1,296 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+<style>
+    .box {
+        border-radius: 0;
+        border-top: 0 solid #f4f4f4;
+        box-shadow: 0 0px 3px 1px rgba(0,0,0,.1);
+        margin-bottom: 15px;
+    }
+    .goodsClassList .box-header {
+        padding: 5px;
+    }
+    h3.box-title {
+        margin-left: 10px !important;
+    }
+</style>
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- 新增分类 -->
+<div class="modal" id="classListAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增分类</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal classAdd">
+                    <div class="box-body">
+                        <!--<div class="form-group" style="display: none;">-->
+                        <!--<label class="col-sm-3 control-label">pid</label>-->
+                        <!--<div class="col-sm-6">-->
+                        <!--&lt;!&ndash;用户组名称&ndash;&gt;-->
+                        <!--<input type="text" class="form-control" name="pid" value="1"-->
+                        <!--placeholder="">-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label goodsClassName">分类名称</label>
+                            <div class="col-sm-6">
+                                <!--分类名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-6">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success classAddConfirmBtn"><i class="fa fa-check fa-fw"></i>增加
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑分类 -->
+<div class="modal" id="classListEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="">修改分类名称</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal classEdit">
+                    <div class="box-body">
+                        <div class="form-group" style="display: none;">
+                            <label class="col-sm-3 control-label">id</label>
+                            <div class="col-sm-6">
+                                <!--用户组名称-->
+                                <input type="text" class="form-control" name="id" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label goodsClassName">分类名称</label>
+                            <div class="col-sm-6">
+                                <!--分类名称-->
+                                <input type="text" class="form-control" name="name" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group" style=""><label class="col-sm-3 control-label">顺序</label>
+                            <div class="col-sm-6">
+                                <!--状态-->
+                                <div class="input-group spinner navNoSpinner" data-trigger="spinner">
+                                    <input type="text"
+                                           class="form-control text-center"
+                                           name="sequence"
+                                           value="1"
+                                           data-min="1"
+                                           data-rule="quantity">
+                                    <span class="input-group-addon">
+                                    <a href="" class="spin-up" data-spin="up">
+                                        <i class="fa fa-caret-up"></i></a>
+                                    <a href="" class="spin-down" data-spin="down">
+                                        <i class="fa fa-caret-down"></i></a>
+                                    </span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>取消
+                </button>
+                <button type="button" class="btn btn-success classListEditConfirmBtn"><i class="fa fa-check fa-fw"></i>修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- 分类 box -->
+            <div class="row" style="margin-bottom: 55px;">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-success classAddBtn pull-right" data-id="" data-pid="0"><i
+                            class="fa fa-plus fa-fw"></i>增加分类
+                    </button>
+                </div>
+            </div>
+
+            <div id="classList">
+                {volist name="class_list" id="vo"}
+                <!--一层-->
+                <div class="box box-default goodsClassList class{$vo.id}" style="cursor:pointer" data-id="{$vo.id}" data-name="{$vo.name}">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" style="margin-top: 8px;">{$vo.name}</h3>
+                        <!--<div class="box-tools pull-right">-->
+                        <div class="pull-right">
+                            <span>{$vo.sequence}</span>
+                            <button type="button" class="btn btn-box-tool classEditBtn" data-id="{$vo.id}" data-sequence="{$vo.sequence}" data-name="{$vo.name}">
+                                <i class="fa fa-pencil-square-o fa-fw"></i>编辑
+                            </button>
+
+                            <!--<button type="button" class="btn btn-box-tool classDelBtn" data-id="{$vo.id}">-->
+                            <!--<i class="fa fa-trash-o fa-fw"></i>删除-->
+                            <!--</button>-->
+
+                            <!--<button type="button" class="btn btn-box-tool classTwoAddBtn" data-id="{$vo.id}"-->
+                            <!--data-pid=""><i class="fa fa-plus fa-fw"></i>新增分类商品-->
+                            <!--</button>-->
+                        </div>
+                    </div>
+                    <div class="box-body" style="margin-left: 30px;padding-right: 0">
+                    </div>
+                </div>
+                {/volist}
+            </div>
+            <!-- /.box-body -->
+            <!--<div class="box-footer no-padding">-->
+            <!--</div>-->
+            <!-- /.footer -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+{/block}
+
+{block name="scriptSrc"}
+
+
+{/block}
+
+
+{block name="script"}
+<script>
+    var goodsClassAddUrl = "{:url('classEdit')}";
+    var goodsClassDelUrl = "{:url('classDel')}";
+
+    var checkNothingChildren = ".content .box-body.no-padding,.box.box-default .box-body";
+
+    //无下级分类隐藏处理
+    $(checkNothingChildren).each(function (i,e) {
+//        console.log($(e).children("div"));
+        if($(e).children("div").length === 0){
+            $(e).hide();
+        }
+    });
+    var goodsClassList = $(".goodsClassList");
+
+    var classAddBtn = $(".classAddBtn");
+    var classTwoAddBtn = $(".classTwoAddBtn");
+    var classThreeAddBtn = $(".classThreeAddBtn");
+
+    //编辑按钮
+    var classEditBtn = $(".classEditBtn");
+    var classDelBtn = $(".classDelBtn");
+
+    var classListAddModal = $("#classListAddModal");
+    var classListEditModal = $("#classListEditModal");
+    var classAddConfirmBtn = $(".classAddConfirmBtn");
+    var classListEditConfirmBtn = $(".classListEditConfirmBtn");
+
+    classAddBtn.click(function () {
+        classListAddModal.modal({backdrop: 'static'});
+//            classListAddModal.find("input[name='pid']").val("0");
+//            classListAddModal.find("label.goodsClassName").text("一级分类名称");
+    });
+//        classTwoAddBtn.click(function () {
+//            var id = $(this).data("id");
+//            classListAddModal.modal({backdrop: 'static'});
+//            classListAddModal.find("input[name='pid']").val(id);
+//            classListAddModal.find("label.goodsClassName").text("二级分类名称");
+//        });
+//        classThreeAddBtn.click(function () {
+//            var id = $(this).data("id");
+//            classListAddModal.modal({backdrop: 'static'});
+//            classListAddModal.find("input[name='pid']").val(id);
+//            classListAddModal.find("label.goodsClassName").text("三级分类名称");
+//        });
+
+    //新增确认
+    classAddConfirmBtn.click(function () {
+        formPost(($("form.classAdd")).serialize(), goodsClassAddUrl);
+    });
+
+    //编辑按钮
+    classEditBtn.click(function () {
+        classListEditModal.modal({backdrop: 'static'});
+        var id = $(this).data("id");
+//            var pid = $(this).data("pid");
+        var name = $(this).data("name");
+        var sequence = $(this).data("sequence");
+        classListEditModal.find("input[name='id']").val(id);
+//            classListEditModal.find("input[name='pid']").val(pid);
+        classListEditModal.find("input[name='name']").val(name);
+        classListEditModal.find("input[name='sequence']").val(sequence);
+    });
+
+    //编辑确认
+    classListEditConfirmBtn.click(function () {
+        formPost(($("form.classEdit")).serialize(), goodsClassAddUrl);
+    });
+
+    //删除按钮
+    classDelBtn.click(function () {
+        var id = $(this).data("id");
+        AlertConfirm("删除分类", "确定要删除该分类吗", "删除", function () {
+            formPost(jQuery.param({id: id}), goodsClassDelUrl);
+        });
+    });
+
+</script>
+
+
+{/block}
+

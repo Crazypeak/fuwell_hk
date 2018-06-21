@@ -35,5 +35,6 @@ class Goods extends Validate
     protected $scene = [
         'goods'        => ['name', 'class_id', 'status', 'sequence'],
         'goods_detail' => ['name', 'type', 'sequence'],
+        'goods_class' => ['name', 'sequence'],
     ];
 }

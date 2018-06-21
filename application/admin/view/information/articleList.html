@@ -38,7 +38,9 @@
                             <th style="width: 120px">作者</th>
                             <th style="width: 160px;">发布时间</th>
                             <th style="width: 80px;">状态</th>
+                            {if condition="!is_HK()"}
                             <th style="width: 80px;">类型</th>
+                            {/if}
                             <th style="width: 220px;">操作</th>
                         </tr>
 
@@ -55,6 +57,8 @@
                                 {default /}
                                 {/switch}
                             </td>
+
+                            {if condition="!is_HK()"}
                             <td>
                                 {switch name="vo.type"}
                                 {case value="0"}<span class="label bg-yellow">公司新闻</span>{/case}
@@ -62,6 +66,7 @@
                                 {default /}
                                 {/switch}
                             </td>
+                            {/if}
                             <td>
                                 <a href="{:url('save',['id'=>$vo['id']])}">
                                     <i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>

@@ -14,7 +14,7 @@ class GoodsModel extends LogModel
 {
     public static function getGoodsPage($where = [], $page = 30)
     {
-        return Db::name('goods')->where($where)->order(['class_id'=>'ASC','sequence'=>'ASC'])->paginate($page);
+        return Db::name('goods')->where($where)->order(['class_id' => 'ASC', 'sequence' => 'ASC'])->paginate($page);
     }
 
     public static function getGoodsOne($id = null)
@@ -29,24 +29,31 @@ class GoodsModel extends LogModel
             return $validate->getError();
         }
 
-        $goods['class_name'] = Db::name('column_url')->where(['id' => $data['class_id']])->value('name');
-
-        $goods['name']        = trim($data['name']);
-        $goods['class_id']    = $data['class_id'];
-        $goods['status']      = $data['status'];
-        $goods['sequence']    = $data['sequence'];
-        $goods['img_url']     = $data['img_url'];
-        $goods['create_time'] = date('Y-m-d H:i:s');
+        $class_name = Db::name('column_url')->where(['id' => $data['class_id']])->value('name');
+        $goods = self::dataGoods($data,$class_name);
 
         if (isset($data['id']) && is_numeric($data['id'])) {
             Db::name('goods')->where(['id' => $data['id']])->update($goods);
             $id = $data['id'];
         } else {
             $article['id'] = time();
-            $id            = Db::name('goods')->insertGetId($goods);
+            $id = Db::name('goods')->insertGetId($goods);
         }
 
         return $id;
+    }
+
+    protected static function dataGoods($data,$class_name = ''){
+        $goods['name'] = $class_name;
+        $goods['name'] = trim($data['name']);
+        $goods['code'] = "P" . $data['class_id'] . date('YmdHis').rand(1000,9999);
+        $goods['class_id'] = $data['class_id'];
+        $goods['status'] = $data['status'];
+        $goods['sequence'] = $data['sequence'];
+        $goods['img_url'] = $data['img_url'];
+        $goods['create_time'] = date('Y-m-d H:i:s');
+
+        return $goods;
     }
 
     public static function delGoods($id)
@@ -56,12 +63,12 @@ class GoodsModel extends LogModel
 
     public static function getGoodsDetailList($goods_id)
     {
-        $detail_data = Db::name('goods_detail')->where(['goods_id'=>$goods_id])->order(['pid' => 'ASC', 'sequence' => 'ASC'])->select();
+        $detail_data = Db::name('goods_detail')->where(['goods_id' => $goods_id])->order(['pid' => 'ASC', 'sequence' => 'ASC'])->select();
 
         $detail_list = [];
         foreach ($detail_data as $item) {
             if ($item['pid'] == 0) {
-                $detail_list[$item['id']]          = $item;
+                $detail_list[$item['id']] = $item;
                 $detail_list[$item['id']]['child'] = [];
             } else {
                 $detail_list[$item['pid']]['child'][] = $item;
@@ -86,19 +93,19 @@ class GoodsModel extends LogModel
             }
         };
 
-        $detail['goods_id']    = $data['goods_id'];
-        $detail['pid']         = $data['pid'];
-        $detail['key']         = $data['name'];
-        $detail['value']       = $data['text'];
-        $detail['type']        = $data['type'];
-        $detail['sequence']    = $data['sequence'];
+        $detail['goods_id'] = $data['goods_id'];
+        $detail['pid'] = $data['pid'];
+        $detail['key'] = $data['name'];
+        $detail['value'] = $data['text'];
+        $detail['type'] = $data['type'];
+        $detail['sequence'] = $data['sequence'];
         $detail['create_time'] = date('Y-m-d H:i:s');
 
         $id = Db::name('goods_detail')->insertGetId($detail);
 
         //层次，结构概念方便搜索用
         $parent = Db::name('goods_detail')->find($data['pid']);
-        $layer  = ($parent ? $parent['layer'] : '') . $id . ',';
+        $layer = ($parent ? $parent['layer'] : '') . $id . ',';
         Db::name('goods_detail')->where(['id' => $id])->update(['layer' => $layer]);
 
         return '';
@@ -118,7 +125,7 @@ class GoodsModel extends LogModel
      */
     public static function getClassList($where = [])
     {
-        return Db::name('goods_class')->where($where)->select();
+        return Db::name('goods_class')->where($where)->order(['sequence' => 'ASC'])->select();
     }
 
     public static function getClassOne($id = 0)

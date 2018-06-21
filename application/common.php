@@ -9,7 +9,7 @@
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 function is_HK(){
-    if (!strpos('gt-jm.com',$_SERVER['SERVER_NAME'])){
+    if ($_SERVER['SERVER_NAME']==='crazypeak.fullwell-hk.com'){
         return true;
     }else return false;
 }

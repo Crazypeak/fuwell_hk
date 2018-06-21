@@ -11,6 +11,8 @@ class Index extends Controller
 
     public function _initialize()
     {
+//        print_r('<pre>');
+//        print_r($_SERVER);die;
         if (defined('USER_ID'))
             return true;
         define('USER_ID', is_login());

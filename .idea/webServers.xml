@@ -10,6 +10,14 @@
           <option name="port" value="21" />
         </fileTransfer>
       </webServer>
+      <webServer id="af3fa175-193a-41db-8ff0-9c2d81778ed4" name="xdm391294537.my3w.com" url="http://xyu3948850001.my3w.com">
+        <fileTransfer host="xyu3948850001.my3w.com" port="21" rootFolder="/htdocs/winstart">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
