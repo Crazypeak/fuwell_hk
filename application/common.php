@@ -9,7 +9,7 @@
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 function is_HK(){
-    if ($_SERVER['SERVER_NAME']==='crazypeak.fullwell-hk.com'){
+    if ($_SERVER['SERVER_NAME']==='test.fullwell-hk.com'){
         return true;
     }else return false;
 }

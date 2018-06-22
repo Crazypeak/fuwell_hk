@@ -9,10 +9,10 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-//return [
-//    '__pattern__' => [
-//        'name' => '\w+',
-//    ],
-//
-//    '/' => 'index/Index/index?url=index',
-//];
+return [
+    '__pattern__' => [
+        'name' => '\w+',
+    ],
+
+    '/' => 'Index/index?url=index',
+];

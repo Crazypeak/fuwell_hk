@@ -21,8 +21,9 @@ class Index extends Controller
         }
 
         $parameter = ParameterModel::getParameterList();
-        $footer    = ParameterModel::getFooterList();
         $this->assign('par', $parameter);
+
+        $footer    = ParameterModel::getFooterList();
         $this->assign('footer', $footer);
     }
 

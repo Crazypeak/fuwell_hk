@@ -20,8 +20,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-xs-4">
-                    <div class="top-number"><p><i class="fa fa-phone-square"></i> (+86) 750
-                        3555655&nbsp;&nbsp;&nbsp;<span class="ihonetel">(+86) 750 3559881</span></p></div>
+                    <div class="top-number">
+                        <p>
+                            <i class="fa fa-phone-square"></i>{$par.con_phone_1}&nbsp;&nbsp;&nbsp;
+                            <span class="ihonetel">{$par.con_phone_2}</span>
+                        </p>
+                    </div>
                 </div>
                 <div class="col-sm-6 col-xs-8">
                     <div class="social">
@@ -64,7 +68,7 @@
         <div class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 {volist name='column_list' id='item'}
-                <li><a href="{$item.url}">{$item.name}</a></li>
+                <li><a href="/{$item.url}">{$item.name}</a></li>
                 {/volist}
                 <!--<li class="active"><a href="index.html">Home</a></li>-->
                 <!--<li><a href="about us.html">About Us</a></li>-->
@@ -100,7 +104,7 @@
                 <div class="widget">
                     <h3>Address</h3>
                     <ul>
-                        <li>No. 16, Zilai Road, Pengjiang District, Jiangmen, Guangdong, China</li>
+                        <li>{$par.con_address}</li>
                     </ul>
                 </div>
             </div>
@@ -108,8 +112,8 @@
                 <div class="widget">
                     <h3>Phone</h3>
                     <ul>
-                        <li>(+86) 750 3555655</li>
-                        <li>(+86) 750 3559881</li>
+                        <li>{$par.con_phone_1}</li>
+                        <li>{$par.con_phone_2}</li>
                     </ul>
                 </div>
             </div>
@@ -117,8 +121,8 @@
                 <div class="widget">
                     <h3>Email</h3>
                     <ul>
-                        <li>felix@fullwell-hk.com</li>
-                        <li>cindy@fullwell-hk.com</li>
+                        <li>{$par.con_email_1}</li>
+                        <li>{$par.con_email_2}</li>
                     </ul>
                 </div>
             </div>
@@ -143,9 +147,9 @@
             </div>
             <div class="col-sm-4">
                 <ul class="pull-right">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Products</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/About Us">About Us</a></li>
+                    <li><a href="/Products">Products</a></li>
                 </ul>
             </div>
         </div>

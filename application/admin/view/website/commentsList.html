@@ -1,0 +1,76 @@
+{extend name="Public:base" /}
+
+{block name="header"}
+{/block}
+
+<!-- 样式 -->
+{block name="style"}
+
+
+<style>
+
+
+</style>
+{/block}
+<!-- /.样式 -->
+
+{block name="content"}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-6">
+                            <h3 class="box-title">产品列表</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th style="">时间</th>
+                            <th style="">名称</th>
+                            <th style="">电话</th>
+                            <th style="">邮箱</th>
+                            <th style="">信息</th>
+                        </tr>
+
+                        {volist name="list" id="vo"}
+                        <tr>
+                            <td >{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                            <td title="{$vo.name}">{$vo.name}</td>
+                            <td title="{$vo.phone}">{$vo.phone}</td>
+                            <td title="{$vo.email}">{$vo.email}</td>
+                            <td title="{$vo.message}">{$vo.message}</td>
+                        </tr>
+                        {/volist}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{/block}
+
+{block name="scriptSrc"}
+<script src="/static/plugins/select2/select2.min.js"></script>
+<script src="/static/plugins/select2/i18n/zh-CN.js"></script>
+{/block}
+
+
+{block name="script"}
+<script type="text/javascript">
+</script>
+{/block}
+

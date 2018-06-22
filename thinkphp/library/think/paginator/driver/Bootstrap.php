@@ -15,6 +15,12 @@ use think\Paginator;
 
 class Bootstrap extends Paginator
 {
+    private $is_HK;
+    public function __construct($items, $listRows, $currentPage = null, $total = null, $simple = false, array $options = [])
+    {
+        $this->is_HK = is_HK();
+        parent::__construct($items, $listRows, $currentPage, $total, $simple, $options);
+    }
 
     /**
      * 上一页按钮
@@ -23,6 +29,7 @@ class Bootstrap extends Paginator
      */
     protected function getPreviousButton($text = "&lt")
     {
+        if ($this->is_HK) $text = '<i class="fa fa-long-arrow-left"></i>Previous Page';
 
         if ($this->currentPage() <= 1) {
             return $this->getDisabledTextWrapper($text);
@@ -42,6 +49,8 @@ class Bootstrap extends Paginator
      */
     protected function getNextButton($text = '&gt')
     {
+        if ($this->is_HK) $text = 'Next Page<i class="fa fa-long-arrow-right"></i>';
+
         if (!$this->hasMore) {
             return $this->getDisabledTextWrapper($text);
         }
@@ -116,8 +125,11 @@ class Bootstrap extends Paginator
                     $this->getNextButton()
                 );
             } else {
+                $div = '<div class="pager">%s %s %s</div>';
+                if ($this->is_HK) $div = '<ul class="pagination pagination-lg">%s %s %s</ul>';
+
                 return sprintf(
-                    '<div class="pager">%s %s %s</div>',
+                    $div,
                     $this->getPreviousButton(),
                     $this->getLinks(),
                     $this->getNextButton()
@@ -135,6 +147,9 @@ class Bootstrap extends Paginator
      */
     protected function getAvailablePageWrapper($url, $page)
     {
+        if ($this->is_HK){
+            return '<li><a href="' . htmlentities($url) . '">' . $page . '</a></li>';
+        }
         return '<a href="' . htmlentities($url) . '">' . $page . '</a>';
     }
 
@@ -146,6 +161,9 @@ class Bootstrap extends Paginator
      */
     protected function getDisabledTextWrapper($text)
     {
+        if ($this->is_HK){
+            return '<li class="disabled"><a class="disabled">' . $text . '</a></li>';
+        }
         return '<a class="disabled"><span>' . $text . '</span></a>';
     }
 
@@ -157,6 +175,9 @@ class Bootstrap extends Paginator
      */
     protected function getActivePageWrapper($text)
     {
+        if ($this->is_HK){
+            return '<li class="active"><a class="disabled">' . $text . '</a></li>';
+        }
         return '<a class="now_page"><span>' . $text . '</span></a>';
     }
 

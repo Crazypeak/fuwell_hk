@@ -87,7 +87,7 @@
 
 <section class="content">
     <div class="row">
-        <div class="col-md-offset-1 col-md-5">
+        <div class="col-md-offset-1 col-md-10">
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
@@ -135,74 +135,74 @@
             </div>
             <!-- /.box -->
         </div>
-        <div class="col-md-offset-0 col-md-5">
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-6">
-                            <h3 class="box-title">底部导航</h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table class="table table-bordered table-hover collaptable">
-                        <tbody>
-                        <tr>
-                            <th style="">名称</th>
-                            <th style="">地址</th>
-                            <th style="width: 60px;">顺序</th>
-                            <th style="width: 120px;">操作</th>
-                        </tr>
+        <!--<div class="col-md-offset-0 col-md-5">-->
+            <!--&lt;!&ndash; Default box &ndash;&gt;-->
+            <!--<div class="box">-->
+                <!--<div class="box-header with-border">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-4 col-lg-6">-->
+                            <!--<h3 class="box-title">底部导航</h3>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.box-header &ndash;&gt;-->
+                <!--<div class="box-body">-->
+                    <!--<table class="table table-bordered table-hover collaptable">-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<th style="">名称</th>-->
+                            <!--<th style="">地址</th>-->
+                            <!--<th style="width: 60px;">顺序</th>-->
+                            <!--<th style="width: 120px;">操作</th>-->
+                        <!--</tr>-->
 
-                        {volist name="footer_list" id="vo"}
-                        <tr data-id="{$vo.id}" data-parent="">
-                            <td>{$vo.name}</td>
-                            <td>'顶部'</td>
-                            <td>{$vo.sequence}</td>
-                            <td>
-                                <a class="text-info footerChildAddBtn"
-                                   href="javascript:void(0);" data-pid="{$vo.id}">
-                                    <i class="fa fa-plus fa-fw"></i>新增</a>
-                                <a href="javascript:void(0);" class="text-danger single footerUrlDelBtn"
-                                   data-id="{$vo.id}">
-                                    <i class="fa fa-trash fa-fw"></i>删除</a>
-                            </td>
-                        </tr>
-                        {volist name="vo.child" id="child_item"}
-                        <tr data-id="{$child_item.id}" data-parent="{$child_item.pid}">
-                            <td>|—&nbsp;&nbsp;&nbsp;{$child_item.name}</td>
-                            <td>{$child_item.url}</td>
-                            <td>{$vo.sequence}.{$child_item.sequence}</td>
-                            <td>
-                                <a href="javascript:void(0);" class="text-danger single footerUrlDelBtn"
-                                   data-id="{$child_item.id}">
-                                    <i class="fa fa-trash fa-fw"></i>删除</a>
-                            </td>
-                        </tr>
-                        {/volist}
-                        {/volist}
+                        <!--{volist name="footer_list" id="vo"}-->
+                        <!--<tr data-id="{$vo.id}" data-parent="">-->
+                            <!--<td>{$vo.name}</td>-->
+                            <!--<td>'顶部'</td>-->
+                            <!--<td>{$vo.sequence}</td>-->
+                            <!--<td>-->
+                                <!--<a class="text-info footerChildAddBtn"-->
+                                   <!--href="javascript:void(0);" data-pid="{$vo.id}">-->
+                                    <!--<i class="fa fa-plus fa-fw"></i>新增</a>-->
+                                <!--<a href="javascript:void(0);" class="text-danger single footerUrlDelBtn"-->
+                                   <!--data-id="{$vo.id}">-->
+                                    <!--<i class="fa fa-trash fa-fw"></i>删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--{volist name="vo.child" id="child_item"}-->
+                        <!--<tr data-id="{$child_item.id}" data-parent="{$child_item.pid}">-->
+                            <!--<td>|—&nbsp;&nbsp;&nbsp;{$child_item.name}</td>-->
+                            <!--<td>{$child_item.url}</td>-->
+                            <!--<td>{$vo.sequence}.{$child_item.sequence}</td>-->
+                            <!--<td>-->
+                                <!--<a href="javascript:void(0);" class="text-danger single footerUrlDelBtn"-->
+                                   <!--data-id="{$child_item.id}">-->
+                                    <!--<i class="fa fa-trash fa-fw"></i>删除</a>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--{/volist}-->
+                        <!--{/volist}-->
 
-                        </tbody>
-                    </table>
+                        <!--</tbody>-->
+                    <!--</table>-->
 
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <button type="submit" class="btn btn-sm	btn-success pull-right"
-                                    id="footerAddBtn" style="">
-                                <i class="fa fa-plus fa-fw"></i>新增父级底部导航
-                            </button>
-                        </div>
-                    </div>
+                <!--</div>-->
+                <!--&lt;!&ndash; /.box-body &ndash;&gt;-->
+                <!--<div class="box-footer clearfix">-->
+                    <!--<div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">-->
+                        <!--<div class="btn-group" role="group" aria-label="...">-->
+                            <!--<button type="submit" class="btn btn-sm	btn-success pull-right"-->
+                                    <!--id="footerAddBtn" style="">-->
+                                <!--<i class="fa fa-plus fa-fw"></i>新增父级底部导航-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                </div>
-            </div>
-            <!-- /.box -->
-        </div>
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; /.box &ndash;&gt;-->
+        <!--</div>-->
     </div>
 </section>
 

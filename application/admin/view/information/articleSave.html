@@ -44,7 +44,12 @@
 
                                 {if condition="is_HK()"}
                                 <input type="hidden" name="type" id="type" value="0"/>
+                                <label class="col-sm-1 control-label">关键词</label>
+                                <div class="col-sm-3">
+                                    <input type="text" placeholder="以“|”区分每个关键词" class="form-control" id="keywords" name="keywords">
+                                </div>
                                 {else/}
+                                <input type="hidden" name="keywords" id="keywords" value=""/>
                                 <label class="col-sm-1 control-label"><span class="text-danger">&nbsp;*</span>类别</label>
                                 <div class="col-sm-3">
                                     <select name="type" id="type" class="form-control">
@@ -141,6 +146,7 @@
         $('#articleImg').attr('src', data.img_url);
 
         $("#title").val(data.title);
+        $("#keywords").val(data.keywords);
         $("#description").val(data.description);
         ue.ready(function() {   //编辑器初始化完成再赋值
             ue.setContent(data.content);  //赋值给UEditor
@@ -213,6 +219,7 @@
             newsSaveData.append('status', $("#status").val());
             newsSaveData.append('content', $("[name='editorValue']").val());
             newsSaveData.append('description', $("#description").val());
+            newsSaveData.append('keywords', $("#keywords").val());
             originFormPost(newsSaveData, newsSaveUrl, this);
         });
     });

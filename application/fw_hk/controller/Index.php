@@ -2,6 +2,7 @@
 
 namespace app\fw_hk\controller;
 
+use app\fw_hk\model\CommentsModel;
 use app\fw_hk\model\GoodsModel;
 use app\fw_hk\model\InformationModel;
 use app\fw_hk\model\ParameterModel;
@@ -21,14 +22,15 @@ class Index extends Controller
         }
 
         $parameter = ParameterModel::getParameterList();
-        $footer    = ParameterModel::getFooterList();
         $this->assign('par', $parameter);
-        $this->assign('footer', $footer);
+
+//        $footer    = ParameterModel::getFooterList();
+//        $this->assign('footer', $footer);
     }
 
     public function index($url = 'index')
     {
-        $title = 'FullWell';
+//        $title = 'FullWell';
         switch ($url) {
             case 'News':
                 $assign_data = $this->article(input('id'));
@@ -85,6 +87,8 @@ class Index extends Controller
             $article = InformationModel::getNewsOne(['id' => $id]);
             !$article && $this->error('404!');
 
+            $article['keywords'] = explode('|',$article['keywords']);
+
             $article['article'] = $article;
             $where['id']        = ['LT', $id];
             $article['last']    = InformationModel::getNewsOne($where, ['id', 'title']);
@@ -105,5 +109,20 @@ class Index extends Controller
     private function goods($id)
     {
         return GoodsModel::getGoodsOne($id);
+    }
+
+    public function apiPostContact(){
+        if ($data = input('post.')){
+            $comments['name'] = $data['name'];
+            $comments['phone'] = $data['phone'];
+            $comments['email'] = $data['email'];
+            $comments['message'] = $data['message'];
+
+            $comments['create_time'] = time();
+            CommentsModel::addComments($comments);
+
+            $this->success('Thank you for your valuable comments',url('/'));
+        }
+//        else $this->redirect('/Contact');
     }
 }
