@@ -117,7 +117,7 @@
                     <table class="table table-bordered table-hover">
                         <tbody>
                         <tr>
-                            <th style="width: 120px">封面</th>
+                            <th style="width: 240px">封面</th>
                             <th style="width: 200px">名称</th>
                             <th style="">所属分类</th>
                             <th style="width: 50px">排序</th>
@@ -129,7 +129,7 @@
                         {volist name="list" id="vo"}
                         <tr>
                             <td title="{$vo.name}">
-                                <img src="{$vo.img_url}"/>
+                                <img height="80px" src="{$vo.img_url}"/>
                             </td>
                             <td>
                                 {$vo.name}

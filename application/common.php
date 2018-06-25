@@ -9,7 +9,9 @@
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 function is_HK(){
-    if ($_SERVER['SERVER_NAME']==='test.fullwell-hk.com'){
+
+    return true;
+    if ($_SERVER['SERVER_NAME']==='localhost'){
         return true;
     }else return false;
 }
@@ -17,6 +19,13 @@ function is_HK(){
 if (is_HK()){
     \think\Config::set('database.prefix','fw_hk_');
     \think\Config::set('default_module','fw_hk');
+    \think\Config::set('dispatch_error_tmpl',APP_PATH.'fw_hk/view/error/index.html');
+    \think\Config::set('exception_tmpl',APP_PATH.'fw_hk/view/error/index.html');
+
+    $column = \think\Db::name('goods_class')->column('name');
+    foreach ($column as $item){
+        \think\Route::rule($item.'/[:id]',\think\Config::get('default_module').'/Index/index?url=Products&class='.$item);
+    }
 };
 
 // 应用公共文件
@@ -24,5 +33,5 @@ if (is_HK()){
 
 $column = \think\Db::name('column_url')->column('url');
 foreach ($column as $item){
-    \think\Route::rule($item.'/[:id]',\think\Config::get('default_module').'/Index/index?url='.$item);
+    \think\Route::rule($item.'/[:id]/[:goods]',\think\Config::get('default_module').'/Index/index?url='.$item);
 }

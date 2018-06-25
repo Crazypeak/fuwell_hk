@@ -68,8 +68,16 @@
         <div class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 {volist name='column_list' id='item'}
-                <li><a href="/{$item.url}">{$item.name}</a></li>
+                    <li id="{$item.name}"><a href="/{$item.url}">{$item.name}</a></li>
                 {/volist}
+
+                <script type="text/javascript">
+                    obj = '<ul class="dropdown-menu">'+
+                            '{volist name="class" id="class_item"}<li><a href="/{$class_item.name}">{$class_item.name}</a></li>{/volist}'+
+                        '</ul>';
+                    $('#Products').addClass('dropdown').find('a').append(' <i class="fa fa-angle-down"></i>').append(obj);
+                </script>
+
                 <!--<li class="active"><a href="index.html">Home</a></li>-->
                 <!--<li><a href="about us.html">About Us</a></li>-->
                 <!--<li class="dropdown">-->

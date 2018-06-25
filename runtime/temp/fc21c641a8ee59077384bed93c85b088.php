@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:60:"D:\PHP\demo\winstart/application/index\view\index\index.html";i:1529475609;s:53:"D:\PHP\demo\winstart/application/index\view\base.html";i:1510803710;s:57:"D:\PHP\demo\winstart/application/index\view\baseHead.html";i:1510166498;s:59:"D:\PHP\demo\winstart/application/index\view\baseScript.html";i:1509433666;s:54:"D:\PHP\demo\winstart/application/index\view\right.html";i:1523861515;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:8:{s:60:"D:\PHP\demo\winstart/application/index\view\index\index.html";i:1529476579;s:53:"D:\PHP\demo\winstart/application/index\view\base.html";i:1510803710;s:57:"D:\PHP\demo\winstart/application/index\view\baseHead.html";i:1510166498;s:74:"D:\PHP\demo\winstart/application/index\view\index\html\20180416091416.html";i:1523841256;s:74:"D:\PHP\demo\winstart/application/index\view\index\html\20180416091630.html";i:1523841390;s:59:"D:\PHP\demo\winstart/application/index\view\baseScript.html";i:1509433666;s:72:"D:\PHP\demo\winstart/application/index\view\index\js\20171022205417.html";i:1508676856;s:54:"D:\PHP\demo\winstart/application/index\view\right.html";i:1523861515;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -126,6 +126,29 @@
 
 <!-- 主要内容 -->
 
+<!--轮播图 开始-->
+<div class="fullSlide">
+    <div class="bd">
+        <ul>
+            <li class="banner01"><a href="http://www.gt-jm.com/zhiwensuo" target="_blank" alt="江门FULLWELL指纹密码锁"></a></li>
+            <li class="banner02"><a href="http://www.gt-jm.com/jixiesuo" target="_blank" alt="FULLWELL机械防盗锁"></a></li>
+            <li class="banner03"><a href="http://www.gt-jm.com/evva" target="_blank" alt="防暴力防技术开启EVVA锁芯"></a></li>
+        </ul>
+    </div>
+    <div class="hd">
+        <ul></ul>
+    </div>
+    <span class="prev"></span>
+    <span class="next"></span>
+</div>
+<!--轮播图 end-->
+<!--广告位 开始-->
+<div class="items cf">
+    <a class="wow fadeInUp" style="animation-delay:0s;" data-wow-duration="1000ms" href="http://www.gt-jm.com/zhiwensuo" target="blank"><img src="images/advert01.jpg" target="_blank" alt="FULLWELL指纹密码锁"/></a>
+    <a class="wow fadeInUp" style="animation-delay:0s;" data-wow-duration="1000ms" href="http://www.gt-jm.com/evva" target="blank"><img src="images/advert02.jpg" alt="著名品牌EVVA锁芯"/></a>
+    <a class="wow fadeInUp" style="animation-delay:0s;" data-wow-duration="1000ms" href="http://www.gt-jm.com/aboutus"  target="_blank"><img src="images/advert03.jpg" alt="门锁个性化定制"/></a>
+</div>
+<!--广告位 end-->
 
 <!--主体 end-->
 
@@ -174,6 +197,61 @@
 </script>
 
 
+<script type="text/javascript">
+    $(".fullSlide").hover(function () {
+            $(this).find(".prev,.next").stop(true, true).fadeTo("show", 0.5)
+        },
+        function () {
+            $(this).find(".prev,.next").fadeOut()
+        });
+    $(".fullSlide").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        effect: "fold",
+        autoPlay: true,
+        autoPage: true,
+        trigger: "click",
+        startFun: function (i) {
+            var curLi = jQuery(".fullSlide .bd li").eq(i);
+            if (!!curLi.attr("_src")) {
+                curLi.css("background", curLi.attr("_src")).removeAttr("_src")
+            }
+        }
+    });
+</script>
+<script>
+    $(function () {
+        $(window).on('scroll', function () {
+            var st = $(document).scrollTop();
+            if (st > 0) {
+                if ($('#main-container').length != 0) {
+                    var w = $(window).width(), mw = $('#main-container').width();
+                    if ((w - mw) / 2 > 70)
+                        $('#go-top').css({'left': (w - mw) / 2 + mw + 20});
+                    else {
+                        $('#go-top').css({'left': 'auto'});
+                    }
+                }
+                $('#go-top').fadeIn(function () {
+                    $(this).removeClass('dn');
+                });
+            } else {
+                $('#go-top').fadeOut(function () {
+                    $(this).addClass('dn');
+                });
+            }
+        });
+        $('#go-top .go').on('click', function () {
+            $('html,body').animate({'scrollTop': 0}, 500);
+        });
+
+        $('#go-top .uc-2vm').hover(function () {
+            $('#go-top .uc-2vm-pop').removeClass('dn');
+        }, function () {
+            $('#go-top .uc-2vm-pop').addClass('dn');
+        });
+    });
+</script>
 
 
 <!-- 右客服侧悬浮代码 开始 -->

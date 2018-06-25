@@ -30,7 +30,7 @@ class GoodsModel extends LogModel
         }
 
         $class_name = Db::name('column_url')->where(['id' => $data['class_id']])->value('name');
-        $goods = self::dataGoods($data,$class_name);
+        $goods = self::dataGoods($data,$data['status'],$data['sequence'],$data['class_id'],$class_name);
 
         if (isset($data['id']) && is_numeric($data['id'])) {
             Db::name('goods')->where(['id' => $data['id']])->update($goods);
@@ -43,13 +43,29 @@ class GoodsModel extends LogModel
         return $id;
     }
 
-    protected static function dataGoods($data,$class_name = ''){
-        $goods['name'] = $class_name;
-        $goods['name'] = trim($data['name']);
-        $goods['code'] = "P" . $data['class_id'] . date('YmdHis').rand(1000,9999);
-        $goods['class_id'] = $data['class_id'];
-        $goods['status'] = $data['status'];
-        $goods['sequence'] = $data['sequence'];
+    public static function addGoodsArray($data = [],$class_id = 0){
+        $class_name = Db::name('column_url')->where(['id' => $class_id])->value('name');
+        $sequence = Db::name('goods')->where(['class_id'=>$class_id])->order(['sequence'=>'DESC'])->find()['sequence'];
+
+        $goods_array_data = [];
+        foreach ($data as $item){
+            $sequence += 1;
+            $goods = ['name'=>0,'img_url'=>$item];
+            $goods_array_data[] = self::dataGoods($goods,1,$sequence,$class_id,$class_name);
+        }
+
+        if ($goods_array_data && Db::name('goods')->insertAll($goods_array_data)){
+            return '';
+        }return '数据库错误';
+    }
+
+    protected static function dataGoods($data,$status = 1,$sequence = 1,$class_id = 0,$class_name = ''){
+        $goods['class_name'] = $class_name;
+        $goods['code'] = "P" . $class_id . date('YmdHis').rand(1000,9999);
+        $goods['name'] = $data['name'] ? trim($data['name']) : $goods['code'];
+        $goods['class_id'] = $class_id;
+        $goods['status'] = $status;
+        $goods['sequence'] = $sequence;
         $goods['img_url'] = $data['img_url'];
         $goods['create_time'] = date('Y-m-d H:i:s');
 

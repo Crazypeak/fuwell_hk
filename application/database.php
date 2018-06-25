@@ -13,17 +13,17 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-//    'hostname'       => 'localhost',
-//    'database'       => 'winstart',
-//    'username'       => 'root',
-//    'password'       => 'root',
-//    'hostport'       => '3306',
-
-    'hostname'       => 'hdm386770184.my3w.com',
-    'database'       => 'hdm386770184_db',
-    'username'       => 'hdm386770184',
-    'password'       => 'gt3555655',
+    'hostname'       => 'localhost',
+    'database'       => 'winstart',
+    'username'       => 'root',
+    'password'       => 'root',
     'hostport'       => '3306',
+
+//    'hostname'       => 'hdm386770184.my3w.com',
+//    'database'       => 'hdm386770184_db',
+//    'username'       => 'hdm386770184',
+//    'password'       => 'gt3555655',
+//    'hostport'       => '3306',
 
     // 连接dsn
     'dsn'             => '',

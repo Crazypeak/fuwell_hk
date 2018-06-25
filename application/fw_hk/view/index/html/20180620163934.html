@@ -1,15 +1,27 @@
-
-<!--slider 开始-->
-<div class="slider_bg">
-    <div class="slider">
-        <div class="callbacks_container">
-            <ul class="rslides" id="slider">
-                <li>
-                    <h3>Providing high<p> level anti-theft security products</p><span>Fashionable and durable safety door locks, safety locks have<br/>gained many patents in China.</span>
-                    </h3>
-                </li>
-            </ul>
+<!--NEWS 开始-->
+<section id="news">
+    <div class="container">
+        <div class="center">
+            <h2>NEWS</h2>
+        </div>
+        <div class="span_of_3">
+            {notempty name="assign_data.news"}
+            {volist name="assign_data.news" id="new"}
+            <div class="events-grid">
+                <a href="/News/{$new.id}"><img src="{$new.img_url}" alt=" " class="img-responsive"/></a>
+                <div class="event-grid-bottom">
+                    <div class="col-xs-2 event-grid-bottom-left">
+                        <h4>{:date('j',strtotime($new['create_time']))}th <span>{:date('F',strtotime($new['create_time']))}</span></h4>
+                    </div>
+                    <div class="col-xs-6 event-grid-bottom-right">
+                        <h4><a href="/News/{$new.id}">{$new.title}</a></h4>
+                        <p>{$new.description}</p>
+                    </div>
+                </div>
+            </div>
+            {/volist}
+            {/notempty}
         </div>
     </div>
-</div>
-<!--slider end-->
+</section>
+<!--NEWS end-->

@@ -12,9 +12,14 @@ use think\Db;
 
 class GoodsModel
 {
-    public static function getGoodsList($class_id = null)
+    public static function getGoodsList($class_id = null,$page=0)
     {
-        return Db::name('goods')->field(['id', 'name', 'img_url'])->where(['class_id' => $class_id])->order(['sequence' => 'ASC'])->select();
+        return Db::name('goods')
+            ->field(['id', 'name', 'img_url'])
+            ->where(['class_id' => $class_id])
+            ->order(['sequence' => 'ASC'])
+            ->page($page,20)
+            ->select();
     }
 
     public static function getGoodsOne($id = null)
@@ -38,5 +43,21 @@ class GoodsModel
         $goods['detail'] = $detail_list;
 
         return $goods;
+    }
+
+    public static function getClassOne($class_name){
+        return Db::name('goods_class')
+            ->where(['name'=>$class_name])
+            ->find();
+    }
+
+    public static function getClassList(){
+        return Db::name('goods_class')
+            ->alias('c')
+            ->join('goods g','c.id = g.class_id','LEFT')
+            ->field(['c.id', 'c.name', 'g.img_url'])
+            ->order(['c.sequence' => 'ASC'])
+            ->group('c.id')
+            ->select();
     }
 }

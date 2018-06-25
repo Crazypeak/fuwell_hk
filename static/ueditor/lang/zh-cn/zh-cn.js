@@ -255,29 +255,29 @@ UE.I18N['zh-cn'] = {
     //===============dialog i18N=======================
     'insertimage':{
         'static':{
-            'lang_tab_remote':"插入图片", //节点
+            // 'lang_tab_remote':"插入图片", //节点
             'lang_tab_upload':"本地上传",
-            'lang_tab_online':"在线管理",
-            'lang_tab_search':"图片搜索",
-            'lang_input_url':"地 址：",
-            'lang_input_size':"大 小：",
-            'lang_input_width':"宽度",
-            'lang_input_height':"高度",
-            'lang_input_border':"边 框：",
-            'lang_input_vhspace':"边 距：",
-            'lang_input_title':"描 述：",
-            'lang_input_align':'图片浮动方式：',
-            'lang_imgLoading':"　图片加载中……",
-            'lang_start_upload':"开始上传",
-            'lock':{'title':"锁定宽高比例"}, //属性
-            'searchType':{'title':"图片类型", 'options':["新闻", "壁纸", "表情", "头像"]}, //select的option
-            'searchTxt':{'value':"请输入搜索关键词"},
-            'searchBtn':{'value':"百度一下"},
-            'searchReset':{'value':"清空搜索"},
-            'noneAlign':{'title':'无浮动'},
-            'leftAlign':{'title':'左浮动'},
-            'rightAlign':{'title':'右浮动'},
-            'centerAlign':{'title':'居中独占一行'}
+            // 'lang_tab_online':"在线管理",
+            // 'lang_tab_search':"图片搜索",
+            // 'lang_input_url':"地 址：",
+            // 'lang_input_size':"大 小：",
+            // 'lang_input_width':"宽度",
+            // 'lang_input_height':"高度",
+            // 'lang_input_border':"边 框：",
+            // 'lang_input_vhspace':"边 距：",
+            // 'lang_input_title':"描 述：",
+            // 'lang_input_align':'图片浮动方式：',
+            // 'lang_imgLoading':"　图片加载中……",
+            // 'lang_start_upload':"开始上传",
+            // 'lock':{'title':"锁定宽高比例"}, //属性
+            // 'searchType':{'title':"图片类型", 'options':["新闻", "壁纸", "表情", "头像"]}, //select的option
+            // 'searchTxt':{'value':"请输入搜索关键词"},
+            // 'searchBtn':{'value':"百度一下"},
+            // 'searchReset':{'value':"清空搜索"},
+            // 'noneAlign':{'title':'无浮动'},
+            // 'leftAlign':{'title':'左浮动'},
+            // 'rightAlign':{'title':'右浮动'},
+            // 'centerAlign':{'title':'居中独占一行'}
         },
         'uploadSelectFile':'点击选择图片',
         'uploadAddFile':'继续添加',

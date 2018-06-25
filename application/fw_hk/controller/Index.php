@@ -32,29 +32,39 @@ class Index extends Controller
     {
 //        $title = 'FullWell';
         switch ($url) {
+            case 'index':
+                $assign_data['news'] = InformationModel::getNewsPage([],3);
+                break;
             case 'News':
                 $assign_data = $this->article(input('id'));
                 break;
-            case 'information':
-                $assign_data = $this->article(input('id'), 1);
+            //产品模块前台输出是
+            case 'Products':
+                if ($class_name = input('class')) {
+                    $assign_data['class'] = GoodsModel::getClassOne($class_name);
+                    $assign_data['list'] = GoodsModel::getGoodsList($assign_data['class']['id']);
+//                    $title                = $assign_data['goods']['name'];
+                }else if ($id = input('id')){
+                    $assign_data['goods'] = GoodsModel::getGoodsOne($id);
+                }else $assign_data['class_status'] = true;
                 break;
             default:
-                if ($id = input('id')) {
-                    $url                  = 'goods';
-                    $assign_data['goods'] = $this->goods($id);
-                    $title                = $assign_data['goods']['name'];
-                } else $assign_data = [];
+                $assign_data = [];
                 break;
         }
+//
+//        print_r('<pre>');
+//        var_dump($url);
+//        var_dump($assign_data);
         $this->assign('assign_data', $assign_data);
 
         $column = ColumnModel::getColumnUrlOne($url);
         !$column && $this->error('404!');
 
         $column_list      = ColumnModel::getColumnUrlList();
-        if ($column_list) foreach($column_list as $key=>$value){
-            $column_list[$key]['child'] = GoodsModel::getGoodsList($value['id']);
-        };
+//        if ($column_list) foreach($column_list as $key=>$value){
+//            $column_list[$key]['child'] = GoodsModel::getGoodsList($value['id']);
+//        };
 //        print_r('<pre>');print_r($column_list);die;
 
         $column_file_list = ColumnModel::getColumnFileList(['pid' => $column['id'], 'status' => 1]);
@@ -69,13 +79,14 @@ class Index extends Controller
         $this->assign('title', $title);
         $this->assign('column', $column);
         $this->assign('column_list', $column_list);
+        $this->assign('class_list', $column_list);
 
         $this->assign('column_file_html', implode(',', $column_file['type0']));
         $this->assign('column_file_css', implode(',', $column_file['type1']));
         $this->assign('column_file_js', implode(',', $column_file['type2']));
 
-        $goods_list = GoodsModel::getGoodsList($column['id']);
-        $this->assign('goods_list', $goods_list);
+        $class_list = GoodsModel::getClassList();;
+        $this->assign('class', $class_list);
 
         return $this->fetch('/' . $url . '/index');
     }
@@ -106,11 +117,6 @@ class Index extends Controller
         }
     }
 
-    private function goods($id)
-    {
-        return GoodsModel::getGoodsOne($id);
-    }
-
     public function apiPostContact(){
         if ($data = input('post.')){
             $comments['name'] = $data['name'];
@@ -124,5 +130,10 @@ class Index extends Controller
             $this->success('Thank you for your valuable comments',url('/'));
         }
 //        else $this->redirect('/Contact');
+    }
+
+    public function apiGetGoodsList($class_id,$page=1){
+        $result = GoodsModel::getGoodsList($class_id,$page);
+        $result ? $this->success($result) : $this->error('全部加载完毕');
     }
 }

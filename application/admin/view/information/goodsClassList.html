@@ -153,6 +153,56 @@
         </div>
     </div>
 </div>
+<!--批量上传-->
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var class_id = 0;
+    //批量上传图片
+    var ue = UE.getEditor('contents',{toolbars:[['insertimage']]});
+    ue.addListener("ready", function () {
+        UE.getEditor('contents').setHide();
+    });
+    ue.addListener('afterSelectionChange', function () {
+        images = [];
+        data = $(ue.getContent()).find('img');
+//
+//        $('#test').append(ue.getContent());
+//        action.log(ue.getContent());
+
+        $(ue.getContent()).find('img').each(function (e,item) {
+//            console.log(e);
+//            console.log(item.src);
+            images[e] = item.src;
+//            e += 100;
+//            var obj = '';
+//            obj +='<div class="col-sm-2" style="padding:0;margin:0;width: 200px;height: 160px;" id="img'+e+'">'+
+//                '<img  width="200px" height="160px" src="'+item.src+'"/>' +
+////                '<input class="images" type="hidden" name="images[]" value="'+item.src+'"/>'+
+//                '<a href="javascript:void(0)" onclick="delimg('+e+')" style="position: absolute;left: 85%;top: 2%;background-color: #fff;"><span class="text-danger">删除</span></a>'+
+//                '</div>';
+//            $('#test').append(obj);
+        });
+        console.log(images);
+        console.log(class_id);
+
+        goodsArrayAddUrl = "{:url('ajaxGoodsAdds')}";
+        formPost({images:images,class_id:class_id}, goodsArrayAddUrl);
+//        document.getElementById('cover-img').src = link;
+//        document.getElementById('cover').value = link;//赋值表单的一个隐藏input
+    });
+
+    //弹出文件上传的对话框
+    function upFiles(e) {
+        class_id = $(e).data('id');
+
+        var myFiles = ue.getDialog("insertimage");
+        myFiles.open();
+    }
+</script>
+<script id="contents" type="text/plain"></script>
+<textarea style="display: none;" name="contents" id="sss" class="tip_textarea3"></textarea>
 
 <!-- Main content -->
 <section class="content">
@@ -170,14 +220,22 @@
             <div id="classList">
                 {volist name="class_list" id="vo"}
                 <!--一层-->
-                <div class="box box-default goodsClassList class{$vo.id}" style="cursor:pointer" data-id="{$vo.id}" data-name="{$vo.name}">
+                <div class="box box-default goodsClassList class{$vo.id}" data-id="{$vo.id}" data-name="{$vo.name}">
                     <div class="box-header with-border">
                         <h3 class="box-title" style="margin-top: 8px;">{$vo.name}</h3>
                         <!--<div class="box-tools pull-right">-->
                         <div class="pull-right">
                             <span>{$vo.sequence}</span>
+                            <a href="{:url('index',['class_id'=>$vo.id])}">
+                                <i class="fa fa-pencil-square-o fa-fw"></i>分类商品列表
+                            </a>
+
                             <button type="button" class="btn btn-box-tool classEditBtn" data-id="{$vo.id}" data-sequence="{$vo.sequence}" data-name="{$vo.name}">
                                 <i class="fa fa-pencil-square-o fa-fw"></i>编辑
+                            </button>
+
+                            <button type="button" onclick="upFiles(this)" class="btn btn-box-tool" data-id="{$vo.id}" data-name="{$vo.name}">
+                                <i class="fa fa-pencil-square-o fa-fw"></i>批量上传商品图片
                             </button>
 
                             <!--<button type="button" class="btn btn-box-tool classDelBtn" data-id="{$vo.id}">-->
