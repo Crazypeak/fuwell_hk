@@ -39,12 +39,45 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="search">
-                            <form role="form">
-                                <input type="text" class="search-form" autocomplete="off" placeholder="Search">
-                                <i class="fa fa-search"></i>
-                            </form>
+                        <div class="search" id="searchDiv">
+                            <input id="searchKey" type="text" class="search-form" autocomplete="off" placeholder="Search">
+                            <i class="fa fa-search"></i>
+                            <div id="searchResult" style="width: 180px;position: absolute;background-color: #121212;z-index: 999">
+                            </div>
                         </div>
+                        <script type="text/javascript">
+                            searchDiv = $('#searchDiv');
+                            searchResult = $('#searchResult');
+                            $('#searchKey').bind('input propertychange',function () {
+                                searchResult.empty();
+                                $.ajax({
+                                    type: "get",
+                                    data: {key: $('#searchKey').val()},
+                                    url: "{:url('index/apiGetSearch')}",
+                                    success: function (data) {
+                                    console.log(data);
+//                                    console.log($('#goodsList'));
+//                                        if (data.code === 1) {
+                                        page += 1;
+                                        $(data.msg).each(function (e, item) {
+                                            obj = '<p style="margin-left:2px;overflow:hidden;white-space:nowrap;"><a style="color: #4e4e4e;width: 100%" href="'+item.status+'/'+item.id+'"><img style="width: 20px;height: 20px;" src="'+item.img_url+'">'+item.name+'</a></p>';
+                                            $('#searchResult').append(obj);
+                                        })
+//                                        }
+                                    },
+                                    error: function () {
+                                        console.warn("没有查询到数据")
+                                    }
+                                });
+                            });
+//                            searchDiv.mouseover(function () {
+//                                searchResult.show();
+//                            });
+                            searchDiv.blur(function () {
+                                searchResult.empty();
+                            });
+
+                        </script>
                     </div>
                 </div>
             </div>

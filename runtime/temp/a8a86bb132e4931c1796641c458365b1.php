@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:10:{s:60:"D:\PHP\demo\winstart/application/fw_hk\view\index\index.html";i:1529483974;s:53:"D:\PHP\demo\winstart/application/fw_hk\view\base.html";i:1529488627;s:57:"D:\PHP\demo\winstart/application/fw_hk\view\baseHead.html";i:1529483273;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620163934.html";i:1529483974;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154224.html";i:1529480544;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154230.html";i:1529480550;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154235.html";i:1529480555;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154241.html";i:1529480561;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154247.html";i:1529480567;s:59:"D:\PHP\demo\winstart/application/fw_hk\view\baseScript.html";i:1529480496;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:10:{s:60:"D:\PHP\demo\winstart/application/fw_hk\view\index\index.html";i:1529920752;s:53:"D:\PHP\demo\winstart/application/fw_hk\view\base.html";i:1529925286;s:57:"D:\PHP\demo\winstart/application/fw_hk\view\baseHead.html";i:1529918654;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620163934.html";i:1529920107;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154224.html";i:1529480544;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154230.html";i:1529480550;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154235.html";i:1529480555;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154241.html";i:1529480561;s:74:"D:\PHP\demo\winstart/application/fw_hk\view\index\html\20180620154247.html";i:1529480567;s:59:"D:\PHP\demo\winstart/application/fw_hk\view\baseScript.html";i:1529918660;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <title>Home</title>
+    <link rel="shortcut icon" href="/fw_hk/images/favicon.ico">
+    <title><?php echo $title; ?></title>
         <!-- core CSS -->
-    <link href="fw_hk/css/bootstrap.min.css" rel="stylesheet">
-    <link href="fw_hk/css/main.css" rel="stylesheet">
-    <link href="fw_hk/css/font-awesome.min.css" rel="stylesheet">
-    <link href="fw_hk/css/animate.min.css" rel="stylesheet">
-    <link href="fw_hk/css/responsive.css" rel="stylesheet">
+    <link type="text/css" href="/fw_hk/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="/fw_hk/css/main.css" rel="stylesheet">
+    <link type="text/css" href="/fw_hk/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" href="/fw_hk/css/animate.min.css" rel="stylesheet">
+    <link type="text/css" href="/fw_hk/css/responsive.css" rel="stylesheet">
+    <script type="text/javascript" src="/fw_hk/js/jquery.min.js"></script>
 
     
 
@@ -27,8 +28,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-xs-4">
-                    <div class="top-number"><p><i class="fa fa-phone-square"></i> (+86) 750
-                        3555655&nbsp;&nbsp;&nbsp;<span class="ihonetel">(+86) 750 3559881</span></p></div>
+                    <div class="top-number">
+                        <p>
+                            <i class="fa fa-phone-square"></i><?php echo $par['con_phone_1']; ?>&nbsp;&nbsp;&nbsp;
+                            <span class="ihonetel"><?php echo $par['con_phone_2']; ?></span>
+                        </p>
+                    </div>
                 </div>
                 <div class="col-sm-6 col-xs-8">
                     <div class="social">
@@ -44,10 +49,39 @@
                         </ul>
                         <div class="search">
                             <form role="form">
-                                <input type="text" class="search-form" autocomplete="off" placeholder="Search">
+                                <input id="searchKey" type="text" class="search-form" autocomplete="off" placeholder="Search">
                                 <i class="fa fa-search"></i>
+                                <div id="searchResult" style="width: 180px;position: absolute;background-color: #121212;z-index: 999">
+                                    <option>1</option>
+                                </div>
                             </form>
                         </div>
+                        <script type="text/javascript">
+
+                            $('#searchKey').bind('input propertychange',function () {
+                                $('#searchResult').empty();
+                                $.ajax({
+                                    type: "get",
+                                    data: {key: $('#searchKey').val()},
+                                    url: "<?php echo url('index/apiGetSearch'); ?>",
+                                    success: function (data) {
+//                                    console.log(data);
+//                                    console.log($('#goodsList'));
+                                        if (data.code === 1) {
+                                            page += 1;
+                                            $(data.msg).each(function (e, item) {
+                                                obj = '<option><a href="'+item.status+item.id+'">'+item.name+'</a></option>';
+                                                $('#searchResult').append(obj);
+                                            })
+                                        }
+                                    },
+                                    error: function () {
+                                        console.warn("没有查询到数据")
+                                    }
+                                });
+                            });
+
+                        </script>
                     </div>
                 </div>
             </div>
@@ -66,13 +100,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+            <a class="navbar-brand" href="index.html"><img src="/fw_hk/images/logo.png" alt="logo"></a>
         </div>
         <div class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 <?php if(is_array($column_list) || $column_list instanceof \think\Collection || $column_list instanceof \think\Paginator): $i = 0; $__LIST__ = $column_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$item): $mod = ($i % 2 );++$i;?>
-                <li><a href="<?php echo $item['url']; ?>"><?php echo $item['name']; ?></a></li>
+                    <li id="<?php echo $item['name']; ?>"><a href="/<?php echo $item['url']; ?>"><?php echo $item['name']; ?></a></li>
                 <?php endforeach; endif; else: echo "" ;endif; ?>
+
+                <script type="text/javascript">
+                    obj = '<ul class="dropdown-menu">'+
+                            '<?php if(is_array($class) || $class instanceof \think\Collection || $class instanceof \think\Paginator): $i = 0; $__LIST__ = $class;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$class_item): $mod = ($i % 2 );++$i;?><li><a href="/<?php echo $class_item['name']; ?>"><?php echo $class_item['name']; ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>'+
+                        '</ul>';
+                    $('#Products').addClass('dropdown').find('a').append(' <i class="fa fa-angle-down"></i>').append(obj);
+                </script>
+
                 <!--<li class="active"><a href="index.html">Home</a></li>-->
                 <!--<li><a href="about us.html">About Us</a></li>-->
                 <!--<li class="dropdown">-->
@@ -97,7 +139,6 @@
 <!--主体 开始-->
 
 <!-- 主要内容 -->
-
 <!--slider 开始-->
 <div class="slider_bg">
     <div class="slider">
@@ -294,6 +335,48 @@
 
 <!--主体 end-->
 
+<!--contact 开始-->
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Address</h3>
+                    <ul>
+                        <li><?php echo $par['con_address']; ?></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Phone</h3>
+                    <ul>
+                        <li><?php echo $par['con_phone_1']; ?></li>
+                        <li><?php echo $par['con_phone_2']; ?></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>Email</h3>
+                    <ul>
+                        <li><?php echo $par['con_email_1']; ?></li>
+                        <li><?php echo $par['con_email_2']; ?></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="widget">
+                    <h3>WeChat</h3>
+                    <ul>
+                        <li><img src="/fw_hk/images/WeChat.jpg"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--contact end-->
 <!--footer 开始-->
 <footer id="footer">
     <div class="container">
@@ -303,9 +386,9 @@
             </div>
             <div class="col-sm-4">
                 <ul class="pull-right">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Products</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/About Us">About Us</a></li>
+                    <li><a href="/Products">Products</a></li>
                 </ul>
             </div>
         </div>
@@ -316,12 +399,11 @@
 
 </body>
     <!--[if lt IE 9]>
-    <script src="fw_hk/js/html5shiv.js"></script>
-    <script src="fw_hk/js/respond.min.js"></script>
+    <script src="/fw_hk/js/html5shiv.js"></script>
+    <script src="/fw_hk/js/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="fw_hk/js/jquery.min.js"></script>
-    <script type="text/javascript" src="fw_hk/js/move-top.js"></script>
-    <script src="fw_hk/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/fw_hk/js/move-top.js"></script>
+    <script src="/fw_hk/js/bootstrap.min.js"></script>
     <!-- scroll -->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -339,6 +421,7 @@
         });
     </script>
     <!-- //scroll -->
+
 
 
 

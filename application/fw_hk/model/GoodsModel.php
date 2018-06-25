@@ -12,19 +12,18 @@ use think\Db;
 
 class GoodsModel
 {
-    public static function getGoodsList($class_id = null,$page=0)
+    public static function getGoodsList($where = [],$page=0,$limit = 20)
     {
         return Db::name('goods')
-            ->field(['id', 'name', 'img_url'])
-            ->where(['class_id' => $class_id])
+            ->where($where)
             ->order(['sequence' => 'ASC'])
-            ->page($page,20)
+            ->page($page,$limit)
             ->select();
     }
 
     public static function getGoodsOne($id = null)
     {
-        $goods       = Db::name('goods')->find($id);
+        $goods       = Db::name('goods')->where(['code'=>$id])->find();
         $detail_data = Db::name('goods_detail')
             ->field(['id','pid','key','value','type'])
             ->where(['goods_id' => $goods['id']])

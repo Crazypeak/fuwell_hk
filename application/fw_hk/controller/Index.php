@@ -42,7 +42,7 @@ class Index extends Controller
             case 'Products':
                 if ($class_name = input('class')) {
                     $assign_data['class'] = GoodsModel::getClassOne($class_name);
-                    $assign_data['list'] = GoodsModel::getGoodsList($assign_data['class']['id']);
+                    $assign_data['list'] = GoodsModel::getGoodsList(['class_id'=>$assign_data['class']['id']]);
 //                    $title                = $assign_data['goods']['name'];
                 }else if ($id = input('id')){
                     $assign_data['goods'] = GoodsModel::getGoodsOne($id);
@@ -133,7 +133,32 @@ class Index extends Controller
     }
 
     public function apiGetGoodsList($class_id,$page=1){
-        $result = GoodsModel::getGoodsList($class_id,$page);
+        $result = GoodsModel::getGoodsList(['class_id'=>$class_id],$page);
         $result ? $this->success($result) : $this->error('全部加载完毕');
+    }
+
+    public function apiGetSearch($key = ''){
+        $data = [];
+
+        $goods_list = GoodsModel::getGoodsList(['name'=>['LIKE','%'.$key.'%']],0,4);
+        foreach ($goods_list as $goods){
+            $time = strtotime($goods['create_time']);
+            $data[$time]['status'] = 'Products';
+            $data[$time]['id'] = $goods['code'];
+            $data[$time]['name'] = $goods['name'];
+            $data[$time]['img_url'] = $goods['img_url'];
+        }
+
+        $news_list  = InformationModel::getNewsPage(['title'=>['LIKE','%'.$key.'%']],4);
+        foreach ($news_list as $news){
+            $time = strtotime($news['create_time']);
+            $data[$time]['status'] = 'News';
+            $data[$time]['id'] = $news['id'];
+            $data[$time]['name'] = $news['title'];
+            $data[$time]['img_url'] = $news['img_url'];
+        }
+
+        array_multisort($data,SORT_DESC);
+        $this->success($data,SORT_DESC );
     }
 }
