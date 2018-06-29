@@ -127,14 +127,14 @@ class Index extends Controller
             $comments['create_time'] = time();
             CommentsModel::addComments($comments);
 
-            $this->success('Thank you for your valuable comments',url('/'));
+//            $this->success('Thank you for your valuable comments',url('/'));
         }
-//        else $this->redirect('/Contact');
+        $this->redirect('/success');
     }
 
     public function apiGetGoodsList($class_id,$page=1){
         $result = GoodsModel::getGoodsList(['class_id'=>$class_id],$page);
-        $result ? $this->success($result) : $this->error('全部加载完毕');
+        $result ? $this->success($result) : $this->result('',2,'全部加载完毕');
     }
 
     public function apiGetSearch($key = ''){

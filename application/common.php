@@ -17,8 +17,8 @@ function is_HK(){
 if (is_HK()){
     \think\Config::set('database.prefix','fw_hk_');
     \think\Config::set('default_module','fw_hk');
-//    \think\Config::set('dispatch_error_tmpl',APP_PATH.'fw_hk/view/404.html');
-//    \think\Config::set('exception_tmpl',APP_PATH.'fw_hk/view/404.html');
+    \think\Config::set('dispatch_error_tmpl',APP_PATH.'fw_hk/view/404.html');
+    \think\Config::set('exception_tmpl',APP_PATH.'fw_hk/view/404.html');
 
     $column = \think\Db::name('goods_class')->column('name');
     foreach ($column as $item){

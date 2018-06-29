@@ -362,7 +362,7 @@ border-radius:5px;-moz-border-radius:5px; }
 #productlist{background:url(../images/productslistbg.jpg);background-size: cover;}
 #productlist h2{ color:#fff;}
 .box_pro{text-align:center;}
-.box1_product{  display:inline-block;margin-right:2.5%; margin-left:2.5%; margin-bottom:5%; color:#fff;position:relative;}
+.box1_product{  display:inline-block;margin-right:2.5%; margin-left:2.5%; margin-bottom:5%;color:#fff;position:relative;}
 .box1_product p{ position:absolute;top:0; left:0; bottom:0;text-align:center; min-width:250px; background-color:#fbf03c; height:32px; line-height:32px; color:#333; font-size:1.2em;}
 .box1_product p:hover{ color:#c52d2f;}
 .box1_product img{ max-width:100%;}

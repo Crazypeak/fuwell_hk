@@ -32,6 +32,10 @@ class GoodsModel extends LogModel
         $class_name = Db::name('column_url')->where(['id' => $data['class_id']])->value('name');
         $goods = self::dataGoods($data,$data['status'],$data['sequence'],$data['class_id'],$class_name);
 
+        if (is_HK()){
+            $goods['material'] = $data['material'];
+        }
+
         if (isset($data['id']) && is_numeric($data['id'])) {
             Db::name('goods')->where(['id' => $data['id']])->update($goods);
             $id = $data['id'];
@@ -44,7 +48,7 @@ class GoodsModel extends LogModel
     }
 
     public static function addGoodsArray($data = [],$class_id = 0){
-        $class_name = Db::name('column_url')->where(['id' => $class_id])->value('name');
+        $class_name = Db::name('goods_class')->where(['id' => $class_id])->value('name');
         $sequence = Db::name('goods')->where(['class_id'=>$class_id])->order(['sequence'=>'DESC'])->find()['sequence'];
 
         $goods_array_data = [];
@@ -61,7 +65,7 @@ class GoodsModel extends LogModel
 
     protected static function dataGoods($data,$status = 1,$sequence = 1,$class_id = 0,$class_name = ''){
         $goods['class_name'] = $class_name;
-        $goods['code'] = "P" . $class_id . date('YmdHis').rand(1000,9999);
+        $goods['code'] = $data['code'] ? $data['code'] : "P" . $class_id . date('Ymd').rand(1000,9999);
         $goods['name'] = $data['name'] ? trim($data['name']) : $goods['code'];
         $goods['class_id'] = $class_id;
         $goods['status'] = $status;

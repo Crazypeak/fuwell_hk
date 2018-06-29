@@ -7,10 +7,10 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/fw_hk/images/favicon.ico">
     <title>{$title}</title>
-    {include file="baseHead"/}
-
     {block name="style"}
     {/block}
+
+    {include file="baseHead"/}
 </head>
 
 <body>
@@ -55,14 +55,18 @@
                                     data: {key: $('#searchKey').val()},
                                     url: "{:url('index/apiGetSearch')}",
                                     success: function (data) {
-                                    console.log(data);
-//                                    console.log($('#goodsList'));
+//                                    console.log(data);
+                                    console.log(data.msg);
 //                                        if (data.code === 1) {
-                                        page += 1;
                                         $(data.msg).each(function (e, item) {
-                                            obj = '<p style="margin-left:2px;overflow:hidden;white-space:nowrap;"><a style="color: #4e4e4e;width: 100%" href="'+item.status+'/'+item.id+'"><img style="width: 20px;height: 20px;" src="'+item.img_url+'">'+item.name+'</a></p>';
+                                            obj = '<p style="margin-left:2px;overflow:hidden;white-space:nowrap;"><a style="color: #4e4e4e;width: 100%" href="/'+item.status+'/'+item.id+'"><img style="width: 20px;height: 20px;" src="'+item.img_url+'">'+item.name+'</a></p>';
                                             $('#searchResult').append(obj);
                                         })
+
+                                        if (data.msg.length === 0){
+                                            obj = '<p style="margin-left:8px;overflow:hidden;white-space:nowrap;color: #4e4e4e;text-align: left" >No search results</p>';
+                                            $('#searchResult').append(obj);
+                                        }
 //                                        }
                                     },
                                     error: function () {
