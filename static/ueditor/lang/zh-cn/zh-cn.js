@@ -312,7 +312,7 @@ UE.I18N['zh-cn'] = {
     },
     'attachment':{
         'static':{
-            'lang_tab_upload': '".css",".js"文件自动上传到“css(js)”文件夹，其它文件默认上传到“image”',
+            'lang_tab_upload': '".css",".js"文件自动上传到“css(js)”文件夹，其它文件默认上传到“images”',
             // 'lang_tab_upload': '批量上传文件',
             // 'lang_tab_online': '在线附件',
             'lang_start_upload':"开始上传",

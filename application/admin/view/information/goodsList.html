@@ -46,6 +46,26 @@
                                        placeholder="">
                             </div>
                         </div>
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">编号</label>
+                            <div class="col-sm-6">
+                                <!--栏目名称-->
+                                <input type="text" class="form-control" id="code" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        {if condition="is_HK()"}
+                        <div class="form-group" style="">
+                            <label class="col-sm-3 control-label">材质</label>
+                            <div class="col-sm-6">
+                                <!--栏目名称-->
+                                <input type="text" class="form-control" id="material" value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                        {else/}
+                        <input id="material" value="" type="hidden">
+                        {/if}
                         <div class="form-group " style="">
                             <label class="col-sm-3 control-label">分类</label>
                             <div class="col-sm-6">
@@ -119,6 +139,7 @@
                         <tr>
                             <th style="width: 240px">封面</th>
                             <th style="width: 200px">名称</th>
+                            <th style="width: 400px">链接</th>
                             <th style="">所属分类</th>
                             <th style="width: 50px">排序</th>
                             <th style="width: 160px;">更新时间</th>
@@ -134,6 +155,11 @@
                             <td>
                                 {$vo.name}
                             </td>
+                            {if condition="is_HK()"}
+                            <td><a href="http://{$_SERVER['SERVER_NAME']}/Products/{$vo.code}">{$_SERVER['SERVER_NAME']}/Products/{$vo.code}</a></td>
+                            {else/}
+                            <td><a href="http://{$_SERVER['SERVER_NAME']}/{$vo.class_name}/{$vo.id}">{$_SERVER['SERVER_NAME']}/{$vo.class_name}/{$vo.id}</a></td>
+                            {/if}
                             <td title="{$vo.class_name}">{$vo.class_name}</td>
                             <td>{$vo.sequence}</td>
                             <td>{$vo.create_time}</td>
@@ -154,13 +180,15 @@
                             </td>
                         </tr>
                         {/volist}
-
                         </tbody>
                     </table>
 
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
+                    <div style="height: 40px;font-size: 12px">
+                        {$list->render()}
+                    </div>
                     <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
                         <div class="btn-group" role="group" aria-label="...">
                             <a class="btn btn-sm btn-success pull-right" style="" id="goodsAddBtn">
@@ -228,6 +256,8 @@
         }
 
         goodsSaveData.append('name', $("#name").val());
+        goodsSaveData.append('code', $("#code").val());
+        goodsSaveData.append('material', $("#material").val());
         goodsSaveData.append('class_id', $("#class_id").val());
         goodsSaveData.append('status', $("[name='status']").val());
         goodsSaveData.append('sequence', $("#sequence").val());

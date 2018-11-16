@@ -46,7 +46,7 @@ class Goods extends Index
     public function save($id = null)
     {
         $goods = GoodsModel::getGoodsOne($id);
-        $goods['detail'] = GoodsModel::getGoodsDetailList($id);
+        $goods['detail_list'] = GoodsModel::getGoodsDetailList($id);
         $this->assign('goods', $goods);
 
         return $this->fetch('information/goodsSave');

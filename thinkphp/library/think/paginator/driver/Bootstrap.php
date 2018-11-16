@@ -126,7 +126,7 @@ class Bootstrap extends Paginator
                 );
             } else {
                 $div = '<div class="pager">%s %s %s</div>';
-                if ($this->is_HK) $div = '<ul class="pagination pagination-lg">%s %s %s</ul>';
+                if ($this->is_HK) $div = '<ul class="pagination ">%s %s %s</ul>';
 
                 return sprintf(
                     $div,

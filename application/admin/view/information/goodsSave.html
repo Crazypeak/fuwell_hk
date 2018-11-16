@@ -145,6 +145,8 @@
                                 <td>材质</td>
                                 <td style="padding: 0;"><input id="material" name="material" style="border: 0;width: 100%;height: 36px" value="{$goods.material}"/></td>
                             </tr>
+                            {else/}
+                            <input type="hidden" id="material" name="material" value="">
                             {/if}
                             <tr>
                                 <td>分类</td>
@@ -222,7 +224,25 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.box-header -->
+
+                {if condition="is_HK()"}
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-sm-10">
+                            <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+                            <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"></script>
+                            <!-- 实例化编辑器 -->
+                            <script type="text/javascript">
+                                var ue = UE.getEditor('contents');
+                                ue.ready(function() {   //编辑器初始化完成再赋值
+                                    ue.setContent("{$goods.detail}");  //赋值给UEditor
+                                });
+                            </script>
+                            <script id="contents" type="text/plain"></script>
+                        </div>
+                    </div>
+                </div>
+                {else/}
                 <div class="box-body">
                     <table class="table table-bordered table-hover collaptable">
                         <tbody>
@@ -232,7 +252,7 @@
                             <th style="width: 60px;">顺序</th>
                             <th style="width: 120px;">操作</th>
                         </tr>
-                        {volist name="goods.detail" id="vo"}
+                        {volist name="goods.detail_list" id="vo"}
                         <tr data-id="{$vo.id}" data-parent="">
                             <td>{$vo.key}</td>
                             <td>类型：{$vo['type'] ? '图片 images' : '文本'}</td>
@@ -263,7 +283,6 @@
                     </table>
 
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer clearfix">
                     <div class="btn-toolbar pull-right" role="toolbar" aria-label="..." style="margin-left: 20px;">
                         <div class="btn-group" role="group" aria-label="...">
@@ -273,8 +292,8 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
+                {/if}
             </div>
             <!-- /.box -->
         </div>
@@ -431,6 +450,7 @@
         });
 
         $('#goodsSaveBtn').click(function () {
+//            console.log(ue.getContent());
             if (!img_url) {
                 if (imgFile[0].files[0] === undefined) {
                     AlertWarn("错误", "未上传封面图片");
@@ -445,11 +465,17 @@
                 }
             }
 
+            {if condition="is_HK()"}
+            goodsSaveData.append('detail', ue.getContent());
+            {/if}
+
             goodsSaveData.append('id', $("[name='id']").val());
             goodsSaveData.append('name', $("#name").val());
+            goodsSaveData.append('code', $("#code").val());
+            goodsSaveData.append('material', $("#material").val());
             goodsSaveData.append('class_id', $("#class_id").val());
-            goodsSaveData.append('status', $("[name='status']").val());
             goodsSaveData.append('sequence', $("#sequence").val());
+            goodsSaveData.append('status', $("[name='status']").val());
             originFormPost(goodsSaveData, goodsSaveUrl, this);
         });
     });

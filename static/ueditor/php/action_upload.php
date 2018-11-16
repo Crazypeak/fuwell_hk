@@ -46,8 +46,8 @@ switch (htmlspecialchars($_GET['action'])) {
         break;
 }
 
-// 样式打包管理
-if (!strpos('gt-jm.com',$_SERVER['SERVER_NAME'])) {
+// 样式打包管理 is_HK
+if ($_SERVER['SERVER_NAME']==='www.fullwell-hk.com') {
     $config['pathFormat'] = '/fw_hk'.$config['pathFormat'];
 }
 

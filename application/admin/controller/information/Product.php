@@ -38,7 +38,7 @@ class Product extends Index{
         $where = [];
         input('?class_id') && $where['class_id'] = input('class_id');
 
-        $goods_page = GoodsModel::getGoodsPage(input());
+        $goods_page = GoodsModel::getGoodsPage($where);
         $this->assign('list', $goods_page);
 
         return $this->fetch('information/goodsList');
@@ -60,7 +60,7 @@ class Product extends Index{
     public function save($id = null)
     {
         $goods = GoodsModel::getGoodsOne($id);
-        $goods['detail'] = GoodsModel::getGoodsDetailList($id);
+        $goods['detail_list'] = GoodsModel::getGoodsDetailList($id);
         $this->assign('goods', $goods);
 
         return $this->fetch('information/goodsSave');

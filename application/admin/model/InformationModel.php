@@ -37,7 +37,10 @@ class InformationModel extends LogModel
         $article['status']      = $data['status'];
         $article['content']     = $data['content'];
         $article['img_url']     = $data['img_url'];
-        $article['keywords']     = $data['keywords'];
+
+        if (is_HK()){
+            $article['keywords']     = $data['keywords'];
+        }
 
         if (isset($data['id']) && is_numeric($data['id'])) {
             Db::name('article')->where(['id' => $data['id']])->update($article);

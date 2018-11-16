@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="Author" content="Mather, CrazyPeak"/>
     <link rel="shortcut icon" href="/fw_hk/images/favicon.ico">
-    <title>{$title}</title>
+    <title>{$par.con_title}-{$title}</title>
+
+    <!--全局设置参数-->
+    <meta name="keywords" content="{$par.seo_keywords}"/>
+    <meta name="description" content="{$description?$description:$par['seo_description']}">
+
     {block name="style"}
     {/block}
 
@@ -100,12 +105,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><img src="/fw_hk/images/logo.png" alt="logo"></a>
+            <a class="navbar-brand" href="/"><img src="/fw_hk/images/logo.png" alt="logo"></a>
         </div>
         <div class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
                 {volist name='column_list' id='item'}
-                    <li id="{$item.name}"><a href="/{$item.url}">{$item.name}</a></li>
+                    <li id="{$item.name}" {eq name="$item['url']" value=":input('url')"}class="active"{/eq}><a href="/{$item.url}">{$item.name}</a></li>
                 {/volist}
 
                 <script type="text/javascript">
@@ -193,7 +198,7 @@
             <div class="col-sm-4">
                 <ul class="pull-right">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/About Us">About Us</a></li>
+                    <li><a href="/AboutUs">About Us</a></li>
                     <li><a href="/Products">Products</a></li>
                 </ul>
             </div>
