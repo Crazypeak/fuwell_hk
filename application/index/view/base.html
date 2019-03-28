@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
     <meta charset="utf-8"/>
@@ -21,7 +21,7 @@
         <div class="nav-right right">
             <ul class="cf">
                 {volist name='column_list' id='item'}
-                <li><a href="/{$item.url}">{$item.name}</a></li>
+                <li><a href="/{$item.url}" class="{$item.url}">{$item.name}</a></li>
                 {/volist}
                 <li><span><img src="/images/tel.png">400-0982-168</span>
                 </li>
@@ -39,7 +39,9 @@
                     <a href="/{$item.url}">{$item.name}</a>
                     <ul class="child" style="display: none">
                         {volist name="item.child" id="goods"}
-                        <li style="background-color:#666"><a href="/{$item.url}/{$goods.id}">|—&nbsp{$goods.name}</a></li>
+                        <li style="background-color:#666">
+                            <a href="{$goods.url?$goods.url:$item.url.'/'.$goods.id}">|—&nbsp{$goods.name}</a>
+                        </li>
                         {/volist}
                     </ul>
                 </li>
@@ -112,6 +114,9 @@
         </div>
         <div class="footer-bottom cf">
             <div class="footer-bottom-left left">
+		<a href="http://www.miitbeian.gov.cn/" style="color:#aaa" target="_blank">
+			粤ICP备15056293号-2 
+		</a>
                 <p>CopyRight© {$par.con_company} . All Right Reserved {$par.con_number}
                     <br/>地址：{$par.con_address}</p>
             </div>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/winstart.iml" filepath="$PROJECT_DIR$/.idea/winstart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../wp/.idea/wp.iml" filepath="$PROJECT_DIR$/../wp/.idea/wp.iml" />
     </modules>
   </component>
 </project>

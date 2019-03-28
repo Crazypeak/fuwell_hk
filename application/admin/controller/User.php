@@ -11,9 +11,29 @@ namespace app\admin\controller;
 use think\Controller;
 use app\admin\model\UserModel;
 use app\admin\model\LogModel;
+use think\Db;
 
 class User extends Controller
 {
+
+    public function del()
+    {
+        $id = $_GET['id'];
+        $nice = Db::table('fw_hk_comments')->where('id',$id)->delete();
+        if($nice){
+            $this->success('删除成功!',$_SERVER["HTTP_REFERER"],-1,1);
+        }
+    }
+    
+    public function info()
+    {
+        $id = $_GET['id'];
+        $info = Db::table('fw_hk_comments')->where('id',$id)->find();
+        $this->assign('nickname', session('user_auth.nickname'));
+        $this->assign('username', session('user_auth.username'));
+        return $this->fetch('website/info',['info'=>$info]);
+
+    }
 
     public function backLogin()
     {

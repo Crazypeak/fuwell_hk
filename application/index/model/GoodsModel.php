@@ -14,7 +14,7 @@ class GoodsModel
 {
     public static function getGoodsList($class_id = null)
     {
-        return Db::name('goods')->field(['id', 'name', 'img_url'])->where(['class_id' => $class_id])->order(['sequence' => 'ASC'])->select();
+        return Db::name('goods')->field(['id', 'name', 'img_url','url'])->where(['class_id' => $class_id])->order(['sequence' => 'ASC'])->select();
     }
 
     public static function getGoodsOne($id = null)

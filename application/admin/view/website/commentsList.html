@@ -6,13 +6,13 @@
 <!-- 样式 -->
 {block name="style"}
 
-
 <style>
-
 
 </style>
 {/block}
 <!-- /.样式 -->
+
+
 
 {block name="content"}
 
@@ -21,11 +21,11 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
             <!-- Default box -->
-            <div class="box">
+            <div class="box" style="width: 60% !important;">
                 <div class="box-header with-border">
                     <div class="row">
                         <div class="col-md-4 col-lg-6">
-                            <h3 class="box-title">产品列表</h3>
+                            <h3 class="box-title">信息列表</h3>
                         </div>
                     </div>
                 </div>
@@ -33,14 +33,16 @@
                 <div class="box-body">
                     <table class="table table-bordered table-hover">
                         <tbody>
-                        <tr>
-                            <th style="">时间</th>
-                            <th style="">名称</th>
-                            <th style="">电话</th>
-                            <th style="">邮箱</th>
-                            <th style="">信息</th>
-                        </tr>
-
+		<thead>
+                        	   <tr>
+                                    <th style="">时间</th>
+                                    <th style="">名称</th>
+                                    <th style="">电话</th>
+                                    <th style="">邮箱</th>
+                                    <th style="">信息</th>
+                                    <th style="width: 130px">操作</th>
+                        	    </tr>
+		</thead>
                         {volist name="list" id="vo"}
                         <tr>
                             <td >{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
@@ -48,6 +50,10 @@
                             <td title="{$vo.phone}">{$vo.phone}</td>
                             <td title="{$vo.email}">{$vo.email}</td>
                             <td title="{$vo.message}">{$vo.message}</td>
+                            <td>&nbsp;&nbsp;
+                                <button onclick="info({$vo.id})" style="background: #2f8743;color: white;padding: 2px 5px 2px 5px;border-radius: 4px;border: 0;box-shadow: 1px 1px 2px #999">查看</button>&nbsp;&nbsp;
+                                <button onclick="del({$vo.id})" style="background: #cc4400;color: white;padding: 2px 5px 2px 5px;border-radius: 4px;border: 0;box-shadow: 1px 1px 2px #999">删除</button>
+                            </td>
                         </tr>
                         {/volist}
 
@@ -69,8 +75,22 @@
 {/block}
 
 
+
 {block name="script"}
 <script type="text/javascript">
+
+    function del(id) {
+        var r = confirm('确定删除该信息？');
+        if( r == true ){
+            window.location.href="{:url('User/del')}"+'?id='+id;
+        }else {
+            return false;
+        }
+    }
+
+    function info(id) {
+        window.location.href="{:url('User/info')}"+'?id='+id;
+    }
+
 </script>
 {/block}
-

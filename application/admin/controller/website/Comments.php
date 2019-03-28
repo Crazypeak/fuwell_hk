@@ -15,8 +15,9 @@ class Comments extends Index
 {
     public function index()
     {
-        $list = Db::name('comments')->order(['create_time'=>'DESC'])->paginate();
+        $list = Db::name('comments')->order(['create_time'=>'DESC'])->paginate(500);
         $this->assign('list',$list);
         return $this->fetch('website/commentsList');
     }
+
 }

@@ -12,7 +12,8 @@
       <paths name="xdm391294537.my3w.com">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$/../wp" web="/" />
+            <mapping local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

@@ -535,7 +535,8 @@ body > section {
 #contact .col-md-3{ width:50%; float:left;}
 #contact h3{ font-size:18px}
 #contact ul li{ font-size:0.9em;}
-.widget{ margin-left:0; margin-right:0; margin-bottom:0; min-height:120px; }
+.widget{ margin-left:0; margin-right:0; margin-bottom:0; min-height:125px; }
+#contact ul li{ line-height:1.6em;}
 #contact .row{ padding-left:50px;}
 #footer .col-sm-8{text-align:center;}
 #footer .col-sm-4{text-align:center;}
@@ -548,7 +549,7 @@ body > section {
 }
 @media screen and (max-width:480px){
 
-.slider_bg{background:url(../images/banner5.jpg) no-repeat 0px 0px;min-height:350px;}
+.slider_bg{background:url(../images/banner5.jpg) no-repeat 0px 0px;min-height:320px;}
 .slider{padding:10em 0 0;}
 .rslides h3{font-size:1.35em;max-width:94%;}
 .rslides h3 p{ padding-top:0.35em;}
@@ -609,4 +610,5 @@ ul.project_detail li{ font-size:0.9em;}
 .product-mix p{ line-height:1.2em; padding:1em 0;}
 #error h1{	font-size:6em;}
 #error p{ font-size:1em;}
+
 }
